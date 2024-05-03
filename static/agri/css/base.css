@@ -1,0 +1,1044 @@
+
+body {
+  background: #fafafa;
+  color: #33333a;
+  padding-top: 0px;
+  padding-bottom: 10px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #323232;
+}
+
+.strike-through-td {
+    text-decoration: line-through;
+}
+
+.col-1 {
+    padding-right: 20px;
+}
+
+.col-2 {
+    padding-left: 20px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-button {
+    align-self: center;
+}
+
+html body {
+    margin: 0;
+    background-color: #fafafa;
+    font-family: 'Roboto Mono', serif;
+    overflow-x: hidden;
+}
+
+.homepage {
+    font-family: 'Roboto Mono', serif;
+    background-image: linear-gradient(to right bottom, #28204d, #2b2354, #2f255b, #322862, #362b69, #333d7f, #294f94, #0f61a9, #0087ca, #00ade2, #00d3f1, #06f8f9);
+    background-attachment: fixed;
+    overflow: hidden; /* Impedisce l'overflow all'interno della .homepage */
+}
+
+.centered {
+  margin-top:30px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+footer {
+    clear: both;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    line-height: 1.5em;
+}
+
+.copyright {
+    text-align: center;
+    color: var(--midnight-green-eagle-green);
+    font-size: 0.75rem;
+}
+
+.copyright-home {
+    text-align: center;
+    color: #06f8f9;
+    font-size: 0.9rem;
+}
+
+.footer-links {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--midnight-green-eagle-green);
+}
+
+.footer-links-icons {
+    text-align: center;
+    font-size: 0.65rem;
+    color: var(--midnight-green-eagle-green);
+}
+
+.footer-icons {
+    text-align: center;
+    font-size: 1.5rem;
+    color: var(--midnight-green-eagle-green);
+}
+
+.link-primary {
+    text-align: center;
+    color: var(--midnight-green-eagle-green);
+}
+
+.link-secondary {
+    color: white;
+    font-size: 0.75rem;
+    padding: 1rem 0.5rem;
+}
+
+.link-secondary:hover {
+    font-size: 0.85rem;
+    color: #06f8f9;
+    text-decoration: none;
+}
+
+.link-footer {
+    color: white;
+    padding: 0.1rem 0.3rem;
+    font-size: 0.75rem;
+}
+
+.link-footer:hover {
+    color: #06f8f9;
+    text-decoration: none;
+    font-size: 0.75rem;
+}
+
+.card1:hover {
+  background:#00ffb6;
+  border:1px solid #00ffb6;
+}
+
+.card1:hover .list-group-item{
+  background:#00ffb6 !important
+}
+
+
+.card2:hover {
+  background: #13F4EF;
+  border:1px solid #00C9FF;
+  transform: translate3D(0,-1px,0) scale(1.1);
+}
+
+.card2:hover .list-group-item{
+  background:#13F4EF !important
+}
+
+
+.card3:hover {
+  background:#ff95e9;
+  border:1px solid #ff95e9;
+}
+
+.card3:hover .list-group-item{
+  background:#ff95e9 !important
+}
+
+
+.card:hover .btn-outline-dark{
+  color:white;
+  background:#212529;
+}
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.hero {
+    /* Sizing */
+    width: 100vw;
+    height: 80vh;
+
+    /* Flexbox stuff */
+    justify-content: center;
+    align-items: center;
+
+    /* Text styles */
+    text-align: center;
+    color: white;
+
+    /* Background styles */
+    background-image: url("/static/img/homepage4.svg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    overflow: hidden;
+
+}
+
+/* Define the initial font size for h1 in rem */
+.hero h1 {
+    font-size: 4rem; /* This would be equivalent to 32px (2 * 16px) */
+    margin-top: 58.5px;
+}
+
+/* Media query to adjust font size for h1 on smaller screens */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 4rem; /* Adjust font size for smaller screens */
+    }
+}
+
+/* Media query to adjust font size for h1 on even smaller screens */
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 4rem; /* Further adjust font size for very small screens */
+    }
+}
+
+.hero .btn {
+    /* Positioning and sizing */
+    display: block;
+
+    /* Padding and margins */
+    padding: 0.5em;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+
+    /* Text styles */
+    color: white;
+    text-decoration: none;
+    font-size: 0.67em;
+
+    /* Border styles */
+    border: 3px solid white;
+    border-radius: 10px;
+
+    /* Background styles */
+    background-color: rgba(147, 112, 219, 0.8);
+}
+
+#table-container {
+  overflow: hidden;
+  height: 0;
+  transition: height 0.3s ease-in-out;
+}
+
+#table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#table-container td, #table-container th {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+.check-class {
+  width: 20px;
+  height: 20px;
+}
+
+.check-class[type="checkbox"]:checked {
+  background-color: var(--midnight-green-eagle-green);
+}
+
+.report-visualization-2 {
+  margin-left: 150px; /* Set the left margin to 0 */
+  width: 300px; /* Allow the table to have free width */
+  overflow-x: auto;
+
+}
+
+.report-visualization-3 {
+  margin-left: 150px; /* Set the left margin to 0 */
+  width: 750px; /* Allow the table to have free width */
+  overflow-x: auto;
+}
+
+.report-visualization-4 {
+  margin-left: 150px; /* Set the left margin to 0 */
+  width: 1000px; /* Allow the table to have free width */
+  overflow-x: auto;
+
+}
+
+
+.report-visualization-5 {
+  margin-left: 150px; /* Set the left margin to 0 */
+  width: 1300px; /* Allow the table to have free width */
+  overflow-x: auto;
+}
+
+.report-visualization-6 {
+  margin-left: 150px;
+  margin-right: 150px;
+  overflow-x: auto;
+
+}
+
+
+#barChart {
+  height: 150px;
+  margin-left: 250px; /* Set the left margin to 0 */
+  margin-right: 250px; /* Set the left margin to 0 */
+
+}
+
+.tab-hide-1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.tab-hide-1 > div {
+    flex-basis: 50%;
+    text-align: center;
+}
+
+
+.chart-report {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.chart-report canvas {
+    max-width: 100%;
+    max-height: 100%;
+    box-sizing: border-box;
+    height: auto;
+    padding: 0;
+    margin: 0;
+}
+
+.chart-report .chart-legend {
+    margin-top: 10px;
+}
+
+.chart-report-riepilogo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    padding: 0;
+    margin: 0;
+}
+
+.chart-report-riepilogo canvas {
+    max-width: 100%;
+    max-height: none;
+    box-sizing: border-box;
+    height: auto;
+    padding: 0;
+    margin: 0;
+}
+
+.chart-report-riepilogo .chart-legend {
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .tab-hide-1 > div {
+        flex-basis: 100%;
+    }
+}
+
+.container-1 {
+  width: 100%;
+  padding-right: 5px;
+  padding-left: 5px;
+  margin-right: 100px;
+  margin-left: 100px;
+  overflow: auto;
+}
+
+.card-header-1 {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0;
+  margin-top: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.container-fluid-sup {
+  width: 95%%;
+  padding-right: 0px;
+  padding-left: 0px;
+  margin-right: 3.5%;
+  margin-left: 3.5%;
+  margin-bottom: 0%;
+}
+
+.container-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.non-clickable {
+  pointer-events: none;
+  cursor: default;
+  border: none;
+  background: #f0f0f0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-right: 0px;
+  display: inline-block;
+}
+
+@media (max-width: 900px) {
+    .navigator {
+      display: none !important;
+    }
+}
+
+.navigator {
+  position: fixed;
+  left: 0;
+  width: 18%; /* Adjust the width as needed */
+  height: calc(100vh); /* Subtract the desired margin/padding */
+  overflow-y: auto;
+  background-color: #f1f1f1;
+  padding: 2px;
+  z-index: 9999;
+  background-image: url('/static/img/navigator.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-right: 0px solid black; /* Adjust the width and color as needed */
+}
+
+.navigator ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navigator li {
+  margin-bottom: 5px;
+  margin-left: 5px;
+  padding-left: 0px;
+}
+
+.navigator a {
+  text-decoration: none;
+  color: #333;
+}
+
+.navigator a:hover {
+  text-decoration: none;
+}
+
+.navigator ul ul {
+  margin-top: 5px; /* Add top margin for sub-points */
+  padding-left: 20px;
+}
+
+.navigator h5 {
+  margin-top: 0;
+}
+
+.col-md-2 {
+  position: relative;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.navigator {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 50px; /* Space for the disclaimer */
+}
+
+.card_report {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-clip: border-box;
+
+}
+
+.card-header-report {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.card-header-report:first-child {
+  border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+}
+
+.card-header-report + .list-group .list-group-item:first-child {
+  border-top: 0;
+}
+
+::-webkit-scrollbar {
+    width: 1px;
+}
+
+::-webkit-scrollbar-track {
+    background: white;
+}
+
+::-webkit-scrollbar-thumb {
+    background: white;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: white;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(65, 56, 119, 0.1) rgba(255, 255, 255, 0);
+    //scrollbar-color: rgba(65, 56, 119, 0.9) rgba(65, 56, 119, 0.9);
+}
+
+.main-color-report {
+  background-color: #413877;
+}
+
+.navbar {
+    transition: background-color 0.5s ease; /* Adjust as needed */
+}
+
+.main-color {
+  background-color: #413877;
+}
+
+.main-color-ricavi {
+  background-image: linear-gradient(to right, #413877, #55c4f2);
+}
+
+.main-color-costi {
+  background: linear-gradient(to right, #413877, hsla(310, 76%, 82%, 1) 100%);
+}
+
+.main-color-attivita {
+  background: linear-gradient(to right, #413877, #54C4C4);
+}
+
+.main-color-passivita {
+  background: linear-gradient(to right, #413877, #f5b8ff);
+}
+
+.main-color-riclassificati {
+  background-image: linear-gradient(to right, #413877, #C75A92);
+}
+
+.side-nav-color {
+  background-color: #413877;
+  color: white !important;
+  border-radius: 0 2em 0 2em;
+}
+
+.side-nav-color-main {
+  background: linear-gradient(to right, #8D468D, #CC6A9C);
+  color: white !important;
+  border-radius: 2em 0 2em 0;
+}
+
+.side-nav-color-ricavi {
+  background-image: linear-gradient(to right, #6AA3C9, #55c4f2);
+  color: white !important;
+  border-radius: 2em 0 2em 0;
+}
+
+.side-nav-color-costi {
+  background: linear-gradient(to right, #C75A92, hsla(310, 76%, 82%, 1) 100%);
+  color: white !important;
+  border-radius: 2em 0 2em 0;
+}
+
+.side-nav-color-attivita {
+  background: linear-gradient(to right, #38AEAE, #54C4C4);
+  color: white !important;
+  border-radius: 2em 0 2em 0;
+}
+
+.side-nav-color-passivita {
+  background: linear-gradient(to right, #BA53A4ff, #f5b8ff);
+  color: white !important;
+  border-radius: 2em 0 2em 0;
+}
+
+.disabled-link {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.5;
+}
+
+.table-striped-data tbody tr:nth-of-type(odd) {
+  //background-color: rgba(236, 238, 243, 0.6);
+  background-color: white;
+  //box-shadow: 1px 1px 2px #000;
+  border-radius: 0;
+}
+
+.table-striped-data tbody tr:nth-of-type(even) {
+  background-color: white;
+  //box-shadow: 1px 1px 2px #000;
+  border-radius: 0;
+}
+
+.custom-table-striped tbody tr:nth-child(odd) {
+    background-color: rgba(236, 238, 243, 0.6); /* Odd row color */
+}
+
+.custom-table-striped tbody tr:nth-child(even) {
+    background-color: rgba(236, 238, 243, 0.2); /* Even row color */
+}
+
+.brushed-highlight {
+    color: black;
+    background: linear-gradient(0deg, #f9defc, rgba(85,101,164,0));
+    display: inline-block;  /* Required to fit the background to the text */
+    padding: 5px 10px;      /* Optional: Add some padding around the text for better visual effect */
+}
+
+.brushed-highlight-2 {
+    color: black;
+    background: linear-gradient(0deg, #b2dfdb, rgba(85,101,164,0));
+    display: inline-block;  /* Required to fit the background to the text */
+    padding: 5px 10px;      /* Optional: Add some padding around the text for better visual effect */
+}
+
+.gradient-text {
+    background: linear-gradient(white, #00ffc2); /* Adjust the acid yellow as needed */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline; /* Make sure it doesn't break onto a new line */
+}
+
+.container-fluid-1 {
+  width: 100%%;
+  padding-right: 0px;
+  padding-left: 0px;
+  margin-right: 5%;
+  margin-left: 5%;
+  margin-bottom: 2.5%;
+  overflow: hidden;
+}
+
+.container-fluid-2 {
+  width: 100%%;
+  padding-right: 0px;
+  padding-left: 0px;
+  margin-right: 0%;
+  margin-left: 0%;
+  margin-bottom: 0%;
+  overflow: hidden;
+}
+
+.container-fluid-3 {
+  width: 100%%;
+  padding-right: 0px;
+  padding-left: 0px;
+  margin-right: 0%;
+  margin-left: 0%;
+  margin-bottom: 0%;
+  overflow: hidden;
+}
+
+@keyframes colorChange {
+    0% {
+        color: white;
+    }
+    50% {
+        color: #8affff; /* Acid light blue color */
+    }
+    100% {
+        color: white;
+    }
+}
+
+.custom-flower {
+    font-size: 3rem;
+    animation: colorChange 4s infinite; /* Change color every 4 seconds (adjust the duration as needed) */
+}
+
+#pdfInput, #xlsInput {
+    width: 400px; /* Set the width of the input element */
+}
+
+.form-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.drop-zone {
+    border: 2px dashed #ccc;
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+.drop-zone input[type="file"] {
+    display: none;
+}
+
+.drop-zone:hover {
+    background-color: #f8f8f8;
+}
+
+.file-name {
+    margin-top: 0.5rem;
+}
+
+.center-checkbox {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.small-size {
+    font-size: 0.67rem;
+}
+
+.blur-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9); /* Adjust the opacity as needed */
+    filter: blur(5px); /* Adjust the blur radius as needed */
+    z-index: 9999;
+}
+
+.custom-image {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 20%;
+    max-height: 20%;
+    z-index: 10000;
+}
+
+.message {
+    position: fixed;
+    top: 62%; /* Adjust this value to position the message vertically below the image */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    font-size: 14px;
+    z-index: 10000;
+}
+
+.hidden {
+    display: none;
+}
+
+.footer-over {
+  z-index: 9999;
+}
+
+ul, li {
+    margin-left: 2px !important;
+    margin-bottom: 1px !important;
+    padding-left: 2px !important;
+}
+
+ul.nested-ul {
+    margin-left: 10px !important;
+    margin-bottom: 0px !important;
+    padding-left: 0px !important;
+}
+
+ul.nested-ul > li:nth-child(1) > ul > li {
+    margin-left: 0px !important;
+    margin-bottom: 0px !important;
+    padding-left: 0px !important;
+}
+
+ul.nested-ul > li:nth-child(2) > ul > li {
+    margin-left: 0px !important;
+    margin-bottom: 0px !important;
+    padding-left: 0px !important;
+}
+
+.col-auto-half {
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.blurred {
+  filter: blur(50px);
+  transition: filter 0.5s ease; /* Optional: Add a transition effect */
+}
+
+.dropdown-menu.show {
+  position: relative;
+  z-index: 93999; /* Add a high z-index value */
+}
+
+.ice-slice-card {
+    background: linear-gradient(0deg, #e0f2f1, rgba(224, 242, 241, 0.4));
+    border: 2px solid #000; /* Imposta il bordo con uno stile e un colore */
+    border-radius: 0px !important;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.ice-slice-card .card-header {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #fff;
+    border-radius: 0;
+    padding: 0.5rem;
+    color: #fff;
+    text-align: center;
+}
+
+.ice-slice-card .card-body {
+    padding: 1rem;
+    color: #333;
+}
+
+.ice-slice-card-2 {
+    background: linear-gradient(0deg, rgba(224, 242, 241, 0.4), #60dbb9);
+    border: 2px solid #000; /* Imposta il bordo con uno stile e un colore */
+    border-radius: 0px !important;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.ice-slice-card-2 .card-header {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #fff;
+    border-radius: 0;
+    padding: 0.5rem;
+    color: #fff;
+    text-align: center;
+}
+
+.ice-slice-card-2 .card-body {
+    padding: 1rem;
+    color: #333;
+}
+
+.ice-slice-card-3 {
+    background: linear-gradient(180deg, #e0f2f1, #f9defc);
+    border: 2px solid #000; /* Imposta il bordo con uno stile e un colore */
+    border-radius: 0px !important;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.ice-slice-card-3 .card-header {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #fff;
+    border-radius: 0;
+    color: #fff;
+    text-align: center;
+}
+
+.ice-slice-card-3 .card-body {
+    color: #333;
+}
+
+
+.ice-slice-card-4 {
+    background: linear-gradient(180deg, white, #e0f2f1);
+    border: 2px solid #000; /* Imposta il bordo con uno stile e un colore */
+    border-radius: 0px !important;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.ice-slice-card-4 .card-header {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #fff;
+    border-radius: 0;
+    color: #fff;
+    text-align: center;
+}
+
+.ice-slice-card-4 .card-body {
+    color: #333;
+}
+
+#map-container {
+    position: relative;
+    height:420px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#map {
+    //filter: saturate(80%);
+    height: 100%;
+    width: 100%;
+    z-index: 1; /* Ensure the map is below the overlay */
+}
+
+#map-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(224, 242, 241, 0.3), rgba(249, 222, 252, 0.3) 50%, rgba(224, 242, 241, 0.3));
+    pointer-events: none; /* Allows clicks to pass through the overlay to the map underneath */
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    z-index: 2; /* Ensure the overlay is above the map */
+}
+
+.selectable-card {
+    cursor: pointer;
+}
+
+.selectable-card:hover {
+    background-color: rgba(249, 222, 252, 0.3);
+    box-shadow: 0 0 5px #CC1A48; /* Adjust as needed */
+}
+
+.selectable-card2 {
+    cursor: pointer;
+}
+
+.selectable-card2:hover {
+    background-color: rgba(249, 222, 252, 0.3);
+    box-shadow: 0 0 5px #CC1A48; /* Adjust as needed */
+}
+
+.selectable-card3 {
+    cursor: pointer;
+}
+
+.selectable-card3:hover {
+    background-color: rgba(249, 222, 252, 0.3);
+    box-shadow: 0 0 5px #CC1A48; /* Adjust as needed */
+}
+
+.selezionata {
+    box-shadow: 0 0 10px #CC1A48;
+    background-color: rgba(249, 222, 252, 0.3);
+}
+
+.selezionata2 {
+    box-shadow: 0 0 10px #CC1A48;
+    background-color: rgba(249, 222, 252, 0.3);
+}
+
+.selezionata3 {
+    box-shadow: 0 0 10px #CC1A48;
+    background-color: rgba(249, 222, 252, 0.3);
+}
+
+/* Personalizzazione dell'input range */
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    background: transparent;
+    outline: none;
+}
+
+/* Personalizzazione del cursore */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    background: rgba(204, 26, 72, 1); /* Cambia il colore del cursore */
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -4px; /* Posiziona il cursore sopra la barra */
+    border: 1px solid #8491A3;
+}
+
+/* Personalizzazione della barra del range */
+input[type="range"]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 7.5px;
+    cursor: pointer;
+    background: rgba(249, 222, 252, 0.5); /* Cambia il colore della barra del range */
+    border-radius: 5px;
+    border: 1px solid #8491A3;
+}
+
+/* Personalizzazione del valore selezionato */
+input[type="range"]::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    background: #CC1A48; /* Cambia il colore del cursore */
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.cardstyle {
+    box-shadow: 0 0 10px #3ce8df;
+}
+
+.cardpreventivo {
+    background-color: #f656e7;
+    background: linear-gradient(135deg, #20f4ff55 25%, transparent 25%) -19px 0/ 38px 38px, linear-gradient(225deg, #20f4ff 25%, transparent 25%) -19px 0/ 38px 38px, linear-gradient(315deg, #20f4ff55 25%, transparent 25%) 0px 0/ 38px 38px, linear-gradient(45deg, #20f4ff 25%, #f656e7 25%) 0px 0/ 38px 38px;
+}
+
+.cardvalutazione {
+    background-color: #f656e7;
+    background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #f656e7 19px ), repeating-linear-gradient( #20f4ff55, #20f4ff );
+}
+
+.highlight-pink-long {
+    position: relative;
+    color: black;
+    z-index: 1001; /* Set a higher z-index for the text */
+}
+
+.highlight-pink-long::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -30px;
+    width: 105%;
+    height: 100%;
+    background-image: url('markpink.png');
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+    z-index: 1; /* Set a lower z-index for the background image */
+    opacity: 0.7;
+}
+
+.patterncard {
+    background-color: #e5e5f7;
+    opacity: 0.2;
+    background-image: radial-gradient(circle at center center, #45f3f7, #e5e5f7), repeating-radial-gradient(circle at center center, #45f3f7, #45f3f7, 32px, transparent 64px, transparent 32px);
+    background-blend-mode: multiply;
+}
+
+.enlarge-less-on-hover:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}

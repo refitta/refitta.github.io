@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="static/agri/css/base.css">
+    <link rel="stylesheet" type="text/css" href="static/agri/css/bootstrap.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@350&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-sankey@1"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="script.js"></script>
+
+</head>
+
+<body style="background-image: url('static/img/requalify_bg.png'); background-size: cover; background-position: center center; background-repeat: no-repeat; background-attachment: fixed; margin-top: 0px;">
+    <div style="text-align: center; height:10%; margin-bottom: 10px; margin-top:40px; padding-top: 20px; margin-left: 250px; margin-right: 250px; background: linear-gradient(180deg, #e0f2f1, #f9defc); opacity: 90%; box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5); border-radius: 0px;" id="title">
+        <img src="static/img/requalify.svg" alt="Valutazione progetto">
+        <form id="loginForm" style="width: 50%; margin: auto; text-align: left;padding: 50px;">
+            <div class="form-group">
+                <label for="username">Utente:</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-info" style="font-size: 0.9rem;">Entra</button>
+        </form>
+    </div>
+
+    <div id="webapp" style="display:none;">
+        <div style="margin:0; margin-bottom: 20px; padding: 40px; padding-bottom: 20px; text-align: center; box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.5); border-radius: 0px; background: linear-gradient(180deg, rgba(224, 242, 241, 0.7), rgba(249, 222, 252, 0.7)); opacity: 100%;">
+            <img src="static/img/requalify.svg" alt="Valutazione progetto">
+        </div>
+        <div class="container-fluid" style="font-size: 0.7rem; padding-top: 30px; padding-bottom: 0px;">
+            <div class="container-fluid" id="scelta">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card enlarge-less-on-hover" style="cursor: pointer; width: 70%; padding: 30px; background: linear-gradient(180deg, #e0f2f1, #e0f2f1); margin-left: auto; margin-right: 10px; box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5); border-radius: 0px;" id="finanziabilita_progetto">
+                            <p class="highlight-pink-long" style="z-index: 10001; font-size: 2rem; padding-bottom: 10px;">Fai un preventivo</p>
+                            <p style="font-size: 1rem;"><span style="font-size: 1.2rem; color: black;"><i class="fa-solid fa-chart-line"></i></span> Simulazione di diversi scenari</p>
+                            <p style="font-size: 1rem;"><span style="font-size: 1.2rem; color: black;"><i class="fa-solid fa-sliders"></i></span> Alta possibilità di personalizzazione</p>
+                            <p style="font-size: 1rem;"><span style="font-size: 1.2rem; color: black;"><i class="fa-solid fa-clover"></i></span> Gratuito e senza impegno</p>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card enlarge-less-on-hover" style="cursor: pointer; width: 70%; padding: 30px; background: linear-gradient(180deg, #e0f2f1, #e0f2f1); margin-left: 10px; box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5); border-radius: 0px;" id="analisi_progetto">
+                            <div style="position: relative;">
+                                <p class="highlight-pink-long" style="font-size: 2rem; padding-bottom: 10px;">Analitiche avanzate</p>
+                            </div>
+
+                            <p style="font-size: 1rem;"><span style="font-size: 1.2rem; color: black;"><i class="fa-solid fa-bolt"></i></span> Stima il rischio del progetto</p>
+                            <p style="font-size: 1rem;"><span style="font-size: 1.2rem; color: black;"><i class="fa-solid fa-chart-simple"></i></span> Analizza i range di profittabilità</p>
+                            <p style="font-size: 1rem;"><span style="font-size: 1.2rem; color: black;"><i class="fa-solid fa-percent"></i></span> Valuta i ratio economici e finanziari</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="finanziabilita" style="display:none; text-align:center;">
+                <div style="padding: 50px; height: auto; margin-left: 100px; background: rgba(249, 249, 249, 0.9); box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5); border-radius: 0px;">
+                    <p style="font-weight: bold; font-size: 1.5rem;">Inserisci i dati dell'immobile</p></center>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-9">
+                            <p style="font-size: 1rem;">Indirizzo:</p>
+                            <form onsubmit="searchAddress(event)" style="display: flex; align-items: center; justify-content: center;">
+                                <input type="text" id="address" name="address" required placeholder="Via Trieste 1, Trieste" style="line-height: 2; width: 60%; font-size: 0.9rem; margin-right: 5px; text-align:center;" class="form-control">
+                                <button class="btn btn-primary btn-sm" type="submit">Cerca</button>
+                            </form>
+                            <br>
+                            <div id="map-container">
+                                <div id="map-overlay"></div>
+                                <div id="map"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="padding-top: 70px;">
+                            <p style="font-size: 1rem; text-align: left;">Superficie catastale:</p>
+                            <div class="row" style="width: 70%; padding-left: 20px;">
+                                <div class="col" style="padding: 0px;">
+                                    <input type="number" id="mqInput" placeholder="65" min="1" style="line-height: 2; font-size: 0.9rem; text-align:center;" class="form-control">
+                                </div>
+                                <div class="col-auto" style="padding: 0px; line-height: 2;">
+                                    <span class="input-group-text" style="font-size: 0.9rem;">mq</span>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <p style="font-size: 1rem; text-align: left;">Rendita catastale:</p>
+                            <div class="row" style="width: 70%; padding-left: 20px;">
+                                <div class="col" style="padding: 0px;">
+                                    <input type="number" id="rendInput" placeholder="800" min="1" style="line-height: 2; font-size: 0.9rem; text-align:center;" class="form-control">
+                                </div>
+                                <div class="col-auto" style="padding: 0px; line-height: 2;">
+                                    <span class="input-group-text" style="font-size: 0.9rem;">euro</span>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <p style="font-size: 1rem; text-align: left;">Spese condominiali annuali:</p>
+                            <div class="row" style="width: 70%; padding-left: 20px;">
+                                <div class="col" style="padding: 0px;">
+                                    <input type="number" id="condInput" placeholder="1200" min="1" style="line-height: 2; font-size: 0.9rem; text-align:center;" class="form-control">
+                                </div>
+                                <div class="col-auto" style="padding: 0px; line-height: 2;">
+                                    <span class="input-group-text" style="font-size: 0.9rem;">euro</span>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <p style="font-size: 1rem; text-align: left;">Numero posti letto:</p>
+                            <div class="row" style="width: 80%;">
+                                <div class="col-md-12">
+                                    <input type="range" id="lettiInput" class="form-range" value="2" min="1" max="8" step="1" style="font-size: 1.2rem; text-align:center;">
+                                </div>
+                                <div class="col-md-12 mt-2">
+                                    <span id="selectedLetti" style="display: inline-block; font-size: 0.8rem;">2 posti letto</span>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <p style="font-size: 1rem; text-align: left;">Numero bagni completi:</p>
+                            <div class="row" style="width: 80%;">
+                                <div class="col-md-12">
+                                    <input type="range" id="bagniInput" class="form-range" value="1" min="1" max="4" step="1" style="font-size: 1.2rem; text-align:center;">
+                                </div>
+                                <div class="col-md-12 mt-2">
+                                    <span id="selectedBagni" style="display: inline-block; font-size: 0.8rem;">1 bagno completo</span>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row justify-content-center">
+                        <div class="col text-center">
+                            <button class="btn btn-danger mr-2" style="font-size: 0.9rem;" id="back_button_f" style="padding: 5px;">Indietro</button>
+                            <button class="btn btn-info" style="font-size: 0.9rem;" id="next_button_1" style="padding: 5px;">Continua</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="finanziabilita_2" style="display:none; text-align:center;">
+                <div style="padding: 50px; height: auto; margin-left: 100px; background: rgba(249, 249, 249, 0.9); box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5); border-radius: 0px;">
+                    <p style="font-weight: bold; font-size: 1.5rem;">Seleziona i dettagli per la ristrutturazione</p></center>
+                    <br>
+                    <br>
+                    <div class="row justify-content-center">
+                        <div class="col-md-12">
+                            <p style="font-size: 1.1rem; text-align:center; padding-bottom: 10px;">Di che tipo di ristrutturazione ha bisogno l'immobile:</p>
+                            <div class="row" style="padding: 0 10px; padding-bottom: 30px;">
+                                <div class="col-md-4" style="padding-left:10px; padding-right:10px;">
+                                    <div class="card selectable-card selezionata" id="leggera" style="border-radius: 0; margin-bottom: 0px; height: 100%;">
+                                        <div class="card-body">
+                                            <p style="font-size: 1.1rem; font-weight:bold;">Leggera</p>
+                                            <span style="display: inline-block; font-size: 1.2rem;">da 5k a 20k euro</span>
+                                            <div style="text-align: left; padding-top: 20px;">
+                                                <span style="font-size: 0.9rem;">- Cambio caldaia ed infissi</span><br>
+                                                <span style="font-size: 0.9rem;">- Ristrutturazione bagno</span><br>
+                                                <span style="font-size: 0.9rem;">- Ammodernamento interni</span><br>
+                                                <span style="font-size: 0.9rem;">- ...</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="padding-left:10px; padding-right:10px;">
+                                    <div class="card selectable-card" id="media" style="border-radius: 0; margin-bottom: 0px; height: 100%;">
+                                        <div class="card-body">
+                                            <p style="font-size: 1.1rem; font-weight:bold;">Media</p>
+                                            <span style="display: inline-block; font-size: 1.2rem;">da 20k a 40k euro</span>
+                                            <p style="font-size: 0.9rem; text-align:left; padding-top: 20px;">Più interventi in contemporanea o ristrutturazione completa di solo alcuni ambienti.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="padding-left:10px; padding-right:10px;">
+                                    <div class="card selectable-card" id="completa" style="border-radius: 0; margin-bottom: 0px; height: 100%;">
+                                        <div class="card-body">
+                                            <p style="font-size: 1.1rem; font-weight:bold;">Completa</p>
+                                            <span style="display: inline-block; font-size: 1.2rem;">prezzo al mq</span>
+                                            <p style="font-size: 0.9rem; text-align:left; padding-top: 20px;">Ristrutturazione completa dell'immobile chiavi in mano. Dalla progettazione all'arredamento.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <p style="font-size: 1.1rem; text-align:center; padding-bottom: 10px;">Indica le finiture richieste per la ristrutturazione:</p>
+                            <div class="row" style="padding: 0 10px; padding-bottom: 30px;">
+                                <div class="col-md-4" style="padding-left:10px; padding-right:10px;">
+                                    <div class="card selectable-card2 selezionata2" id="economiche" style="border-radius: 0; margin-bottom: 0px; height: 100%;">
+                                        <div class="card-body">
+                                            <p style="font-size: 1.1rem; font-weight:bold;">Standard</p>
+                                            <p style="font-size: 0.9rem; text-align:left;">Materiali selezionati ma economici, impianti con funzioni base e di seconda marca.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="padding-left:10px; padding-right:10px;">
+                                    <div class="card selectable-card2" id="medie" style="border-radius: 0; margin-bottom: 0px; height: 100%;">
+                                        <div class="card-body">
+                                            <p style="font-size: 1.1rem; font-weight:bold;">Premium</p>
+                                            <p style="font-size: 0.9rem; text-align:left;">Materiali resistenti e di buona qualità senza finiture di pregio.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="padding-left:10px; padding-right:10px;">
+                                    <div class="card selectable-card2" id="qualita" style="border-radius: 0; margin-bottom: 0px; height: 100%;">
+                                        <div class="card-body">
+                                            <p style="font-size: 1.1rem; font-weight:bold;">Luxury</p>
+                                            <p style="font-size: 0.9rem; text-align:left;">Materiali di alta qualità ad alta efficienza e con impiantistica domotica.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <p style="font-size: 1.1rem; text-align:center; padding-bottom: 10px;">Scegli se contribuire alle spese dell'immobile per incrementare la % di ristrutturazione a zero:</p>
+                            <div class="row" style="padding: 0 10px; padding-bottom: 30px;">
+                                <div class="col-md-3" style="padding-left:10px; padding-right:10px;">
+                                    <div class="card selectable-card3 selezionata3" id="NessunaContribuzione" style="border-radius: 0; margin-bottom: 0px; height: 100%;">
+                                        <div class="card-body">
+                                            <p style="font-size: 1.1rem; font-weight:bold;">Nessuna contribuzione</p>
+                                            <p style="font-size: 0.9rem;">Quota annuale:</p>
+                                            <p style="font-size: 2rem; text-align:center;">0€</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="padding-left:10px; padding-right:10px;">
+                                    <div class="card selectable-card3" id="Tasse" style="border-radius: 0; margin-bottom: 0px; height: 100%;">
+                                        <div class="card-body">
+                                            <p style="font-size: 1.1rem; font-weight:bold;">Tasse sull'immobile</p>
+                                            <p style="font-size: 0.9rem;">Quota annuale:</p>
+                                            <div id="tquote"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="padding-left:10px; padding-right:10px;">
+                                    <div class="card selectable-card3" id="CondominialiTasse" style="border-radius: 0; margin-bottom: 0px; height: 100%;">
+                                        <div class="card-body">
+                                            <p style="font-size: 1.1rem; font-weight:bold;">Condominiali + Tasse</p>
+                                            <p style="font-size: 0.9rem;">Quota annuale:</p>
+                                            <div id="cdtquote"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="padding-left:10px; padding-right:10px;">
+                                    <div class="card selectable-card3" id="CostiFissi" style="border-radius: 0; margin-bottom: 0px; height: 100%;">
+                                        <div class="card-body">
+                                            <p style="font-size: 1.1rem; font-weight:bold;">Costi Fissi Immobile</p>
+                                            <p style="font-size: 0.9rem;">Quota annuale:</p>
+                                            <div id="cfquote"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <p style="font-size: 1.1rem; text-align:center; padding-bottom: 10px;">Durata del contratto:</p>
+                            <div class="row justify-content-center" style="padding-top: 10px; padding-bottom: 30px;">
+                                <div class="col-md-8">
+                                    <input type="range" id="yearsInput" class="form-range" value="5" min="2" max="10" style="font-size: 1.2rem; text-align:center; width: 80%;">
+                                </div>
+                                <div class="col-md-8 mt-2">
+                                    <span id="selectedYears" style="display: inline-block; font-size: 1.2rem;">5 Anni</span>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <p style="font-size: 1.1rem; text-align:center; padding-bottom: 10px;">Quota richiesta delle rendite nette annuali:</p>
+                            <div class="row justify-content-center" style="padding-top: 10px; padding-bottom: 30px;">
+                                <div class="col-md-8" style="padding-left:0px;">
+                                    <input type="range" id="desired_net_income_percentageInput" class="form-range" value="0" min="0" max="100" step="0.5" style="font-size: 1.2rem; text-align:center; width: 80%;">
+                                </div>
+                                <div class="col-md-8 mt-2">
+                                    <span id="selectedQuote" style="display: inline-block; font-size: 1.2rem;">0%</span>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                        </div>
+                        <div class="card col-md-10" style="background: linear-gradient(180deg, #e0f2f1, #f9defc); opacity: 90%; box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5); border-radius: 0px;" id="lavori_finanziabili">
+                        </div>
+                        <br>
+                        <br>
+                    </div>
+                    <div class="row justify-content-center" style="padding-top: 55px;">
+                        <div class="col text-center">
+                            <button class="btn btn-danger mr-2" style="font-size: 0.9rem;" id="back_button_2" style="padding: 5px;">Indietro</button>
+                            <button class="btn btn-info" style="font-size: 0.9rem;" id="next_button_2" style="padding: 5px;" onclick="calculateValues_finan()">Invia la richiesta</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="analisi" style="display:none;">
+                <div style="background: rgba(0, 0, 0, 0.3); padding: 20px; padding-top: 30px; padding-bottom: 30px; box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5); border-radius: 0px;">
+                    <div class="row" style="padding-left: 10px; padding-right: 10px;">
+                        <div class="col-md-5">
+                            <center><p style="color: white; font-weight: bold; text-shadow: 2px 2px 1px black; font-size: 1rem; padding:5px; margin-left:10px; margin-right:10px; margin-bottom: 15px;">INSERIMENTO DATI</p></center>
+
+                            <div class="card" style="padding:20px; padding-top: 20px; padding-bottom: 14px; width:100%;  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                <form id="inputForm">
+                                    <h2>Dati progetto</h2>
+                                    <br>
+                                    <div class="form-group row">
+                                        <label for="cedolare_secca_rate" class="col-sm-8 col-form-label">Tipologia contratto d'affitto:</label>
+                                        <div class="col-sm-4">
+                                            <select id="contract_typology" class="form-control" style="width: 100%;">
+                                                <option value="Breve">Breve</option>
+                                                <option value="Concordato">Concordato</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="gross_monthly_income" class="col-sm-8 col-form-label">Rendita mensile lorda prevista:</label>
+                                        <div class="col-sm-4 input-group" style="width: 35%;">
+                                            <input type="number" id="gross_monthly_income" class="form-control" value="1500.00">
+                                            <span class="input-group-text">€</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="uncertainty_range" class="col-sm-8 col-form-label">% Incertezza:</label>
+                                        <div class="col-sm-4 input-group" style="width: 35%;">
+                                            <input type="number" id="uncertainty_range" class="form-control" value="10" step="0.5">
+                                            <span class="input-group-text">%</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="years" class="col-sm-8 col-form-label">Durata del finanziamento:</label>
+                                        <div class="col-sm-4 input-group" style="width: 35%;">
+                                            <input type="number" id="years" class="form-control" value="5" style="width: 15%;">
+                                            <span class="input-group-text">Anni</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="financing_options" class="col-sm-8 col-form-label">Downpayment:</label>
+                                        <div class="col-sm-4">
+                                            <select id="financing_options" class="form-control" style="width: 100%;">
+                                                <option value="Nessuno">Nessuno</option>
+                                                <option value="Costi Fissi">Costi Fissi</option>
+                                                <option value="Cond.+Imu+Tari">Cond.+Imu+Tari</option>
+                                                <option value="Imu+Tari">Imu+Tari</option>
+                                                <option value="Imu">Imu</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="desired_net_income_percentage" class="col-sm-8 col-form-label">% Rendita richiesta:</label>
+                                        <div class="col-sm-4 input-group" style="width: 35%;">
+                                            <input type="number" id="desired_net_income_percentage" class="form-control" value="0.00" step="0.01" style="width: 15%;">
+                                            <span class="input-group-text">%</span>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <h2>Dati finanziari</h2>
+                                    <br>
+                                    <div class="form-group row">
+                                        <label for="risk_free_rate" class="col-sm-8 col-form-label">WACC annualizzato:</label>
+                                        <div class="col-sm-4 input-group" style="width: 35%;">
+                                            <input type="number" id="risk_free_rate" class="form-control" value="4.00" step="0.01" style="width: 15%;">
+                                            <span class="input-group-text">%</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="premio_rischio" class="col-sm-8 col-form-label">Spread tasso annualizzato:</label>
+                                        <div class="col-sm-4 input-group" style="width: 35%;">
+                                            <input type="number" id="premio_rischio" class="form-control" value="3.00" step="0.01" style="width: 15%;">
+                                            <span class="input-group-text">%</span>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <h2>Imposte e tributi</h2>
+                                    <br>
+                                    <div class="form-group row">
+                                        <label for="cedolare_secca_rate" class="col-sm-8 col-form-label">Tasso cedolare secca:</label>
+                                        <div class="col-sm-4">
+                                            <select id="cedolare_secca_rate" class="form-control" style="width: 70%;">
+                                                <option value="0.1">10%</option>
+                                                <option value="0.21" selected>21%</option>
+                                                <option value="0.26">26%</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="second_home_tax" class="col-sm-8 col-form-label">Tasse sulla seconda casa:</label>
+                                        <div class="col-sm-4 input-group" style="width: 35%;">
+                                            <input type="number" id="second_home_tax" class="form-control" value="1000" style="width: 15%;">
+                                            <span class="input-group-text">€</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="waste_collection_tax" class="col-sm-8 col-form-label">Tasse sulla raccolta rifiuti:</label>
+                                        <div class="col-sm-4 input-group" style="width: 35%;">
+                                            <input type="number" id="waste_collection_tax" class="form-control" value="350" style="width: 15%;">
+                                            <span class="input-group-text">€</span>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <h2>Costi di gestione ed utenze</h2>
+                                    <br>
+                                    <div class="form-group row">
+                                        <label for="monthly_condo_fees" class="col-sm-8 col-form-label">Spese condominiali mensili:</label>
+                                        <div class="col-sm-4 input-group" style="width: 35%;">
+                                            <input type="number" id="monthly_condo_fees" class="form-control" value="100" style="width: 15%;">
+                                            <span class="input-group-text">€</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="monthly_utilities" class="col-sm-8 col-form-label">Spese utenze mensili:</label>
+                                        <div class="col-sm-4 input-group" style="width: 35%;">
+                                            <input type="number" id="monthly_utilities" class="form-control" value="100" style="width: 15%;">
+                                            <span class="input-group-text">€</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="monthly_miscellaneous_costs" class="col-sm-8 col-form-label">Costi vari mensili:</label>
+                                        <div class="col-sm-4 input-group" style="width: 35%;">
+                                            <input type="number" id="monthly_miscellaneous_costs" class="form-control" value="50" style="width: 15%;">
+                                            <span class="input-group-text">€</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="property_management_fees" class="col-sm-8 col-form-label">Spese gestione immobiliare e assicurazione:</label>
+                                        <div class="col-sm-4 input-group" style="width: 35%;">
+                                            <input type="number" id="property_management_fees" class="form-control" value="50" style="width: 15%;">
+                                            <span class="input-group-text">€</span>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <h2>Commissioni startup</h2>
+                                    <br>
+                                    <div class="form-group row">
+                                        <label for="restructure_fees" class="col-sm-8 col-form-label">Servizio di ristrutturazione:</label>
+                                        <div class="col-sm-4 input-group" style="width: 35%;">
+                                            <input type="number" id="restructure_fees" class="form-control" value="10" step="0.01" style="width: 15%;">
+                                            <span class="input-group-text">%</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="propmanaging_fees" class="col-sm-8 col-form-label">Servizio gestione immobiliare:</label>
+                                        <div class="col-sm-4 input-group" style="width: 35%;">
+                                            <input type="number" id="propmanaging_fees" class="form-control" value="20" step="0.01" style="width: 20%;">
+                                            <span class="input-group-text">%</span>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <center><p style="color: white; font-weight: bold; text-shadow: 2px 2px 1px black; font-size: 1rem; padding:5px; margin-left:10px; margin-right:10px; margin-bottom: 15px;">ANALISI DEI DATI E VALUTAZIONE DEL PROGETTO</p></center>
+                            <div class="card ice-slice-card" style="padding:20px; width:100%; box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                <h2>Analisi del progetto</h2>
+                                <br>
+                                <div id="output">
+                                    <!-- Calculated values will appear here -->
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="card ice-slice-card" style="padding:20px; width:100%; box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                <h2>Conto economico attualizzato del progetto</h2>
+                                <br>
+                                <div id="startupGains">
+                                    <!-- Calculated values will appear here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <center><p style="color: white; font-weight: bold; text-shadow: 2px 2px 1px black; font-size: 1rem; padding:5px; margin-left:10px; margin-right:10px; margin-top: 40px;">DATI FINANZIARI DELL'IMMOBILE</p></center>
+
+                    <div class="row" style="padding-top: 5px; padding-left: 10px; padding-right: 10px;">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                        <center><p style="font-size: 0.8rem;">Entrate/Uscite</p></center>
+                                        <br>
+                                        <div id="entrateuscite">
+                                            <!-- Calculated values will appear here -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                        <center><p style="font-size: 0.8rem;">Rendita di pareggio</p></center>
+                                        <br>
+                                        <div id="rendita_pareggio">
+                                            <!-- Calculated values will appear here -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                        <center><p style="font-size: 0.8rem;">Utile Immobile/Rendita Affitti</p></center>
+                                        <br>
+                                        <div id="por">
+                                            <!-- Calculated values will appear here -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                        <center><p style="font-size: 0.8rem;">Utile Immobile/Costi Immobile</p></center>
+                                        <br>
+                                        <div id="roii">
+                                            <!-- Calculated values will appear here -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row" style="padding-top: 5px; padding-left: 10px; padding-right: 10px;">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                        <center><p style="font-size: 0.8rem;">Costi fissi annuali immobile</p></center>
+                                        <br>
+                                        <div id="fixedcost">
+                                            <!-- Calculated values will appear here -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                        <center><p style="font-size: 0.8rem;">Totale lavori finanziabili</p></center>
+                                        <br>
+                                        <div id="lavorifinanziati">
+                                            <!-- Calculated values will appear here -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                        <center><p style="font-size: 0.8rem;">Quota annuale per il proprietario</p></center>
+                                        <br>
+                                        <div id="quotapagata">
+                                            <!-- Calculated values will appear here -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                        <center><p style="font-size: 0.8rem;">Beneficio fiscale annuale (x10 anni)</p></center>
+                                        <br>
+                                        <div id="fiscal">
+                                            <!-- Calculated values will appear here -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <center><p style="color: white; font-weight: bold; text-shadow: 2px 2px 1px black; font-size: 1rem; padding:5px; margin-left:10px; margin-right:10px; margin-top: 40px;">RATIO FINANZIARI DEL PROGETTO</p></center>
+                    <br>
+                    <div class="row" style="padding-top: 5px; padding-left: 10px; padding-right: 10px;">
+                        <div class="col-md-3">
+                            <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                <center><p style="font-size: 0.8rem;">Utile lordo Progetto/Investimento</p></center>
+                                <br>
+                                <div id="rois">
+                                    <!-- Calculated values will appear here -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                <center><p style="font-size: 0.8rem;">Utile netto Progetto/Investimento</p></center>
+                                <br>
+                                <div id="roisn">
+                                    <!-- Calculated values will appear here -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                <center><p style="font-size: 0.8rem;">ROI lordo annualizzato</p></center>
+                                <br>
+                                <div id="roisannualized">
+                                    <!-- Calculated values will appear here -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                <center><p style="font-size: 0.8rem;">ROI netto annualizzato</p></center>
+                                <br>
+                                <div id="roisannualizedn">
+                                    <!-- Calculated values will appear here -->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <br>
+                    <div class="row" style="padding-top: 5px; padding-left: 10px; padding-right: 10px;">
+                        <div class="col-md-6">
+                            <div class="card ice-slice-card-3" style="padding:2px; padding-top: 12px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                <center><p style="font-size: 0.8rem; padding-bottom: 5px;">Quote ricavi dei singoli business</p></center>
+                                <div id="shares" style="padding-left: 15px;">
+                                    <canvas id="myChart" height="73"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="col-md-3">
+                            <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                <center><p style="font-size: 0.8rem;">Recupero del capitale investito</p></center>
+                                <br>
+                                <div id="recupero_capitale">
+                                    <!-- Calculated values will appear here -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                <center><p style="font-size: 0.8rem;">Indici di rischiosità</p></center>
+                                <br>
+                                <div id="coeffVariazione">
+                                    <!-- Calculated values will appear here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <center><p style="color: white; font-weight: bold; text-shadow: 2px 2px 1px black; font-size: 1rem; padding:5px; margin-left:10px; margin-right:10px; margin-top: 40px;">RATIO FINANZIARI SUI LAVORI EFFETTIVI</p></center>
+                    <div class="row justify-content-center">
+                        <div class="card ice-slice-card" style="padding: 5px; padding-top:10px; font-size: 0.9rem;">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label for="restructuring_cost" class="col-sm-6 col-form-label">Totale Finanziato:</label>
+                                    <div class="col-sm-6 input-group" style="width: 100%; font-size: 0.9rem;">
+                                        <input type="number" id="restructuring_cost" style="font-size: 0.9rem;" class="form-control" value="" step="1">
+                                        <span class="input-group-text" style="font-size: 0.9rem;"> euro</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div id="rcost" style="display:none;">
+                        <div class="row" style="padding-top: 5px; padding-left: 10px; padding-right: 10px;">
+                            <div class="col-md-3">
+                                <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                    <center><p style="font-size: 0.8rem;">Ricavi</p></center>
+                                    <br>
+                                    <div id="ricavi_eff">
+                                        <!-- Calculated values will appear here -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                    <center><p style="font-size: 0.8rem;">Costi</p></center>
+                                    <br>
+                                    <div id="costi_eff">
+                                        <!-- Calculated values will appear here -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                    <center><p style="font-size: 0.8rem;">Utili Lordi</p></center>
+                                    <br>
+                                    <div id="utililordi_eff">
+                                        <!-- Calculated values will appear here -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                    <center><p style="font-size: 0.8rem;">Utili Netti</p></center>
+                                    <br>
+                                    <div id="utilinetti_eff">
+                                        <!-- Calculated values will appear here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row" style="padding-top: 5px; padding-left: 10px; padding-right: 10px;">
+                            <div class="col-md-3">
+                                <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                    <center><p style="font-size: 0.8rem;">Utile lordo Progetto/Investimento</p></center>
+                                    <br>
+                                    <div id="rois_eff">
+                                        <!-- Calculated values will appear here -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                    <center><p style="font-size: 0.8rem;">Utile netto Progetto/Investimento</p></center>
+                                    <br>
+                                    <div id="roisn_eff">
+                                        <!-- Calculated values will appear here -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                    <center><p style="font-size: 0.8rem;">ROI lordo annualizzato</p></center>
+                                    <br>
+                                    <div id="roisannualized_eff">
+                                        <!-- Calculated values will appear here -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                    <center><p style="font-size: 0.8rem;">ROI netto annualizzato</p></center>
+                                    <br>
+                                    <div id="roisannualizedn_eff">
+                                        <!-- Calculated values will appear here -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <br>
+                        <div class="row" style="padding-top: 5px; padding-left: 10px; padding-right: 10px;">
+                            <div class="col-md-3">
+                                <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                    <center><p style="font-size: 0.8rem;">Costo copertura del rischio</p></center>
+                                    <br>
+                                    <br>
+                                    <div id="digital_cost_eff" style="padding-bottom: 7px;">
+                                        <!-- Calculated values will appear here -->
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                    <center><p style="font-size: 0.8rem;">Rendita di pareggio effettiva</p></center>
+                                    <br>
+                                    <br>
+                                    <div id="rendita_pareggio_eff" style="padding-bottom: 7px;">
+                                        <!-- Calculated values will appear here -->
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                    <center><p style="font-size: 0.8rem;">Recupero del capitale investito</p></center>
+                                    <br>
+                                    <div id="recupero_capitale_eff">
+                                        <!-- Calculated values will appear here -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                    <center><p style="font-size: 0.8rem;">Indici di rischiosità</p></center>
+                                    <br>
+                                    <div id="coeffVariazione_eff">
+                                        <!-- Calculated values will appear here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <center><button class="btn btn-info" style="font-size: 0.9rem;" id="back_button">Indietro</button></center>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="footer" style="display:none; margin:0px; padding:0px;">
+        <div style="margin:0; text-align: center; box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.5); border-radius: 0px; background: linear-gradient(180deg, rgba(224, 242, 241, 0.7), rgba(249, 222, 252, 0.7)); opacity: 100%;">
+            <p style="padding-top: 10px;">
+                <span id="year"></span>
+            </p>
+            <br>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>
