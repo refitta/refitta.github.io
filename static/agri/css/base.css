@@ -806,7 +806,7 @@ ul.nested-ul > li:nth-child(2) > ul > li {
 }
 
 .ice-slice-card {
-    background: linear-gradient(0deg, #e0f2f1, rgba(224, 242, 241, 0.4));
+    background: linear-gradient(0deg, rgba(0, 255, 255, 0.2), rgba(224, 242, 241, 0.4));
     border: 2px solid #000; /* Imposta il bordo con uno stile e un colore */
     border-radius: 0px !important;
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
@@ -828,7 +828,7 @@ ul.nested-ul > li:nth-child(2) > ul > li {
 }
 
 .ice-slice-card-2 {
-    background: linear-gradient(0deg, rgba(224, 242, 241, 0.4), #60dbb9);
+    background: linear-gradient(0deg, rgba(224, 242, 241, 0.4), white);
     border: 2px solid #000; /* Imposta il bordo con uno stile e un colore */
     border-radius: 0px !important;
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
@@ -850,7 +850,7 @@ ul.nested-ul > li:nth-child(2) > ul > li {
 }
 
 .ice-slice-card-3 {
-    background: linear-gradient(180deg, #e0f2f1, #f9defc);
+    background: linear-gradient(180deg, #e0f2f1, rgba(255,0,255,0.15));
     border: 2px solid #000; /* Imposta il bordo con uno stile e un colore */
     border-radius: 0px !important;
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
