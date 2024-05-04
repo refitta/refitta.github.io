@@ -1924,7 +1924,7 @@ pre code {
 .form-control:focus {
   color: #495057;
   background-color: #fff;
-  border-color: #80bdff;
+  border-color: #00FFFF;
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(96, 219, 185, 0.25);
 }
@@ -2573,15 +2573,15 @@ fieldset:disabled a.btn {
 
 .btn-info {
   color: black;
-  background-color: #60dbb9;
-  border-color: #60dbb9;
+  background-color: #00FFFF;
+  border-color: #00FFFF;
   border-radius: 0;
 }
 
 .btn-info:hover {
   color: #fff;
-  background-color: #138496;
-  border-color: #117a8b;
+  background-color: #ff4dff;
+  border-color:  #ff4dff;
 }
 
 .btn-info:focus, .btn-info.focus {
@@ -2642,16 +2642,16 @@ fieldset:disabled a.btn {
 
 .btn-danger {
   color: #fff;
-  background-color: var(--light-red);
-  border-color: var(--light-red);
+  background-color: #ff4dff;
+  border-color: #ff4dff;
   border-radius: 0;
 
 }
 
 .btn-danger:hover {
   color: #fff;
-  background-color: var(--dark-red);
-  border-color: var(--dark-red);
+  background-color: #00FFFF;
+  border-color: #00FFFF;
 }
 
 .btn-danger:focus, .btn-danger.focus {

@@ -35,7 +35,7 @@ function searchAddress(event) {
 
 $(document).ready(function() {
     var year = new Date().getFullYear();
-    $("#year").text("fattureazero.it di CoolCompany © " + year);
+    $("#year").html("<i class='fa-solid fa-leaf'></i> <span style='font-weight: bold;'>" + year + "</span>  <i class='fa-solid fa-angle-left'></i>Recuperiamo insieme il patrimonio immobiliare italiano<i class='fa-solid fa-angle-right'></i>");
 });
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -105,7 +105,7 @@ $(document).ready(function () {
         var password = $('#password').val();
 
         // Check if username and password match
-        if (username === 'chris' && password === 'chris') {
+        if ((username === 'chris' && password === 'chris') || (username === 'thom' && password === 'thom')) {
             // Authentication successful, redirect to the main page
             $('#loginForm').hide();
             $('#title').hide();
@@ -160,7 +160,7 @@ $(document).ready(function () {
         $('#scelta').hide();
         $('#analisi').show();
         window.scrollTo({
-          top: 300,
+          top: 250,
           behavior: 'smooth' // Optional: Smooth scrolling behavior
         });
     });
@@ -170,7 +170,7 @@ $(document).ready(function () {
         $('#scelta').hide();
         $('#finanziabilita').show();
         window.scrollTo({
-          top: 330,
+          top: 250,
           behavior: 'smooth' // Optional: Smooth scrolling behavior
         });
     });
@@ -214,7 +214,7 @@ $(document).ready(function () {
             $('#finanziabilita_2').show();
             calculateValues_finan();
             window.scrollTo({
-                top: 330,
+                top: 250,
                 behavior: 'smooth' // Optional: Smooth scrolling behavior
             });
         } else {
@@ -238,7 +238,7 @@ $(document).ready(function () {
         $('#finanziabilita').show();
         $('#finanziabilita_2').hide();
         window.scrollTo({
-          top: 330,
+          top: 250,
           behavior: 'smooth' // Optional: Smooth scrolling behavior
         });
     });
@@ -611,7 +611,7 @@ function calculateValues() {
                         },
                         font: {
                             family: 'Roboto Mono',
-                            size: 12,
+                            size: 8,
                             color: '#000'
                         }
                     }
@@ -620,7 +620,7 @@ function calculateValues() {
                     ticks: {
                         font: {
                             family: 'Roboto Mono',
-                            size: 12,
+                            size: 10,
                             color: '#000'
                         }
                     }
@@ -631,7 +631,7 @@ function calculateValues() {
                     labels: {
                         font: {
                             family: 'Roboto Mono',
-                            size: 10,
+                            size: 7,
                             color: '#000'
                         }
                     }
@@ -713,170 +713,170 @@ function calculateValues() {
 
     // Update output placeholders
     $('#entrateuscite').html(`
-        <center><p style="font-size: 3rem;">${revcostMid.toFixed(2)}x</p></center>
-        <center><p style="font-size: 1.2rem;">(${revcostMin.toFixed(2)}x/${revcostMax.toFixed(2)}x)</p></center>
+        <center><p style="font-size: 2rem;">${revcostMid.toFixed(2)}x</p></center>
+        <center><p style="font-size: 0.8rem;">(${revcostMin.toFixed(2)}x/${revcostMax.toFixed(2)}x)</p></center>
     `);
 
     // Update output placeholders
     $('#rendita_pareggio').html(`
-        <center><p style="font-size: 3rem;">${renditaPareggioMid.toFixed(2)}€</p></center>
-        <center><p style="font-size: 1.2rem;">(${renditaPareggioMin.toFixed(2)}€/${renditaPareggioMax.toFixed(2)}€)</p></center>
+        <center><p style="font-size: 2rem;">${renditaPareggioMid.toFixed(2)}€</p></center>
+        <center><p style="font-size: 0.8rem;">(${renditaPareggioMin.toFixed(2)}€/${renditaPareggioMax.toFixed(2)}€)</p></center>
     `);
 
     // Update output placeholders
     $('#lavorifinanziati').html(`
-        <center><p style="font-size: 3rem;">${totaleFinanziabileMid.toFixed(2)}€</p></center>
-        <center><p style="font-size: 1.2rem;">(${totaleFinanziabileMin.toFixed(2)}€/${totaleFinanziabileMax.toFixed(2)}€)</p></center>
+        <center><p style="font-size: 2rem;">${totaleFinanziabileMid.toFixed(2)}€</p></center>
+        <center><p style="font-size: 0.8rem;">(${totaleFinanziabileMin.toFixed(2)}€/${totaleFinanziabileMax.toFixed(2)}€)</p></center>
     `);
 
     // Update output placeholders
     $('#quotapagata').html(`
-        <center><p style="font-size: 3rem;">${quotaProprietarioMid.toFixed(2)}€</p></center>
-        <center><p style="font-size: 1.2rem;">(${quotaProprietarioMin.toFixed(2)}€/${quotaProprietarioMax.toFixed(2)}€)</p></center>
+        <center><p style="font-size: 2rem;">${quotaProprietarioMid.toFixed(2)}€</p></center>
+        <center><p style="font-size: 0.8rem;">(${quotaProprietarioMin.toFixed(2)}€/${quotaProprietarioMax.toFixed(2)}€)</p></center>
     `);
 
     // Update output placeholders
     $('#por').html(`
-        <center><p style="font-size: 3rem;">${profitOnRevenues.toFixed(2)}%</p></center>
-        <center><p style="font-size: 1.2rem;">(${profitOnRevenuesMin.toFixed(2)}%/${profitOnRevenuesMax.toFixed(2)}%)</p></center>
+        <center><p style="font-size: 2rem;">${profitOnRevenues.toFixed(2)}%</p></center>
+        <center><p style="font-size: 0.8rem;">(${profitOnRevenuesMin.toFixed(2)}%/${profitOnRevenuesMax.toFixed(2)}%)</p></center>
     `);
 
      // Update output placeholders
     $('#roii').html(`
-        <center><p style="font-size: 3rem;">${returnOnInvestment.toFixed(2)}%</p></center>
-        <center><p style="font-size: 1.2rem;">(${returnOnInvestmentMin.toFixed(2)}%/${returnOnInvestmentMax.toFixed(2)}%)</p></center>
+        <center><p style="font-size: 2rem;">${returnOnInvestment.toFixed(2)}%</p></center>
+        <center><p style="font-size: 0.8rem;">(${returnOnInvestmentMin.toFixed(2)}%/${returnOnInvestmentMax.toFixed(2)}%)</p></center>
     `);
 
     // Update output placeholders
     $('#fixedcost').html(`
-        <center><p style="font-size: 3rem;">${fixedcostMid.toFixed(2)}€</p></center>
-        <center><p style="font-size: 1.2rem;">(${fixedcostMin.toFixed(2)}€/${fixedcostMax.toFixed(2)}€)</p></center>
+        <center><p style="font-size: 2rem;">${fixedcostMid.toFixed(2)}€</p></center>
+        <center><p style="font-size: 0.8rem;">(${fixedcostMin.toFixed(2)}€/${fixedcostMax.toFixed(2)}€)</p></center>
     `);
 
     // Update output placeholders
     $('#fiscal').html(`
-        <center><p style="font-size: 3rem;">${fiscalbenefitMid.toFixed(2)}€</p></center>
-        <center><p style="font-size: 1.2rem;">(${fiscalbenefitMin.toFixed(2)}€/${fiscalbenefitMax.toFixed(2)}€)</p></center>
+        <center><p style="font-size: 2rem;">${fiscalbenefitMid.toFixed(2)}€</p></center>
+        <center><p style="font-size: 0.8rem;">(${fiscalbenefitMin.toFixed(2)}€/${fiscalbenefitMax.toFixed(2)}€)</p></center>
     `);
 
     // Update output placeholders
     $('#rois').html(`
-        <center><p style="font-size: 3rem;">${returnOnICapital.toFixed(2)}%</p></center>
-        <center><p style="font-size: 1.2rem;">(${returnOnICapitalMin.toFixed(2)}%/${returnOnICapitalMax.toFixed(2)}%)</p></center>
+        <center><p style="font-size: 2rem;">${returnOnICapital.toFixed(2)}%</p></center>
+        <center><p style="font-size: 0.8rem;">(${returnOnICapitalMin.toFixed(2)}%/${returnOnICapitalMax.toFixed(2)}%)</p></center>
     `);
 
     // Update output placeholders
     $('#roisannualized').html(`
-        <center><p style="font-size: 3rem;">${annualizedReturn.toFixed(2)}%</p></center>
-        <center><p style="font-size: 1.2rem;">(${annualizedReturnMin.toFixed(2)}%/${annualizedReturnMax.toFixed(2)}%)</p></center>
+        <center><p style="font-size: 2rem;">${annualizedReturn.toFixed(2)}%</p></center>
+        <center><p style="font-size: 0.8rem;">(${annualizedReturnMin.toFixed(2)}%/${annualizedReturnMax.toFixed(2)}%)</p></center>
     `);
 
     // Update output placeholders
     $('#roisn').html(`
-        <center><p style="font-size: 3rem;">${returnOnICapitalNet.toFixed(2)}%</p></center>
-        <center><p style="font-size: 1.2rem;">(${returnOnICapitalNetMin.toFixed(2)}%/${returnOnICapitalNetMax.toFixed(2)}%)</p></center>
+        <center><p style="font-size: 2rem;">${returnOnICapitalNet.toFixed(2)}%</p></center>
+        <center><p style="font-size: 0.8rem;">(${returnOnICapitalNetMin.toFixed(2)}%/${returnOnICapitalNetMax.toFixed(2)}%)</p></center>
     `);
 
     // Update output placeholders
     $('#roisannualizedn').html(`
-        <center><p style="font-size: 3rem;">${annualizedReturnNet.toFixed(2)}%</p></center>
-        <center><p style="font-size: 1.2rem;">(${annualizedReturnNetMin.toFixed(2)}%/${annualizedReturnNetMax.toFixed(2)}%)</p></center>
+        <center><p style="font-size: 2rem;">${annualizedReturnNet.toFixed(2)}%</p></center>
+        <center><p style="font-size: 0.8rem;">(${annualizedReturnNetMin.toFixed(2)}%/${annualizedReturnNetMax.toFixed(2)}%)</p></center>
     `);
 
     // Update output placeholders
     $('#rendita_pareggio').html(`
-        <center><p style="font-size: 3rem;">${renditaPareggioMid.toFixed(2)}€</p></center>
-        <center><p style="font-size: 1.2rem;">(${renditaPareggioMin.toFixed(2)}€/${renditaPareggioMax.toFixed(2)}€)</p></center>
+        <center><p style="font-size: 2rem;">${renditaPareggioMid.toFixed(2)}€</p></center>
+        <center><p style="font-size: 0.8rem;">(${renditaPareggioMin.toFixed(2)}€/${renditaPareggioMax.toFixed(2)}€)</p></center>
     `);
 
     // Update output placeholders
     $('#recupero_capitale').html(`
-        <center><p style="font-size: 3rem; margin-bottom: 0px; padding-bottom: 0px;">${recuperoCapitaleMid.toFixed(2)}</p></center>
-        <center><p style="font-size: 1.8rem;">anni</p></center>
-        <center><p style="font-size: 1.2rem;">(${recuperoCapitaleMin.toFixed(2)} anni/${recuperoCapitaleMax.toFixed(2)} anni)</p></center>
+        <center><p style="font-size: 2rem; margin-bottom: 0px; padding-bottom: 0px;">${recuperoCapitaleMid.toFixed(2)}</p></center>
+        <center><p style="font-size: 1.5rem;">anni</p></center>
+        <center><p style="font-size: 0.8rem;">(${recuperoCapitaleMin.toFixed(2)} anni/${recuperoCapitaleMax.toFixed(2)} anni)</p></center>
     `);
 
     // Update output placeholders
     $('#coeffVariazione').html(`
-        <p style="font-size: 0.8rem; margin-top: 0px; padding-top: 2px; margin-left: 20px; margin-bottom: 0px; padding-bottom: 2px;"><strong>Deviazione Standard:</strong></p>
-        <p style="font-size: 2.2rem; margin-left: 20px; margin-bottom: 0px; padding-bottom: 10px;">${devStand.toFixed(2)}€</p>
-        <p style="font-size: 0.8rem; margin-left: 20px; margin-bottom: 0px; padding-bottom: 0px;""><strong>Coefficiente di Variazione:</strong></p>
-        <p style="font-size: 2.2rem; margin-left: 20px; margin-bottom: 7px; padding-bottom: 0px;">${coeffVar.toFixed(2)}%</p>
+        <p style="font-size: 0.65rem; margin-top: 0px; padding-top: 2px; margin-left: 20px; margin-bottom: 0px; padding-bottom: 2px;"><strong>Deviazione Standard:</strong></p>
+        <p style="font-size: 1.5rem; margin-left: 20px; margin-bottom: 0px; padding-bottom: 10px;">${devStand.toFixed(2)}€</p>
+        <p style="font-size: 0.65rem; margin-left: 20px; margin-bottom: 0px; padding-bottom: 0px;""><strong>Coefficiente di Variazione:</strong></p>
+        <p style="font-size: 1.5rem; margin-left: 20px; margin-bottom: 7px; padding-bottom: 0px;">${coeffVar.toFixed(2)}%</p>
     `);
 
     // Update output placeholders
     $('#ricavi_eff').html(`
-        <center><p style="font-size: 3rem;">${totalGainMid_eff.toFixed(2)}€</p></center>
-        <center><p style="font-size: 1.2rem;">(${totalGainMin_eff.toFixed(2)}€/${totalGainMax_eff.toFixed(2)}€)</p></center>
+        <center><p style="font-size: 2rem;">${totalGainMid_eff.toFixed(2)}€</p></center>
+        <center><p style="font-size: 0.8rem;">(${totalGainMin_eff.toFixed(2)}€/${totalGainMax_eff.toFixed(2)}€)</p></center>
     `);
 
     // Update output placeholders
     $('#costi_eff').html(`
-        <center><p style="font-size: 3rem;">${costiOperativiMid_eff.toFixed(2)}€</p></center>
-        <center><p style="font-size: 1.2rem;">(${costiOperativiMin_eff.toFixed(2)}€/${costiOperativiMax_eff.toFixed(2)}€)</p></center>
+        <center><p style="font-size: 2rem;">${costiOperativiMid_eff.toFixed(2)}€</p></center>
+        <center><p style="font-size: 0.8rem;">(${costiOperativiMin_eff.toFixed(2)}€/${costiOperativiMax_eff.toFixed(2)}€)</p></center>
     `);
 
     // Update output placeholders
     $('#utililordi_eff').html(`
-        <center><p style="font-size: 3rem;">${utiliLordiMid_eff.toFixed(2)}€</p></center>
-        <center><p style="font-size: 1.2rem;">(${utiliLordiMin_eff.toFixed(2)}€/${utiliLordiMax_eff.toFixed(2)}€)</p></center>
+        <center><p style="font-size: 2rem;">${utiliLordiMid_eff.toFixed(2)}€</p></center>
+        <center><p style="font-size: 0.8rem;">(${utiliLordiMin_eff.toFixed(2)}€/${utiliLordiMax_eff.toFixed(2)}€)</p></center>
     `);
 
     // Update output placeholders
     $('#utilinetti_eff').html(`
-        <center><p style="font-size: 3rem;">${utiliNettiMid_eff.toFixed(2)}€</p></center>
-        <center><p style="font-size: 1.2rem;">(${utiliNettiMin_eff.toFixed(2)}€/${utiliNettiMax_eff.toFixed(2)}€)</p></center>
+        <center><p style="font-size: 2rem;">${utiliNettiMid_eff.toFixed(2)}€</p></center>
+        <center><p style="font-size: 0.8rem;">(${utiliNettiMin_eff.toFixed(2)}€/${utiliNettiMax_eff.toFixed(2)}€)</p></center>
     `);
 
     // Update output placeholders
     $('#rois_eff').html(`
-        <center><p style="font-size: 3rem;">${returnOnICapital_eff.toFixed(2)}%</p></center>
-        <center><p style="font-size: 1.2rem;">(${returnOnICapitalMin_eff.toFixed(2)}%/${returnOnICapitalMax_eff.toFixed(2)}%)</p></center>
+        <center><p style="font-size: 2rem;">${returnOnICapital_eff.toFixed(2)}%</p></center>
+        <center><p style="font-size: 0.8rem;">(${returnOnICapitalMin_eff.toFixed(2)}%/${returnOnICapitalMax_eff.toFixed(2)}%)</p></center>
     `);
 
     // Update output placeholders
     $('#roisannualized_eff').html(`
-        <center><p style="font-size: 3rem;">${annualizedReturn_eff.toFixed(2)}%</p></center>
-        <center><p style="font-size: 1.2rem;">(${annualizedReturnMin_eff.toFixed(2)}%/${annualizedReturnMax_eff.toFixed(2)}%)</p></center>
+        <center><p style="font-size: 2rem;">${annualizedReturn_eff.toFixed(2)}%</p></center>
+        <center><p style="font-size: 0.8rem;">(${annualizedReturnMin_eff.toFixed(2)}%/${annualizedReturnMax_eff.toFixed(2)}%)</p></center>
     `);
 
     // Update output placeholders
     $('#roisn_eff').html(`
-        <center><p style="font-size: 3rem;">${returnOnICapitalNet_eff.toFixed(2)}%</p></center>
-        <center><p style="font-size: 1.2rem;">(${returnOnICapitalNetMin_eff.toFixed(2)}%/${returnOnICapitalNetMax_eff.toFixed(2)}%)</p></center>
+        <center><p style="font-size: 2rem;">${returnOnICapitalNet_eff.toFixed(2)}%</p></center>
+        <center><p style="font-size: 0.8rem;">(${returnOnICapitalNetMin_eff.toFixed(2)}%/${returnOnICapitalNetMax_eff.toFixed(2)}%)</p></center>
     `);
 
     // Update output placeholders
     $('#roisannualizedn_eff').html(`
-        <center><p style="font-size: 3rem;">${annualizedReturnNet_eff.toFixed(2)}%</p></center>
-        <center><p style="font-size: 1.2rem;">(${annualizedReturnNetMin_eff.toFixed(2)}%/${annualizedReturnNetMax_eff.toFixed(2)}%)</p></center>
+        <center><p style="font-size: 2rem;">${annualizedReturnNet_eff.toFixed(2)}%</p></center>
+        <center><p style="font-size: 0.8rem;">(${annualizedReturnNetMin_eff.toFixed(2)}%/${annualizedReturnNetMax_eff.toFixed(2)}%)</p></center>
     `);
 
     // Update output placeholders
     $('#digital_cost_eff').html(`
-        <center><p style="font-size: 3rem;">${totalPremiumEuroMid.toFixed(2)}€</p></center>
-        <center><p style="font-size: 1.2rem;">(${totalPremiumEuroMin.toFixed(2)}€/${totalPremiumEuroMax.toFixed(2)}€)</p></center>
+        <center><p style="font-size: 2rem;">${totalPremiumEuroMid.toFixed(2)}€</p></center>
+        <center><p style="font-size: 0.8rem;">(${totalPremiumEuroMin.toFixed(2)}€/${totalPremiumEuroMax.toFixed(2)}€)</p></center>
     `);
 
     // Update output placeholders
     $('#rendita_pareggio_eff').html(`
-        <center><p style="font-size: 3rem;">${renditaPareggioMid_eff.toFixed(2)}€</p></center>
-        <center><p style="font-size: 1.2rem;">(${renditaPareggioMin_eff.toFixed(2)}€/${renditaPareggioMax_eff.toFixed(2)}€)</p></center>
+        <center><p style="font-size: 2rem;">${renditaPareggioMid_eff.toFixed(2)}€</p></center>
+        <center><p style="font-size: 0.8rem;">(${renditaPareggioMin_eff.toFixed(2)}€/${renditaPareggioMax_eff.toFixed(2)}€)</p></center>
     `);
 
     // Update output placeholders
     $('#recupero_capitale_eff').html(`
-        <center><p style="font-size: 3rem; margin-bottom: 0px; padding-bottom: 0px;">${recuperoCapitaleMid_eff.toFixed(2)}</p></center>
-        <center><p style="font-size: 1.8rem;">anni</p></center>
-        <center><p style="font-size: 1.2rem;">(${recuperoCapitaleMin_eff.toFixed(2)} anni/${recuperoCapitaleMax_eff.toFixed(2)} anni)</p></center>
+        <center><p style="font-size: 2rem; margin-bottom: 0px; padding-bottom: 0px;">${recuperoCapitaleMid_eff.toFixed(2)}</p></center>
+        <center><p style="font-size: 1.5rem;">anni</p></center>
+        <center><p style="font-size: 0.8rem;">(${recuperoCapitaleMin_eff.toFixed(2)} anni/${recuperoCapitaleMax_eff.toFixed(2)} anni)</p></center>
     `);
 
     // Update output placeholders
     $('#coeffVariazione_eff').html(`
-        <p style="font-size: 0.8rem; margin-top: 0px; padding-top: 2px; margin-left: 20px; margin-bottom: 0px; padding-bottom: 2px;"><strong>Deviazione Standard:</strong></p>
-        <p style="font-size: 2.2rem; margin-left: 20px; margin-bottom: 0px; padding-bottom: 10px;">${devStand_eff.toFixed(2)}€</p>
-        <p style="font-size: 0.8rem; margin-left: 20px; margin-bottom: 0px; padding-bottom: 0px;""><strong>Coefficiente di Variazione:</strong></p>
-        <p style="font-size: 2.2rem; margin-left: 20px; margin-bottom: 7px; padding-bottom: 0px;">${coeffVar_eff.toFixed(2)}%</p>
+        <p style="font-size: 0.65rem; margin-top: 0px; padding-top: 2px; margin-left: 20px; margin-bottom: 0px; padding-bottom: 2px;"><strong>Deviazione Standard:</strong></p>
+        <p style="font-size: 1.5rem; margin-left: 20px; margin-bottom: 0px; padding-bottom: 10px;">${devStand_eff.toFixed(2)}€</p>
+        <p style="font-size: 0.65rem; margin-left: 20px; margin-bottom: 0px; padding-bottom: 0px;""><strong>Coefficiente di Variazione:</strong></p>
+        <p style="font-size: 1.5rem; margin-left: 20px; margin-bottom: 7px; padding-bottom: 0px;">${coeffVar_eff.toFixed(2)}%</p>
     `);
 }
 
@@ -1136,86 +1136,86 @@ function calculateValues_finan() {
 
     let finaltext = "";
 
-    finaltext = "Il tuo immobile e le tue preferenze riguardo entrate, uscite e anni di contratto garantiscono un nostro pagamento minimo del <span style='font-weight: bold; color: #CC1A48;'>" + Math.round(ratioFinanziabilitaMin * 100) / 100 + "% </span> dei costi stimati per una <strong>ristrutturazione " + livello + " con finiture " + finiture + ".</strong> <br><br> Con la nostra formula ZEROPENSIERI, per <span style='font-weight: bold; color: #CC1A48;'>" + years + " anni </span>" + textpaghiincassi + " senza altri costi e senza doverti preoccupare della gestione del tuo immobile.<br><br> Il costo iniziale a tuo carico stimato sarà di massimo <span style='font-weight: bold; color: #CC1A48;'>" + Math.round(pagamentoMax) + "€ </span> ed alla scadenza del contratto avrai un <strong>immobile rinnovato e con possibilità di rendita maggiori</strong>.<br><br>"
+    finaltext = "Il tuo immobile e le tue preferenze riguardo entrate, uscite e anni di contratto garantiscono un nostro pagamento minimo del <span style='font-weight: bold; color: #CC1A48;'>" + Math.round(ratioFinanziabilitaMin * 100) / 100 + "% </span> dei costi stimati per una <strong>ristrutturazione " + livello + " con finiture " + finiture + ".</strong> <br><br> Con la nostra formula ZEROPENSIERI, per <span style='font-weight: bold; color: #CC1A48;'>" + years + " anni </span>" + textpaghiincassi + " senza altri costi e senza doverti preoccupare della gestione del tuo immobile.<br><br> Il costo iniziale a tuo carico stimato è di massimo <span style='font-weight: bold; color: #CC1A48;'>" + Math.round(pagamentoMax) + "€ </span> ed alla scadenza del contratto avrai un <strong>immobile rinnovato e con possibilità di rendita maggiori</strong>.<br><br>"
 
     // Update output placeholders
     $('#tquote').html(`
-       <p style="font-size: 2rem; text-align:center;">${taxesHomeMid.toFixed(2)}€</p>
+       <p style="font-size: 1.5rem; text-align:center;">${taxesHomeMid.toFixed(2)}€</p>
     `);
 
     // Update output placeholders
     $('#cdtquote').html(`
-       <p style="font-size: 2rem; text-align:center;">${condotaxMid.toFixed(2)}€</p>
+       <p style="font-size: 1.5rem; text-align:center;">${condotaxMid.toFixed(2)}€</p>
     `);
 
     // Update output placeholders
     $('#cfquote').html(`
-       <p style="font-size: 2rem; text-align:center;">${fixedcostMid.toFixed(2)}€</p>
+       <p style="font-size: 1.5rem; text-align:center;">${fixedcostMid.toFixed(2)}€</p>
     `);
 
     // Update output placeholders
     $('#lavori_finanziabili').html(`
-        <center><p style="font-size: 1.2rem; padding-top: 40px;">Ecco i risultati basati sul tuo immobile e sulle tue preferenze:</p></center><br><br>
+        <center><p style="font-size: 0.8rem; padding-top: 40px;">Ecco i risultati basati sul tuo immobile e sulle tue preferenze:</p></center><br><br>
         <div class="row" style="padding-left: 50px; padding-right: 50px; padding-bottom: 40px;">
             <div class="col-md-3">
-                <div class="card cardstyle" style="height: 120px; padding: 10px; background-color: white;">
-                    <p style="font-size: 0.9rem; text-align: center;">Quota dei lavori a nostro carico:</p>
-                    <strong><p style="font-size: 2.5rem; text-align: center;"><span style="font-size: 1.5rem;">min</span>${ratiomintext.toFixed(0)}%</p></strong>
+                <div class="card cardstyle" style="height: 100px; padding: 10px; background-color: white;">
+                    <p style="font-size: 0.65rem; text-align: center;">Quota dei lavori a nostro carico:</p>
+                    <strong><p style="font-size: 1.5rem; text-align: center;"><span style="font-size: 1.5rem;">min</span>${ratiomintext.toFixed(0)}%</p></strong>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card cardstyle" style="height: 120px; padding: 10px;">
-                    <p style="font-size: 0.9rem; text-align: center;">Anni di durata dell\'accordo:</p>
-                    <strong><p style="font-size: 2.5rem; text-align: center;">${years}</p></strong>
+                <div class="card cardstyle" style="height: 100px; padding: 10px;">
+                    <p style="font-size: 0.65rem; text-align: center;">Anni di durata dell\'accordo:</p>
+                    <strong><p style="font-size: 1.5rem; text-align: center;">${years}</p></strong>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card cardstyle" style="height: 120px; padding: 10px;">
-                    <p style="font-size: 0.9rem; text-align: center;">Le tue entrate annuali minime:</p>
-                    <strong><p style="font-size: 2.5rem; text-align: center;">${entrateMin.toFixed(2)}€</p></strong>
+                <div class="card cardstyle" style="height: 100px; padding: 10px;">
+                    <p style="font-size: 0.65rem; text-align: center;">Le tue entrate annuali minime:</p>
+                    <strong><p style="font-size: 1.5rem; text-align: center;">${entrateMin.toFixed(2)}€</p></strong>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card cardstyle" style="height: 120px; padding: 10px;">
-                    <p style="font-size: 0.9rem; text-align: center;">Le tue uscite annuali massime:</p>
-                    <strong><p style="font-size: 2.5rem; text-align: center;">${usciteMax.toFixed(2)}€</p></strong>
+                <div class="card cardstyle" style="height: 100px; padding: 10px;">
+                    <p style="font-size: 0.65rem; text-align: center;">Le tue uscite annuali massime:</p>
+                    <strong><p style="font-size: 1.5rem; text-align: center;">${usciteMax.toFixed(2)}€</p></strong>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-8">
-                <strong><p style="font-size: 1.1rem; padding-left: 50px; text-align: left;">RISTRUTTURAZIONE:</p></strong>
-                <strong><p style="font-size: 1rem; padding-left: 50px; text-align: left;">Stima indicativa dei costi di ristrutturazione:</p></strong>
+                <strong><p style="font-size: 0.7rem; padding-left: 50px; text-align: left;">RISTRUTTURAZIONE:</p></strong>
+                <strong><p style="font-size: 0.65rem; padding-left: 50px; text-align: left;">Stima indicativa dei costi di ristrutturazione:</p></strong>
                 <br>
-                <strong><p style="font-size: 1.1rem; padding-left: 50px; text-align: left;">FLUSSI DI CASSA ANNUALI PER TE:</p></strong>
-                <p style="font-size: 1rem; padding-left: 50px; text-align: left;">Beneficio fiscale annuale (x10 anni):</p>
-                <p style="font-size: 1rem; padding-left: 50px; text-align: left;">Quota annuale pagata:</p>
-                <p style="font-size: 1rem; padding-left: 50px; text-align: left;">Stima delle rendite annuali incassate:</p>
-                <strong><p style="font-size: 1rem; padding-left: 50px; text-align: left;">Totale:</p></strong>
+                <strong><p style="font-size: 0.7rem; padding-left: 50px; text-align: left;">FLUSSI DI CASSA ANNUALI PER TE:</p></strong>
+                <p style="font-size: 0.65rem; padding-left: 50px; text-align: left;">Beneficio fiscale annuale (x10 anni):</p>
+                <p style="font-size: 0.65rem; padding-left: 50px; text-align: left;">Quota annuale pagata:</p>
+                <p style="font-size: 0.65rem; padding-left: 50px; text-align: left;">Stima delle rendite annuali incassate:</p>
+                <strong><p style="font-size: 0.65rem; padding-left: 50px; text-align: left;">Totale:</p></strong>
                 <br>
-                <strong><p style="font-size: 1.1rem; padding-left: 50px; text-align: left;">PAGAMENTO COSTI DI RISTRUTTURAZIONE:</p></strong>
-                <strong><p style="font-size: 1rem; padding-left: 50px; text-align: left;">Quota pagata da noi:</p></strong>
-                <strong><p style="font-size: 1rem; padding-left: 50px; text-align: left;">Costo ristrutturazione a carico tuo:</p></strong>
+                <strong><p style="font-size: 0.7rem; padding-left: 50px; text-align: left;">PAGAMENTO COSTI DI RISTRUTTURAZIONE:</p></strong>
+                <strong><p style="font-size: 0.65rem; padding-left: 50px; text-align: left;">Quota pagata da noi:</p></strong>
+                <strong><p style="font-size: 0.65rem; padding-left: 50px; text-align: left;">Costo ristrutturazione a carico tuo:</p></strong>
                 <br>
                 <br>
             </div>
             <div class="col-md-4">
-                <strong><p style="height: 1.35rem; padding-left: 50px; text-align: left;"></p></strong>
-                <strong><p style="font-size: 1rem; padding-right: 50px; text-align: right;">da ${costoRistrutturazioneMin.toFixed(2)}€ a ${costoRistrutturazioneMax.toFixed(2)}€</p></strong>
+                <strong><p style="height: 0.85rem; padding-left: 50px; text-align: left;"></p></strong>
+                <strong><p style="font-size: 0.65rem; padding-right: 50px; text-align: right;">da ${costoRistrutturazioneMin.toFixed(2)}€ a ${costoRistrutturazioneMax.toFixed(2)}€</p></strong>
                 <br>
-                <strong><p style="height: 1.35rem; padding-left: 50px; text-align: left;"></p></strong>
-                <p style="font-size: 1rem; padding-right: 50px; text-align: right;">da ${fiscalbenefitMin.toFixed(2)}€ a ${fiscalbenefitMax.toFixed(2)}€</p>
-                <p style="font-size: 1rem; padding-right: 50px; text-align: right;">da ${downpaymentQuantityMin.toFixed(2)}€ a ${downpaymentQuantityMin.toFixed(2)}€</p>
-                <p style="font-size: 1rem; padding-right: 50px; text-align: right;">da ${ownerFeeMin.toFixed(2)}€ a ${ownerFeeMax.toFixed(2)}€</p>
-                <strong><p style="font-size: 1rem;  padding-right: 50px; text-align: right;">da ${totalquoteMin.toFixed(2)}€ a ${totalquoteMax.toFixed(2)}€</p></strong>
+                <strong><p style="height: 0.85rem; padding-left: 50px; text-align: left;"></p></strong>
+                <p style="font-size: 0.65rem; padding-right: 50px; text-align: right;">da ${fiscalbenefitMin.toFixed(2)}€ a ${fiscalbenefitMax.toFixed(2)}€</p>
+                <p style="font-size: 0.65rem; padding-right: 50px; text-align: right;">da ${downpaymentQuantityMin.toFixed(2)}€ a ${downpaymentQuantityMin.toFixed(2)}€</p>
+                <p style="font-size: 0.65rem; padding-right: 50px; text-align: right;">da ${ownerFeeMin.toFixed(2)}€ a ${ownerFeeMax.toFixed(2)}€</p>
+                <strong><p style="font-size: 0.65rem;  padding-right: 50px; text-align: right;">da ${totalquoteMin.toFixed(2)}€ a ${totalquoteMax.toFixed(2)}€</p></strong>
                 <br>
-                <strong><p style="height: 1.35rem; padding-left: 50px; text-align: left;"></p></strong>
-                <strong><p style="font-size: 1rem; padding-right: 50px; text-align: right;">${ratiotext}</p></strong>
-                <strong><p style="font-size: 1rem; padding-right: 50px; text-align: right;">${pagamentotext}</p></strong>
+                <strong><p style="height: 0.85rem; padding-left: 50px; text-align: left;"></p></strong>
+                <strong><p style="font-size: 0.65rem; padding-right: 50px; text-align: right;">${ratiotext}</p></strong>
+                <strong><p style="font-size: 0.65rem; padding-right: 50px; text-align: right;">${pagamentotext}</p></strong>
             </div>
         </div>
-        <p style="font-size: 1.1rem; padding-left: 50px; padding-right: 50px; text-align: left;">${finaltext}</p>
+        <p style="font-size: 0.75rem; padding-left: 50px; padding-right: 50px; text-align: left;">${finaltext}</p>
         <br>
-        <strong><p style="font-size: 1.1rem; padding-left: 50px; padding-right: 50px; padding-bottom: 40px; text-align: left;">Invia la richiesta se vuoi essere contattato da un nostro esperto per il preventivo dettagliato!</p></strong>
+        <strong><p style="font-size: 0.75rem; padding-left: 50px; padding-right: 50px; padding-bottom: 40px; text-align: left;">Invia la richiesta se vuoi essere contattato da un nostro esperto per il preventivo dettagliato!</p></strong>
     `);
 }
