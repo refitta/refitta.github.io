@@ -924,8 +924,8 @@ function calculateValues_finan() {
         return entry ? entry["Rendita mensile"] : null;
     }
 
-    // const grossMonthlyIncome = findRenditaMensile(bagni, letti);
-    const grossMonthlyIncome = 1000;
+    const grossMonthlyIncome = findRenditaMensile(bagni, letti);
+    // const grossMonthlyIncome = 1000;
 
     const selectedCard = document.querySelector('.selezionata');
     let livello = null;
