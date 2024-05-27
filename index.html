@@ -21,7 +21,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script src="scripto.js"></script>
+    <script src="script.js"></script>
 
 </head>
 
@@ -304,7 +304,7 @@
             <div id="analisi" style="display:none;">
                 <div style="background: rgba(0, 0, 0, 0.3); padding: 20px; padding-top: 30px; padding-bottom: 30px; box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5); border-radius: 0px;">
                     <div class="row" style="padding-left: 10px; padding-right: 10px;">
-                        <div class="col-md-5">
+                        <div class="col-md-5" id="col-md-5">
                             <center><p style="color: white; font-weight: bold; text-shadow: 2px 2px 1px black; font-size: 1rem; padding:5px; margin-left:10px; margin-right:10px; margin-bottom: 15px;">INSERIMENTO DATI</p></center>
 
                             <div class="card" style="padding:20px; padding-top: 20px; padding-bottom: 14px; width:100%;  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
@@ -312,7 +312,7 @@
                                     <h2>Dati progetto</h2>
                                     <br>
                                     <div class="form-group row">
-                                        <label for="cedolare_secca_rate" class="col-sm-8 col-form-label">Tipologia contratto d'affitto:</label>
+                                        <label for="contract_typology" class="col-sm-8 col-form-label">Tipologia contratto d'affitto:</label>
                                         <div class="col-sm-4">
                                             <select id="contract_typology" class="form-control" style="width: 100%;">
                                                 <option value="Breve">Breve</option>
@@ -382,17 +382,14 @@
                                     <h2>Imposte e tributi</h2>
                                     <br>
                                     <div class="form-group row">
-                                        <label for="cedolare_secca_rate" class="col-sm-8 col-form-label">Tasso cedolare secca:</label>
-                                        <div class="col-sm-4">
-                                            <select id="cedolare_secca_rate" class="form-control" style="width: 70%;">
-                                                <option value="0.1">10%</option>
-                                                <option value="0.21" selected>21%</option>
-                                                <option value="0.26">26%</option>
-                                            </select>
+                                        <label for="second_home_tax" class="col-sm-8 col-form-label">Costo atto notarile:</label>
+                                        <div class="col-sm-4 input-group" style="width: 35%;">
+                                            <input type="number" id="notaio" class="form-control" value="1000" style="width: 15%;">
+                                            <span class="input-group-text">€</span>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="second_home_tax" class="col-sm-8 col-form-label">Tasse sulla seconda casa:</label>
+                                        <label for="second_home_tax" class="col-sm-8 col-form-label">Tasse sugli immobili:</label>
                                         <div class="col-sm-4 input-group" style="width: 35%;">
                                             <input type="number" id="second_home_tax" class="form-control" value="1000" style="width: 15%;">
                                             <span class="input-group-text">€</span>
@@ -403,6 +400,18 @@
                                         <div class="col-sm-4 input-group" style="width: 35%;">
                                             <input type="number" id="waste_collection_tax" class="form-control" value="350" style="width: 15%;">
                                             <span class="input-group-text">€</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="irpef" class="col-sm-8 col-form-label">Aliquota Irpef:</label>
+                                        <div class="col-sm-4">
+                                            <select id="irpef" class="form-control" style="width: 100%;">
+                                                <option value="0" selected>0%</option>
+                                                <option value="0.23">23%</option>
+                                                <option value="0.25">25%</option>
+                                                <option value="0.35">35%</option>
+                                                <option value="0.43">43%</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <br>
@@ -432,34 +441,17 @@
                                     <div class="form-group row">
                                         <label for="property_management_fees" class="col-sm-8 col-form-label">Spese di gestione e assicurazione:</label>
                                         <div class="col-sm-4 input-group" style="width: 35%;">
-                                            <input type="number" id="property_management_fees" class="form-control" value="50" style="width: 15%;">
+                                            <input type="number" id="property_management_fees" class="form-control" value="200" style="width: 15%;">
                                             <span class="input-group-text">€</span>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <h2>Commissioni startup</h2>
-                                    <br>
-                                    <div class="form-group row">
-                                        <label for="restructure_fees" class="col-sm-8 col-form-label">Servizio di ristrutturazione:</label>
-                                        <div class="col-sm-4 input-group" style="width: 35%;">
-                                            <input type="number" id="restructure_fees" class="form-control" value="10" step="0.01" style="width: 15%;">
-                                            <span class="input-group-text">%</span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="propmanaging_fees" class="col-sm-8 col-form-label">Servizio gestione immobiliare:</label>
-                                        <div class="col-sm-4 input-group" style="width: 35%;">
-                                            <input type="number" id="propmanaging_fees" class="form-control" value="20" step="0.01" style="width: 20%;">
-                                            <span class="input-group-text">%</span>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-7" id="col-md-7">
                             <center><p style="color: white; font-weight: bold; text-shadow: 2px 2px 1px black; font-size: 1rem; padding:5px; margin-left:10px; margin-right:10px; margin-bottom: 15px;">ANALISI DEI DATI E VALUTAZIONE DEL PROGETTO</p></center>
                             <div class="card ice-slice-card" style="padding:20px; width:100%; box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
-                                <h2>Analisi del progetto</h2>
+                                <h2>Lavori finanziabili</h2>
                                 <br>
                                 <div id="output">
                                     <!-- Calculated values will appear here -->
@@ -467,8 +459,8 @@
                             </div>
                             <br>
                             <br>
-                            <div class="card ice-slice-card" style="padding:20px; padding-bottom: 27px; width:100%; box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
-                                <h2>Conto economico attualizzato del progetto</h2>
+                            <div class="card ice-slice-card" style="padding:20px; padding-bottom: 10px; width:100%; box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                <h2>Analisi del progetto</h2>
                                 <br>
                                 <div id="startupGains">
                                     <!-- Calculated values will appear here -->
@@ -493,31 +485,9 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
-                                        <center><p style="font-size: 0.7rem;">Rendita di pareggio</p></center>
-                                        <br>
-                                        <div id="rendita_pareggio">
-                                            <!-- Calculated values will appear here -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
-                                        <center><p style="font-size: 0.7rem;">Utile Immobile/Rendita Affitti</p></center>
+                                        <center><p style="font-size: 0.7rem;">Profitto lordo Immobile/Rendita</p></center>
                                         <br>
                                         <div id="por">
-                                            <!-- Calculated values will appear here -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
-                                        <center><p style="font-size: 0.7rem;">Utile Immobile/Costi Immobile</p></center>
-                                        <br>
-                                        <div id="roii">
                                             <!-- Calculated values will appear here -->
                                         </div>
                                     </div>
@@ -525,16 +495,13 @@
 
                             </div>
                         </div>
-                    </div>
-                    <br>
-                    <div class="row" style="padding-top: 5px; padding-left: 10px; padding-right: 10px;">
                         <div class="col-md-6">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
-                                        <center><p style="font-size: 0.7rem;">Costi fissi annuali immobile</p></center>
+                                        <center><p style="font-size: 0.7rem;">Profitto lordo annuale immobile</p></center>
                                         <br>
-                                        <div id="fixedcost">
+                                        <div id="utileprevisto">
                                             <!-- Calculated values will appear here -->
                                         </div>
                                     </div>
@@ -548,7 +515,31 @@
                                         </div>
                                     </div>
                                 </div>
-
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row" style="padding-top: 5px; padding-left: 10px; padding-right: 10px;">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                        <center><p style="font-size: 0.7rem;">Rendita di pareggio</p></center>
+                                        <br>
+                                        <div id="rendita_pareggio">
+                                            <!-- Calculated values will appear here -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                        <center><p style="font-size: 0.7rem;">Costi fissi annuali immobile</p></center>
+                                        <br>
+                                        <div id="fixedcost">
+                                            <!-- Calculated values will appear here -->
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -575,7 +566,46 @@
                         </div>
                     </div>
                     <br>
-                    <center><p style="color: white; font-weight: bold; text-shadow: 2px 2px 1px black; font-size: 1rem; padding:5px; margin-left:10px; margin-right:10px; margin-top: 40px;">RATIO FINANZIARI DEL PROGETTO</p></center>
+                    <center><p style="color: white; font-weight: bold; text-shadow: 2px 2px 1px black; font-size: 1rem; padding:5px; margin-left:10px; margin-right:10px; margin-top: 40px;">RATIO FINANZIARI DEL PROGETTO PER REFITTA</p></center>
+                    <br>
+                    <div class="row" style="padding-top: 5px; padding-left: 10px; padding-right: 10px;">
+                        <div class="col-md-3">
+                            <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                <center><p style="font-size: 0.7rem;">Ricavi</p></center>
+                                <br>
+                                <div id="ricavi_eff">
+                                    <!-- Calculated values will appear here -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                <center><p style="font-size: 0.7rem;">Costi</p></center>
+                                <br>
+                                <div id="costi_eff">
+                                    <!-- Calculated values will appear here -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                <center><p style="font-size: 0.7rem;">Utile lordo per Refitta</p></center>
+                                <br>
+                                <div id="utililordi_eff">
+                                    <!-- Calculated values will appear here -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                <center><p style="font-size: 0.7rem;">Utile netto per Refitta</p></center>
+                                <br>
+                                <div id="utilinetti_eff">
+                                    <!-- Calculated values will appear here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <br>
                     <div class="row" style="padding-top: 5px; padding-left: 10px; padding-right: 10px;">
                         <div class="col-md-3">
@@ -618,14 +648,6 @@
                     </div>
                     <br>
                     <div class="row" style="padding-top: 5px; padding-left: 10px; padding-right: 10px;">
-                        <div class="col-md-6">
-                            <div class="card ice-slice-card-3" style="padding:2px; padding-top: 12px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
-                                <center><p style="font-size: 0.7rem; padding-bottom: 5px;">Quote ricavi dei singoli business</p></center>
-                                <div id="shares" style="padding-left: 15px;">
-                                    <canvas id="myChart" height="73"></canvas>
-                                </div>
-                            </div>
-                        </div>
                          <div class="col-md-3">
                             <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
                                 <center><p style="font-size: 0.7rem;">Recupero del capitale investito</p></center>
@@ -636,6 +658,15 @@
                             </div>
                         </div>
                         <div class="col-md-3">
+                            <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
+                                <center><p style="font-size: 0.7rem;">Costo lordo per il proprietario</p></center>
+                                <br>
+                                <div id="recupero_capitale_prop">
+                                    <!-- Calculated values will appear here -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
                                 <center><p style="font-size: 0.7rem;">Indici di rischiosità</p></center>
                                 <br>
@@ -663,45 +694,6 @@
                     </div>
                     <br>
                     <div id="rcost" style="display:none;">
-                        <div class="row" style="padding-top: 5px; padding-left: 10px; padding-right: 10px;">
-                            <div class="col-md-3">
-                                <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
-                                    <center><p style="font-size: 0.7rem;">Ricavi</p></center>
-                                    <br>
-                                    <div id="ricavi_eff">
-                                        <!-- Calculated values will appear here -->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
-                                    <center><p style="font-size: 0.7rem;">Costi</p></center>
-                                    <br>
-                                    <div id="costi_eff">
-                                        <!-- Calculated values will appear here -->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
-                                    <center><p style="font-size: 0.7rem;">Utili Lordi</p></center>
-                                    <br>
-                                    <div id="utililordi_eff">
-                                        <!-- Calculated values will appear here -->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
-                                    <center><p style="font-size: 0.7rem;">Utili Netti</p></center>
-                                    <br>
-                                    <div id="utilinetti_eff">
-                                        <!-- Calculated values will appear here -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
                         <div class="row" style="padding-top: 5px; padding-left: 10px; padding-right: 10px;">
                             <div class="col-md-3">
                                 <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
@@ -747,22 +739,18 @@
                                 <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
                                     <center><p style="font-size: 0.7rem;">Prezzo del rischio</p></center>
                                     <br>
-                                    <br>
-                                    <div id="digital_cost_eff" style="padding-bottom: 3px;">
+                                    <div id="digital_cost_eff">
                                         <!-- Calculated values will appear here -->
                                     </div>
-                                    <br>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
                                     <center><p style="font-size: 0.7rem;">Rendita di pareggio effettiva</p></center>
                                     <br>
-                                    <br>
-                                    <div id="rendita_pareggio_eff" style="padding-bottom: 3px;">
+                                    <div id="rendita_pareggio_eff">
                                         <!-- Calculated values will appear here -->
                                     </div>
-                                    <br>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -776,16 +764,25 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="card ice-slice-card-3" style="padding:10px; padding-top: 20px; width:100%; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); border-radius: 0px !important;">
-                                    <center><p style="font-size: 0.7rem;">Indici di rischiosità</p></center>
+                                    <center><p style="font-size: 0.7rem;">Costo lordo per il proprietario</p></center>
                                     <br>
-                                    <div id="coeffVariazione_eff">
+                                    <div id="recupero_capitale_prop_eff">
                                         <!-- Calculated values will appear here -->
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <br>
+                        <br>
+                        <div class="row justify-content-center">
+                            <div class="card ice-slice-card" style="padding: 15px; padding-top:20px; padding-left: 20px; padding-right: 20px; font-size: 0.75rem;">
+                                <div class="col-md-12">
+                                    <div id="npv">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <br>
                     <br>
                     <br>
                     <center><button class="btn btn-info" style="font-size: 0.7rem;" id="back_button">Indietro</button></center>

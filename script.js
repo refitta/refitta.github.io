@@ -281,96 +281,134 @@ $(document).ready(function () {
         calculateValues_finan();
     });
 
+    $('#irpef').on('input', function () {
+        calculateValues_finan();
+    });
+
     $('#desired_net_income_percentageInput').on('input', function () {
         calculateValues_finan();
     });
 
 });
 
-$(document).ready(function () {
-    $('#contract_typology').change(function () {
-        if ($(this).val() === "Concordato") {
-            // Set the cedolare secca rate to 10%
-            $('#cedolare_secca_rate').val('0.1');
-            $('#waste_collection_tax').val('0');
-            $('#monthly_utilities').val('0');
-            $('#property_management_fees').val('0');
-            $('#monthly_miscellaneous_costs').val('0');
-            $('#propmanaging_fees').val('5');
-            calculateValues();
-        }
-    });
-});
+
 
 
 $(document).ready(function () {
     // Calculate values when the page loads
     calculateValues();
 
-    // Bind input event to trigger calculation when input values change
-    $('#inputForm input, #cedolare_secca_rate').on('input', function () {
+    $('#inputForm input, #financing_options, #irpef').on('input', function () {
         calculateValues();
     });
 
-    $('#inputForm input, #financing_options').on('input', function () {
-        calculateValues();
-    });
 });
 
 function calculateValues() {
     // Retrieve input values
 
+	// dai contratto
     const contractTypology = $('#contract_typology').val()
     const years = parseFloat($('#years').val());
-    const grossMonthlyIncome = parseFloat($('#gross_monthly_income').val());
-    const grossAnnualIncome = grossMonthlyIncome * 12;
     const uncertaintyPer = parseFloat($('#uncertainty_range').val()) / 100;
-    const revenuesMin = grossAnnualIncome * (1 - uncertaintyPer);
-    const revenuesMax = grossAnnualIncome * (1 + uncertaintyPer);
-    const revenuesMid = revenuesMin + (revenuesMax - revenuesMin) / 2;
-
-    const cedolareSeccaRate = parseFloat($('#cedolare_secca_rate').val());
-    const tasseCedolareMin = revenuesMin * cedolareSeccaRate
-    const tasseCedolareMax = revenuesMax * cedolareSeccaRate
-    const monthlyCondoFeesMin = parseFloat($('#monthly_condo_fees').val()) * (1 + uncertaintyPer);
-    const monthlyCondoFeesMax = parseFloat($('#monthly_condo_fees').val()) * (1 - uncertaintyPer);
-    const monthlyUtilitiesMin = parseFloat($('#monthly_utilities').val()) * (1 + uncertaintyPer);
-    const monthlyUtilitiesMax = parseFloat($('#monthly_utilities').val()) * (1 - uncertaintyPer);
-    const monthlyMiscellaneousCostsMin = parseFloat($('#monthly_miscellaneous_costs').val()) * (1 + uncertaintyPer);
-    const monthlyMiscellaneousCostsMax = parseFloat($('#monthly_miscellaneous_costs').val()) * (1 - uncertaintyPer);
-    const propertyManagementFeesMin = parseFloat($('#property_management_fees').val()) * (1 + uncertaintyPer);
-    const propertyManagementFeesMax = parseFloat($('#property_management_fees').val()) * (1 - uncertaintyPer);
-    const secondHomeTaxMin = parseFloat($('#second_home_tax').val()) * (1 + uncertaintyPer);
-    const secondHomeTaxMax = parseFloat($('#second_home_tax').val()) * (1 - uncertaintyPer);
-    const secondHomeTaxMid = secondHomeTaxMin + (secondHomeTaxMax - secondHomeTaxMin)/2
-
-    const wasteCollectionTaxMin = parseFloat($('#waste_collection_tax').val()) * (1 + uncertaintyPer);
-    const wasteCollectionTaxMax = parseFloat($('#waste_collection_tax').val()) * (1 - uncertaintyPer);
     const desiredNetIncomePercentage = parseFloat($('#desired_net_income_percentage').val());
-
     const riskFreeRate = parseFloat($('#risk_free_rate').val());
     const premioRischio = parseFloat($('#premio_rischio').val());
-    const restructure_fees = parseFloat($('#restructure_fees').val())/100;
-    const propmanaging_fees = parseFloat($('#propmanaging_fees').val())/100;
+    const quotaStartup = 0.15;
 
-    const totaleFinanziato = parseFloat($('#restructuring_cost').val());
+    const irpef = parseFloat($('#irpef').val());
 
-    // Perform calculations
-    const taxesMin = tasseCedolareMin
-    const taxesMax = tasseCedolareMax
-    const taxesMid = tasseCedolareMin + (tasseCedolareMax - tasseCedolareMin)/2
+	// ricavi
+	const grossMonthlyIncome = parseFloat($('#gross_monthly_income').val());
+    const grossAnnualIncome = grossMonthlyIncome * 12;
+	const revenuesMin = grossAnnualIncome * (1 - uncertaintyPer);
+    const revenuesMax = grossAnnualIncome * (1 + uncertaintyPer);
+    const revenuesMid = grossAnnualIncome;
+
+	// costi
+    const notaio = parseFloat($('#notaio').val()) / years;
+
+	const secondHomeTaxMid = parseFloat($('#second_home_tax').val());
+    const secondHomeTaxMin = secondHomeTaxMid * (1 + uncertaintyPer);
+    const secondHomeTaxMax = secondHomeTaxMid * (1 - uncertaintyPer);
+
+    const wasteCollectionTaxMid = parseFloat($('#waste_collection_tax').val())
+    const wasteCollectionTaxMin = wasteCollectionTaxMid * (1 + uncertaintyPer);
+    const wasteCollectionTaxMax = wasteCollectionTaxMid * (1 - uncertaintyPer);
+
+    const monthlyCondoFeesMid = parseFloat($('#monthly_condo_fees').val())
+    const monthlyCondoFeesMin = monthlyCondoFeesMid * (1 + uncertaintyPer);
+    const monthlyCondoFeesMax = monthlyCondoFeesMid * (1 - uncertaintyPer);
+
+    const monthlyUtilitiesMid = parseFloat($('#monthly_utilities').val())
+    const monthlyUtilitiesMin = monthlyUtilitiesMid * (1 + uncertaintyPer);
+    const monthlyUtilitiesMax = monthlyUtilitiesMid * (1 - uncertaintyPer);
+
+    const monthlyUtilitiesEmptyMid = monthlyUtilitiesMid * 0.6
+    const monthlyUtilitiesEmptyMin = monthlyUtilitiesMin * 0.6
+    const monthlyUtilitiesEmptyMax = monthlyUtilitiesMax * 0.6
+
+    const monthlyMiscellaneousCostsMid = parseFloat($('#monthly_miscellaneous_costs').val());
+    const monthlyMiscellaneousCostsMin = monthlyMiscellaneousCostsMid * (1 + uncertaintyPer);
+    const monthlyMiscellaneousCostsMax = monthlyMiscellaneousCostsMid * (1 - uncertaintyPer);
+
+	const monthlyMiscellaneousCostsEmptyMid = monthlyUtilitiesEmptyMid * 0.5
+	const monthlyMiscellaneousCostsEmptyMin = monthlyUtilitiesEmptyMin * 0.5
+	const monthlyMiscellaneousCostsEmptyMax = monthlyUtilitiesEmptyMax * 0.5
+
+    const propertyManagementFeesMid = parseFloat($('#property_management_fees').val());
+    const propertyManagementFeesMin = propertyManagementFeesMid * (1 + uncertaintyPer);
+    const propertyManagementFeesMax = propertyManagementFeesMid * (1 - uncertaintyPer);
+
     const taxesHomeMin = secondHomeTaxMin + wasteCollectionTaxMin;
     const taxesHomeMax = secondHomeTaxMax + wasteCollectionTaxMax;
-    const taxesHomeMid = taxesHomeMin + (taxesHomeMax - taxesHomeMin)/2
-    const totalTaxesMin = tasseCedolareMin + taxesHomeMin;
-    const totalTaxesMax = tasseCedolareMax + taxesHomeMax;
-    const totalTaxesMid = totalTaxesMin + (totalTaxesMax - totalTaxesMin)/2;
+    const taxesHomeMid = secondHomeTaxMid + wasteCollectionTaxMid;
+
     const feesMin = (monthlyCondoFeesMin + monthlyUtilitiesMin + monthlyMiscellaneousCostsMin) * 12;
     const feesMax = (monthlyCondoFeesMax + monthlyUtilitiesMax + monthlyMiscellaneousCostsMax) * 12;
-    const feesMid = feesMin + (feesMax - feesMin)/2;
-    const fixedcostMin = (monthlyCondoFeesMin + 100) * 12 + taxesHomeMin;
-    const fixedcostMax = (monthlyCondoFeesMax + 100) * 12 + taxesHomeMax;
-    const fixedcostMid = fixedcostMin + (fixedcostMax - fixedcostMin)/2;
+    const feesMid = (monthlyCondoFeesMid + monthlyUtilitiesMid + monthlyMiscellaneousCostsMid) * 12;
+
+	const feesEmptyMin = (monthlyCondoFeesMin + monthlyUtilitiesEmptyMin + monthlyMiscellaneousCostsEmptyMin) * 12;
+	const feesEmptyMax = (monthlyCondoFeesMax + monthlyUtilitiesEmptyMax + monthlyMiscellaneousCostsEmptyMax) * 12;
+	const feesEmptyMid = (monthlyCondoFeesMid + monthlyUtilitiesEmptyMid + monthlyMiscellaneousCostsEmptyMid) * 12;
+
+    const fixedcostMin = (monthlyCondoFeesMin + monthlyUtilitiesEmptyMin + monthlyMiscellaneousCostsEmptyMin) * 12 + taxesHomeMin + notaio;
+    const fixedcostMax = (monthlyCondoFeesMax + monthlyUtilitiesEmptyMax + monthlyMiscellaneousCostsEmptyMax) * 12 + taxesHomeMax + notaio;
+    const fixedcostMid = (monthlyCondoFeesMid + monthlyUtilitiesEmptyMid + monthlyMiscellaneousCostsEmptyMid) * 12 + taxesHomeMid + notaio;
+
+    const managementCostsMin = propertyManagementFeesMin * 12;
+    const managementCostsMax = propertyManagementFeesMax * 12;
+    const managementCostsMid = propertyManagementFeesMid * 12;
+
+    const totalStartupTaxesMid = (revenuesMid - feesMid - managementCostsMid) * 0.28
+    const totalStartupTaxesMin = (revenuesMin - feesMin - managementCostsMin) * 0.28
+    const totalStartupTaxesMax = (revenuesMax - feesMax - managementCostsMax) * 0.28
+
+    const totalTaxesMin = totalStartupTaxesMin + taxesHomeMin;
+    const totalTaxesMax = totalStartupTaxesMax + taxesHomeMax;
+    const totalTaxesMid = totalStartupTaxesMid + taxesHomeMid;
+
+    const utileRichiestoMid = revenuesMid * quotaStartup;
+    const utileRichiestoMin = revenuesMin * quotaStartup;
+    const utileRichiestoMax = revenuesMax * quotaStartup;
+
+    const generalCostsMin = feesMin + managementCostsMin + notaio;
+    const generalCostsMax = feesMax + managementCostsMax + notaio;
+    const generalCostsMid = feesMid + managementCostsMid + notaio;
+
+    const generalCostsEmptyMin = feesEmptyMin + notaio;
+    const generalCostsEmptyMax = feesEmptyMax + notaio;
+    const generalCostsEmptyMid = feesEmptyMid + notaio;
+
+    const totalCostsMin = totalTaxesMin + generalCostsMin;
+    const totalCostsMax = totalTaxesMax + generalCostsMax;
+    const totalCostsMid = totalTaxesMid + generalCostsMid;
+    const expectedAnnualProfitMin = revenuesMin - totalCostsMin;
+    const expectedAnnualProfitMax = revenuesMax - totalCostsMax;
+    const expectedAnnualProfitMid = revenuesMid - totalCostsMid;
+    const ownerFeeMin = expectedAnnualProfitMin * (desiredNetIncomePercentage / 100);
+    const ownerFeeMax = expectedAnnualProfitMax * (desiredNetIncomePercentage / 100);
+    const ownerFeeMid = expectedAnnualProfitMid * (desiredNetIncomePercentage / 100);
 
     const downpayment = $('#financing_options').val();
     let downpaymentQuantityMin = 0;
@@ -378,267 +416,169 @@ function calculateValues() {
     let downpaymentQuantityMid = 0;
 
     if (downpayment == 'Costi Fissi') {
-        downpaymentQuantityMin = fixedcostMin;
-        downpaymentQuantityMax = fixedcostMax;
-        downpaymentQuantityMid = fixedcostMid;
+        downpaymentQuantityMin = fixedcostMin / 1.22;
+        downpaymentQuantityMax = fixedcostMax / 1.22;
+        downpaymentQuantityMid = fixedcostMid / 1.22;
     } else if (downpayment == 'Cond.+Imu+Tari') {
-        downpaymentQuantityMin = fixedcostMin - 100 * 12;
-        downpaymentQuantityMax = fixedcostMax - 100 * 12;
-        downpaymentQuantityMid = fixedcostMid - 100 * 12;
+        downpaymentQuantityMin = (taxesHomeMin + monthlyCondoFeesMin) / 1.22;
+        downpaymentQuantityMax = (taxesHomeMax + monthlyCondoFeesMax) / 1.22;
+        downpaymentQuantityMid = (taxesHomeMid + monthlyCondoFeesMid) / 1.22;
     } else if (downpayment == 'Imu+Tari') {
-        downpaymentQuantityMin = taxesHomeMin;
-        downpaymentQuantityMax = taxesHomeMax;
-        downpaymentQuantityMid = taxesHomeMid;
+        downpaymentQuantityMin = taxesHomeMin / 1.22;
+        downpaymentQuantityMax = taxesHomeMax / 1.22;
+        downpaymentQuantityMid = taxesHomeMid / 1.22;
     } else if (downpayment == 'Imu') {
-        downpaymentQuantityMin = secondHomeTaxMin;
-        downpaymentQuantityMax = secondHomeTaxMax;
-        downpaymentQuantityMid = secondHomeTaxMid;
+        downpaymentQuantityMin = secondHomeTaxMin / 1.22;
+        downpaymentQuantityMax = secondHomeTaxMax / 1.22;
+        downpaymentQuantityMid = secondHomeTaxMid / 1.22;
     }
 
-    const managementCostsMin = propertyManagementFeesMin * 12;
-    const managementCostsMax = propertyManagementFeesMax * 12;
-    const managementCostsMid = managementCostsMin + (managementCostsMax - managementCostsMin)/2;
-    const startupCommissionsMin = revenuesMin * propmanaging_fees;
-    const startupCommissionsMax = revenuesMax * propmanaging_fees;
-    const startupCommissionsMid = startupCommissionsMin + (startupCommissionsMax - startupCommissionsMin)/2
-    const generalCostsMin = feesMin + managementCostsMin + startupCommissionsMin;
-    const generalCostsMax = feesMax + managementCostsMax + startupCommissionsMax;
-    const generalCostsMid = generalCostsMin + (generalCostsMax - generalCostsMin)/2;
-    const totalCostsMin = totalTaxesMin + generalCostsMin;
-    const totalCostsMax = totalTaxesMax + generalCostsMax;
-    const totalCostsMid = totalCostsMin + (totalCostsMax - totalCostsMin)/2;
-    const expectedAnnualProfitMin = revenuesMin - totalCostsMin;
-    const expectedAnnualProfitMax = revenuesMax - totalCostsMax;
-    const expectedAnnualProfitMid = expectedAnnualProfitMin + (expectedAnnualProfitMax-expectedAnnualProfitMin)/2;
-    const ownerFeeMin = expectedAnnualProfitMin * (desiredNetIncomePercentage / 100);
-    const ownerFeeMax = expectedAnnualProfitMax * (desiredNetIncomePercentage / 100);
-    const ownerFeeMid = expectedAnnualProfitMid * (desiredNetIncomePercentage / 100);
-    const utileSpendibileMin = expectedAnnualProfitMin - ownerFeeMin + downpaymentQuantityMin;
-    const utileSpendibileMax = expectedAnnualProfitMax - ownerFeeMax + downpaymentQuantityMax;
-    const utileSpendibileMid = utileSpendibileMin + (utileSpendibileMax - utileSpendibileMin)/2;
+    const utileSpendibileMin = expectedAnnualProfitMin - ownerFeeMin + downpaymentQuantityMin * 0.72 - utileRichiestoMid;
+    const utileSpendibileMax = expectedAnnualProfitMax - ownerFeeMax + downpaymentQuantityMax * 0.72 - utileRichiestoMax;
+    const utileSpendibileMid = expectedAnnualProfitMid - ownerFeeMid + downpaymentQuantityMid * 0.72 - utileRichiestoMid;
+
     const totalRate = (riskFreeRate + premioRischio) / 100;
     const rfRate = riskFreeRate / 100;
+
     const totaleFinanziabileMin = utileSpendibileMin * (1 - Math.pow(1 + totalRate, -years)) / totalRate;
     const totaleFinanziabileMax = utileSpendibileMax * (1 - Math.pow(1 + totalRate, -years)) / totalRate;
     const totaleFinanziabileMid = utileSpendibileMid * (1 - Math.pow(1 + totalRate, -years)) / totalRate;
-    const recuperoCapitaleMid = totaleFinanziabileMid / (utileSpendibileMid+startupCommissionsMid)
-    const recuperoCapitaleMin = totaleFinanziabileMin / (utileSpendibileMin+startupCommissionsMin)
-    const recuperoCapitaleMax = totaleFinanziabileMax / (utileSpendibileMax+startupCommissionsMax)
+    const totaleFinanziabileVeroMin = totaleFinanziabileMin / (1 + irpef);
+    const totaleFinanziabileVeroMax = totaleFinanziabileMax / (1 + irpef);
+    const totaleFinanziabileVeroMid = totaleFinanziabileMid / (1 + irpef);
 
-    const fiscalbenefitMin = totaleFinanziabileMin/2/10
-    const fiscalbenefitMax = totaleFinanziabileMax/2/10
-    const fiscalbenefitMid = totaleFinanziabileMid/2/10
-    const fiscalfixedcostMin = fiscalbenefitMin / fixedcostMin * 100
-    const fiscalfixedcostMax = fiscalbenefitMax / fixedcostMax * 100
-    const fiscalfixedcostMid = fiscalbenefitMid / fixedcostMid * 100
-    const totaleFinanziabileRiskFreeMin = utileSpendibileMin * (1 - Math.pow(1 + rfRate, -years)) / rfRate;
-    const totaleFinanziabileRiskFreeMax = utileSpendibileMax * (1 - Math.pow(1 + rfRate, -years)) / rfRate;
-    const totaleFinanziabileRiskFreeMid = utileSpendibileMid * (1 - Math.pow(1 + rfRate, -years)) / rfRate;
-    const lendGainMin = totaleFinanziabileRiskFreeMin - totaleFinanziabileMin;
-    const lendGainMax = totaleFinanziabileRiskFreeMax - totaleFinanziabileMax;
-    const lendGainMid = totaleFinanziabileRiskFreeMid - totaleFinanziabileMid;
-    const restructureGainMin = totaleFinanziabileMin * restructure_fees;
-    const restructureGainMax = totaleFinanziabileMax * restructure_fees;
-    const restructureGainMid = totaleFinanziabileMid * restructure_fees;
-    const managingCommissionsMin = startupCommissionsMin * (1 - Math.pow(1 + totalRate, -years)) / totalRate;
-    const managingCommissionsMax = startupCommissionsMax * (1 - Math.pow(1 + totalRate, -years)) / totalRate;
-    const managingCommissionsMid = startupCommissionsMid * (1 - Math.pow(1 + totalRate, -years)) / totalRate;
-    const totalGainMin = lendGainMin + restructureGainMin + managingCommissionsMin;
-    const totalGainMax = lendGainMax + restructureGainMax + managingCommissionsMax;
-    const totalGainMid = lendGainMid + restructureGainMid + managingCommissionsMid;
+	let fiscalbenefitMin;
+    let fiscalbenefitMax;
+    let fiscalbenefitMid;
 
-    const costiOperativiMid = managingCommissionsMid * 0.4 + lendGainMid * 0.05
-    const utiliLordiMid = totalGainMid - costiOperativiMid
-    const imposteMid = utiliLordiMid * 0.24 + utiliLordiMid * 0.24 * 0.035
-    const utiliNettiMid = utiliLordiMid - imposteMid
+    if (irpef > 0) {
+        fiscalbenefitMin = totaleFinanziabileVeroMin / 2 / 10;
+        fiscalbenefitMax = totaleFinanziabileVeroMax / 2 / 10;
+        fiscalbenefitMid = totaleFinanziabileVeroMid / 2 / 10;
+    } else {
+        fiscalbenefitMin = 0;
+        fiscalbenefitMax = 0;
+        fiscalbenefitMid = 0;
+    }
 
-    const costiOperativiMin = managingCommissionsMin * 0.4 + lendGainMin * 0.05
-    const utiliLordiMin = totalGainMin - costiOperativiMin
-    const imposteMin = utiliLordiMin * 0.24 + utiliLordiMin * 0.24 * 0.035
-    const utiliNettiMin = utiliLordiMin - imposteMin
+    const ricaviTotaliMid = revenuesMid * years;
+    const ricaviTotaliMin = revenuesMin * years;
+    const ricaviTotaliMax = revenuesMax * years;
 
-    const costiOperativiMax = managingCommissionsMax * 0.4 + lendGainMax * 0.05
-    const utiliLordiMax = totalGainMax - costiOperativiMax
-    const imposteMax = utiliLordiMax * 0.24 + utiliLordiMax * 0.24 * 0.035
-    const utiliNettiMax = utiliLordiMax - imposteMax
+    const costiTotaliMid = (notaio + taxesHomeMid + feesMid + managementCostsMid) * years;
+    const costiTotaliMin = (notaio + taxesHomeMin + feesMin + managementCostsMin) * years;
+    const costiTotaliMax = (notaio + taxesHomeMax + feesMax + managementCostsMax) * years;
 
-    const profitOnRevenues = expectedAnnualProfitMid / revenuesMid * 100;
-    const profitOnRevenuesMin = expectedAnnualProfitMin / revenuesMin * 100;
-    const profitOnRevenuesMax = expectedAnnualProfitMax / revenuesMax * 100;
+    const utiliTotaliLordiMid = ricaviTotaliMid - costiTotaliMid;
+    const utiliTotaliLordiMin = ricaviTotaliMin - costiTotaliMin;
+    const utiliTotaliLordiMax = ricaviTotaliMax - costiTotaliMax;
 
-    const returnOnInvestment = expectedAnnualProfitMid / totalCostsMid * 100;
-    const returnOnInvestmentMin = expectedAnnualProfitMin / totalCostsMin * 100;
-    const returnOnInvestmentMax = expectedAnnualProfitMax / totalCostsMax * 100;
+    const utiliTotaliNettiMid = utiliTotaliLordiMid - (ricaviTotaliMid - (feesMid + managementCostsMid) * years) * 0.28;
+    const utiliTotaliNettiMin = utiliTotaliLordiMin - (ricaviTotaliMin - (feesMin + managementCostsMin) * years) * 0.28;
+    const utiliTotaliNettiMax = utiliTotaliLordiMax - (ricaviTotaliMax - (feesMax + managementCostsMax) * years) * 0.28;
 
-    const returnOnICapital = utiliLordiMid / totaleFinanziabileMid * 100;
-    const returnOnICapitalMin = utiliLordiMin / totaleFinanziabileMin * 100;
-    const returnOnICapitalMax = utiliLordiMax / totaleFinanziabileMax * 100;
+    const recuperoCapitaleMid = totaleFinanziabileMid / (utiliTotaliNettiMid) * years;
+    const recuperoCapitaleMin = totaleFinanziabileMin / (utiliTotaliNettiMin) * years;
+    const recuperoCapitaleMax = totaleFinanziabileMax / (utiliTotaliNettiMax) * years;
+
+    const utiliTotaleNettiPropMid = (utiliTotaliLordiMid + notaio * years) * 0.79;
+    const utiliTotaleNettiPropMin = (utiliTotaliLordiMin + notaio * years) * 0.79;
+    const utiliTotaleNettiPropMax = (utiliTotaliLordiMax + notaio * years) * 0.79;
+
+    const costiLavoriPropMid = totaleFinanziabileMid * 1.20;
+    const costiLavoriPropMin = totaleFinanziabileMin * 1.20;
+    const costiLavoriPropMax = totaleFinanziabileMax * 1.20;
+
+    const recuperoCapitalePropMid = years - costiLavoriPropMid / (utiliTotaleNettiPropMid) * years;
+    const recuperoCapitalePropMin = years - costiLavoriPropMin / (utiliTotaleNettiPropMin) * years;
+    const recuperoCapitalePropMax = years - costiLavoriPropMax / (utiliTotaleNettiPropMin) * years;
+
+    const profitOnRevenues = (expectedAnnualProfitMid + totalStartupTaxesMid + notaio) / revenuesMid * 100;
+    const profitOnRevenuesMin = (expectedAnnualProfitMin + totalStartupTaxesMin + notaio) / revenuesMin * 100;
+    const profitOnRevenuesMax = (expectedAnnualProfitMax + totalStartupTaxesMax + notaio) / revenuesMax * 100;
+
+    const returnOnICapital = ((utiliTotaliLordiMid / totaleFinanziabileMid) - 1) * 100;
+    const returnOnICapitalMin = ((utiliTotaliLordiMin / totaleFinanziabileMin) - 1) * 100;
+    const returnOnICapitalMax = ((utiliTotaliLordiMax / totaleFinanziabileMax) - 1) * 100;
 
     const annualizedReturn = (Math.pow(1 + returnOnICapital/100, 1 / years) - 1) * 100;
     const annualizedReturnMin = (Math.pow(1 + returnOnICapitalMin/100, 1 / years) - 1) * 100;
     const annualizedReturnMax = (Math.pow(1 + returnOnICapitalMax/100, 1 / years) - 1) * 100;
 
-    const returnOnICapitalNet = utiliNettiMid / totaleFinanziabileMid * 100;
-    const returnOnICapitalNetMin = utiliNettiMin / totaleFinanziabileMin * 100;
-    const returnOnICapitalNetMax = utiliNettiMax / totaleFinanziabileMax * 100;
+    const returnOnICapitalNet = ((utiliTotaliNettiMid / totaleFinanziabileMid) - 1) * 100;
+    const returnOnICapitalNetMin = ((utiliTotaliNettiMin / totaleFinanziabileMin) - 1) * 100;
+    const returnOnICapitalNetMax = ((utiliTotaliNettiMax / totaleFinanziabileMax) - 1) * 100;
 
     const annualizedReturnNet = (Math.pow(1 + returnOnICapitalNet/100, 1 / years) - 1) * 100;
     const annualizedReturnNetMin = (Math.pow(1 + returnOnICapitalNetMin/100, 1 / years) - 1) * 100;
     const annualizedReturnNetMax = (Math.pow(1 + returnOnICapitalNetMax/100, 1 / years) - 1) * 100;
 
-    const shareLend = lendGainMid / totalGainMid * 100;
-    const shareLendMin = lendGainMin / totalGainMin * 100;
-    const shareLendMax = lendGainMax / totalGainMax * 100;
+    const quotaProprietarioMid = -downpaymentQuantityMid * 1.22 + ownerFeeMid
+    const quotaProprietarioMin = -downpaymentQuantityMin * 1.22 + ownerFeeMin
+    const quotaProprietarioMax = -downpaymentQuantityMax * 1.22 + ownerFeeMax
 
-    const shareRestructure = restructureGainMid / totalGainMid * 100;
-    const shareRestructureMin = restructureGainMin / totalGainMin * 100;
-    const shareRestructureMax = restructureGainMax / totalGainMax * 100;
+    const coeffVar = (utiliTotaliNettiMax - utiliTotaliNettiMin)/(utiliTotaliNettiMax + utiliTotaliNettiMin) * 100;
+    const devStand = (utiliTotaliNettiMax - utiliTotaliNettiMin)/2
 
-    const shareManaging = managingCommissionsMid / totalGainMid * 100;
-    const shareManagingMin = managingCommissionsMin / totalGainMin * 100;
-    const shareManagingMax = managingCommissionsMax / totalGainMax * 100;
+    const revcostMid = revenuesMid / (totalCostsMid - totalStartupTaxesMid);
+    const revcostMin = revenuesMin / (totalCostsMin - totalStartupTaxesMin);
+    const revcostMax = revenuesMax / (totalCostsMax - totalStartupTaxesMax);
 
-    const quotaProprietarioMid = -downpaymentQuantityMid + ownerFeeMid
-    const quotaProprietarioMin = -downpaymentQuantityMin + ownerFeeMin
-    const quotaProprietarioMax = -downpaymentQuantityMax + ownerFeeMax
+    let renditaPareggioMid = (taxesHomeMid + generalCostsEmptyMid + utileSpendibileMid - downpaymentQuantityMid * 0.72) / 12;
+    let renditaPareggioMin = (taxesHomeMin + generalCostsEmptyMin + utileSpendibileMin - downpaymentQuantityMin * 0.72) / 12;
+    let renditaPareggioMax = (taxesHomeMax + generalCostsEmptyMax + utileSpendibileMax - downpaymentQuantityMax * 0.72) / 12;
 
-    const coeffVar = (utiliNettiMax-utiliNettiMin)/(utiliNettiMax+utiliNettiMin) * 100;
-    const devStand = (utiliNettiMax-utiliNettiMin)/2
+    const totaleFinanziato = parseFloat($('#restructuring_cost').val());
 
-    const revcostMid = revenuesMid/totalCostsMid;
-    const revcostMin = revenuesMid/totalCostsMin;
-    const revcostMax = revenuesMid/totalCostsMax;
+    const recuperoCapitaleMid_eff = totaleFinanziato / (utiliTotaliNettiMid) * years
+    const recuperoCapitaleMin_eff = totaleFinanziato / (utiliTotaliNettiMin) * years
+    const recuperoCapitaleMax_eff = totaleFinanziato / (utiliTotaliNettiMax) * years
 
-    let renditaPareggioMid = (taxesMid + taxesHomeMid + generalCostsMid - startupCommissionsMid + utileSpendibileMid - downpaymentQuantityMid) / 12;
-    let renditaPareggioMin = (taxesMin + taxesHomeMin + generalCostsMin - startupCommissionsMin + utileSpendibileMin - downpaymentQuantityMin) / 12;
-    let renditaPareggioMax = (taxesMax + taxesHomeMax + generalCostsMax - startupCommissionsMax + utileSpendibileMax - downpaymentQuantityMax) / 12;
+    const costiLavoriPropMid_eff = totaleFinanziato * 1.20;
+    const costiLavoriPropMin_eff = totaleFinanziato * 1.20;
+    const costiLavoriPropMax_eff = totaleFinanziato * 1.20;
 
-    const recuperoCapitaleMid_eff = totaleFinanziato / (utileSpendibileMid+startupCommissionsMid)
-    const recuperoCapitaleMin_eff = totaleFinanziato / (utileSpendibileMin+startupCommissionsMin)
-    const recuperoCapitaleMax_eff = totaleFinanziato / (utileSpendibileMax+startupCommissionsMax)
+    const recuperoCapitalePropMid_eff = years - costiLavoriPropMid_eff / (utiliTotaleNettiPropMid) * years;
+    const recuperoCapitalePropMin_eff = years - costiLavoriPropMin_eff / (utiliTotaleNettiPropMin) * years;
+    const recuperoCapitalePropMax_eff = years - costiLavoriPropMax_eff / (utiliTotaleNettiPropMax) * years;
 
     const totRata = totaleFinanziato / ((1 - Math.pow(1 + totalRate, -years)) / totalRate);
     const totFinanziatoRiskFree = totRata * (1 - Math.pow(1 + rfRate, -years)) / rfRate;
 
-    const lendGain_eff = totFinanziatoRiskFree - totaleFinanziato;
-    const restructureGain_eff = totaleFinanziato * restructure_fees;
-
-    const totalGainMin_eff = lendGain_eff + restructureGain_eff + managingCommissionsMin;
-    const totalGainMax_eff = lendGain_eff + restructureGain_eff + managingCommissionsMax;
-    const totalGainMid_eff = lendGain_eff + restructureGain_eff + managingCommissionsMid;
-
-    const costiOperativiMid_eff = managingCommissionsMid * 0.4 + lendGain_eff * 0.05
-    const utiliLordiMid_eff = totalGainMid_eff - costiOperativiMid_eff
-    const imposteMid_eff = utiliLordiMid_eff * 0.24 + utiliLordiMid_eff * 0.24 * 0.035
-    const utiliNettiMid_eff = utiliLordiMid_eff - imposteMid_eff
-
-    const costiOperativiMin_eff = managingCommissionsMin * 0.4 + lendGain_eff * 0.05
-    const utiliLordiMin_eff = totalGainMin_eff - costiOperativiMin_eff
-    const imposteMin_eff = utiliLordiMin_eff * 0.24 + utiliLordiMin_eff * 0.24 * 0.035
-    const utiliNettiMin_eff = utiliLordiMin_eff - imposteMin_eff
-
-    const costiOperativiMax_eff = managingCommissionsMax * 0.4 + lendGain_eff * 0.05
-    const utiliLordiMax_eff = totalGainMax_eff - costiOperativiMax_eff
-    const imposteMax_eff = utiliLordiMax_eff * 0.24 + utiliLordiMax_eff * 0.24 * 0.035
-    const utiliNettiMax_eff = utiliLordiMax_eff - imposteMax_eff
-
-    const returnOnICapital_eff = utiliLordiMid_eff / totaleFinanziato * 100;
-    const returnOnICapitalMin_eff = utiliLordiMin_eff / totaleFinanziato * 100;
-    const returnOnICapitalMax_eff = utiliLordiMax_eff / totaleFinanziato * 100;
+    const returnOnICapital_eff = ((utiliTotaliLordiMid / totaleFinanziato) -1) * 100;
+    const returnOnICapitalMin_eff = ((utiliTotaliLordiMin / totaleFinanziato) -1) * 100;
+    const returnOnICapitalMax_eff = ((utiliTotaliLordiMax / totaleFinanziato) -1) * 100;
 
     const annualizedReturn_eff = (Math.pow(1 + returnOnICapital_eff/100, 1 / years) - 1) * 100;
     const annualizedReturnMin_eff = (Math.pow(1 + returnOnICapitalMin_eff/100, 1 / years) - 1) * 100;
     const annualizedReturnMax_eff = (Math.pow(1 + returnOnICapitalMax_eff/100, 1 / years) - 1) * 100;
 
-    const returnOnICapitalNet_eff = utiliNettiMid_eff / totaleFinanziato * 100;
-    const returnOnICapitalNetMin_eff = utiliNettiMin_eff / totaleFinanziato * 100;
-    const returnOnICapitalNetMax_eff = utiliNettiMax_eff / totaleFinanziato * 100;
+    const returnOnICapitalNet_eff = ((utiliTotaliNettiMid / totaleFinanziato) -1) * 100;
+    const returnOnICapitalNetMin_eff = ((utiliTotaliNettiMin / totaleFinanziato) -1) * 100;
+    const returnOnICapitalNetMax_eff = ((utiliTotaliNettiMax / totaleFinanziato) -1) * 100;
 
     const annualizedReturnNet_eff = (Math.pow(1 + returnOnICapitalNet_eff/100, 1 / years) - 1) * 100;
     const annualizedReturnNetMin_eff = (Math.pow(1 + returnOnICapitalNetMin_eff/100, 1 / years) - 1) * 100;
     const annualizedReturnNetMax_eff = (Math.pow(1 + returnOnICapitalNetMax_eff/100, 1 / years) - 1) * 100;
 
-    const coeffVar_eff = (utiliNettiMax_eff-utiliNettiMin_eff)/(utiliNettiMax_eff+utiliNettiMin_eff) * 100;
-    const devStand_eff = (utiliNettiMax_eff-utiliNettiMin_eff)/2
+    const coeffVar_eff = (utiliTotaliNettiMax - utiliTotaliNettiMin) / (utiliTotaliNettiMax + utiliTotaliNettiMin) * 100;
+    const devStand_eff = (utiliTotaliNettiMax - utiliTotaliNettiMin) / 2
 
-    let renditaPareggioMid_eff = (taxesMid + taxesHomeMid + generalCostsMid - startupCommissionsMid + totRata - downpaymentQuantityMid) / 12;
-    let renditaPareggioMin_eff = (taxesMin + taxesHomeMin + generalCostsMin - startupCommissionsMin + totRata - downpaymentQuantityMin) / 12;
-    let renditaPareggioMax_eff = (taxesMax + taxesHomeMax + generalCostsMax - startupCommissionsMax + totRata - downpaymentQuantityMax) / 12;
+    let renditaPareggioMid_eff = (taxesHomeMid + generalCostsEmptyMid + totRata - downpaymentQuantityMid * 0.72) / 12;
+    let renditaPareggioMin_eff = (taxesHomeMin + generalCostsEmptyMin + totRata - downpaymentQuantityMin * 0.72) / 12;
+    let renditaPareggioMax_eff = (taxesHomeMax + generalCostsEmptyMax + totRata - downpaymentQuantityMax * 0.72) / 12;
 
-    const canvas = document.getElementById('myChart');
+    const npvMid = (utiliTotaliNettiMid / years + downpaymentQuantityMid * 0.72) * (1 - Math.pow(1 + totalRate, -years)) / totalRate - totaleFinanziabileMid;
+    const npvMin = (utiliTotaliNettiMin / years + downpaymentQuantityMin * 0.72) * (1 - Math.pow(1 + totalRate, -years)) / totalRate - totaleFinanziabileMin;
+    const npvMax = (utiliTotaliNettiMax / years + downpaymentQuantityMax * 0.72) * (1 - Math.pow(1 + totalRate, -years)) / totalRate - totaleFinanziabileMax;
 
-    // Check if the canvas element exists and if there's an associated Chart instance
-    if (canvas && Chart.getChart(canvas)) {
-        // If there's an existing Chart instance, destroy it
-        Chart.getChart(canvas).destroy();
-    }
+    const npvMid_eff = (utiliTotaliNettiMid / years + downpaymentQuantityMid * 0.72) * (1 - Math.pow(1 + totalRate, -years)) / totalRate - totaleFinanziato;
+    const npvMin_eff = (utiliTotaliNettiMin / years + downpaymentQuantityMin * 0.72) * (1 - Math.pow(1 + totalRate, -years)) / totalRate - totaleFinanziato;
+    const npvMax_eff = (utiliTotaliNettiMax / years + downpaymentQuantityMax * 0.72) * (1 - Math.pow(1 + totalRate, -years)) / totalRate - totaleFinanziato;
 
-    // Now create the new Chart instance
-    const ctx = canvas.getContext('2d');
-    const myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Finanziamento', 'Ristrutturazione', 'Gestione immobiliare'],
-            datasets: [
-            {
-                label: 'Worst Case',
-                data: [shareLendMax, shareRestructureMax, shareManagingMax],
-                backgroundColor: 'rgba(175, 18, 90, 0.5)',
-                borderColor: 'rgba(175, 18, 90, 0.5)',
-                borderWidth: 1
-            },
-            {
-                label: 'Base Case',
-                data: [shareLend, shareRestructure, shareManaging],
-                backgroundColor: '#64A6BD',
-                borderColor: '#64A6BD',
-                borderWidth: 1
-            }, {
-                label: 'Best Case',
-                data: [shareLendMin, shareRestructureMin, shareManagingMin],
-                backgroundColor: 'rgba(96, 219, 185, 0.7)',
-                borderColor: 'rgba(96, 219, 185, 0.7)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    ticks: {
-                        beginAtZero: true,
-                        callback: function(value) {
-                            return value.toFixed(2) + '%';
-                        },
-                        font: {
-                            family: 'Roboto Mono',
-                            size: 8,
-                            color: '#000'
-                        }
-                    }
-                },
-                x: {
-                    ticks: {
-                        font: {
-                            family: 'Roboto Mono',
-                            size: 10,
-                            color: '#000'
-                        }
-                    }
-                }
-            },
-            plugins: {
-                legend: {
-                    labels: {
-                        font: {
-                            family: 'Roboto Mono',
-                            size: 7,
-                            color: '#000'
-                        }
-                    }
-                }
-            }
-        }
-    });
+    const utileImmobileMid = expectedAnnualProfitMid + totalStartupTaxesMid + notaio;
+    const utileImmobileMin = expectedAnnualProfitMin + totalStartupTaxesMin + notaio;
+    const utileImmobileMax = expectedAnnualProfitMax + totalStartupTaxesMax + notaio;
 
     function calculateDigitalPutTotalPV(S, K, sigma, r, maturity, step, dividendYield) {
         let totalPV = 0;
@@ -682,33 +622,31 @@ function calculateValues() {
         <strong><p>Totale entrate annuali previste: ${revenuesMid.toFixed(2)}€ (${revenuesMin.toFixed(2)}€/${revenuesMax.toFixed(2)}€)</p></strong>
         <br>
         <p style="font-weight: 500; padding-top: 5px;">Uscite generali: ${generalCostsMid.toFixed(2)}€ (${generalCostsMin.toFixed(2)}€/${generalCostsMax.toFixed(2)}€)</p>
+        <em><p>&emsp;&#8226 Costo atto notarile per usufrutto: ${notaio.toFixed(2)}€ (${notaio.toFixed(2)}€/${notaio.toFixed(2)}€)</p></em>
         <em><p>&emsp;&#8226 Spese annuali per utenze, condominio e varie: ${feesMid.toFixed(2)}€ (${feesMin.toFixed(2)}€/${feesMax.toFixed(2)}€)</p></em>
         <em><p>&emsp;&#8226 Spese gestione immobiliare: ${managementCostsMid.toFixed(2)}€ (${managementCostsMin.toFixed(2)}€/${managementCostsMax.toFixed(2)}€)</p></em>
-        <em><p>&emsp;&#8226 Commissioni startup: ${startupCommissionsMid.toFixed(2)}€ (${startupCommissionsMin.toFixed(2)}€/${startupCommissionsMax.toFixed(2)}€)</p></em>
         <p style="font-weight: 500; padding-top: 5px;">Tasse ed imposte: ${totalTaxesMid.toFixed(2)} (${totalTaxesMin.toFixed(2)}€/${totalTaxesMax.toFixed(2)}€)</p>
-        <em><p>&emsp;&#8226 Cedolare secca: ${taxesMid.toFixed(2)}€ (${taxesMin.toFixed(2)}€/${taxesMax.toFixed(2)}€)</p></em>
         <em><p>&emsp;&#8226 Tassa rifiuti e tassa possesso fabbricati: ${taxesHomeMid.toFixed(2)}€ (${taxesHomeMin.toFixed(2)}€/${taxesHomeMax.toFixed(2)}€)</p></em>
+        <em><p>&emsp;&#8226 IRES + IRAP: ${totalStartupTaxesMid.toFixed(2)}€ (${totalStartupTaxesMin.toFixed(2)}€/${totalStartupTaxesMax.toFixed(2)}€)</p></em>
+
         <strong><p>Totale uscite annuali previste: ${totalCostsMid.toFixed(2)}€ (${totalCostsMin.toFixed(2)}€/${totalCostsMax.toFixed(2)}€)</p></strong>
         <br>
         <p>Utile annuale previsto: ${expectedAnnualProfitMid.toFixed(2)}€ (${expectedAnnualProfitMin.toFixed(2)}€/${expectedAnnualProfitMax.toFixed(2)}€)</p>
         <p>Quota entrate richiesta dal proprietario: ${ownerFeeMid.toFixed(2)}€ (${ownerFeeMin.toFixed(2)}€/${ownerFeeMax.toFixed(2)}€)</p>
-        <p>Downpayment del finanziamento: ${downpaymentQuantityMid.toFixed(2)}€ (${downpaymentQuantityMin.toFixed(2)}€/${downpaymentQuantityMax.toFixed(2)}€)</p>
+        <p>Quota startup: ${utileRichiestoMid.toFixed(2)}€ (${utileRichiestoMin.toFixed(2)}€/${utileRichiestoMax.toFixed(2)}€)</p>
         <strong><p>Utile annuale destinato al rimborso prestito: ${utileSpendibileMid.toFixed(2)}€ (${utileSpendibileMin.toFixed(2)}€/${utileSpendibileMax.toFixed(2)}€)</p></strong>
         <br>
-        <p style="font-size: 0.95rem;">Totale lavori finanziabili: <strong>${totaleFinanziabileMid.toFixed(2)}€ (${totaleFinanziabileMin.toFixed(2)}€/${totaleFinanziabileMax.toFixed(2)}€)</strong></p>
+        <p style="font-size: 0.75rem;">Totale finanziabile: <strong>${totaleFinanziabileMid.toFixed(2)}€ (${totaleFinanziabileMin.toFixed(2)}€/${totaleFinanziabileMax.toFixed(2)}€)</strong></p>
+        <p style="font-size: 0.95rem;">Totale lavori finanziabili: <strong>${totaleFinanziabileVeroMid.toFixed(2)}€ (${totaleFinanziabileVeroMin.toFixed(2)}€/${totaleFinanziabileVeroMax.toFixed(2)}€)</strong></p>
         <!-- Add more calculated values here -->
     `);
 
     // Update output placeholders
     $('#startupGains').html(`
-        <p>+ Ricavi dal prestito: ${lendGainMid.toFixed(2)}€ (${lendGainMin.toFixed(2)}€/${lendGainMax.toFixed(2)}€)</p>
-        <p>+ Ricavi sulla ristrutturazione: ${restructureGainMid.toFixed(2)}€ (${restructureGainMin.toFixed(2)}€/${restructureGainMax.toFixed(2)}€)</p>
-        <p>+ Ricavi sulla gestione immobiliare: ${managingCommissionsMid.toFixed(2)}€ (${managingCommissionsMin.toFixed(2)}€/${managingCommissionsMax.toFixed(2)}€)</p>
-        <p style="font-size: 0.74rem;">= Totale ricavi: <strong>${totalGainMid.toFixed(2)}€ (${totalGainMin.toFixed(2)}€/${totalGainMax.toFixed(2)}€)</strong></p>
-        <p>- Costi operativi e accantonamenti: ${costiOperativiMid.toFixed(2)}€ (${costiOperativiMin.toFixed(2)}€/${costiOperativiMax.toFixed(2)}€)</p>
-        <p style="font-size: 0.74rem;">= Utili lordi: <strong>${utiliLordiMid.toFixed(2)}€ (${utiliLordiMin.toFixed(2)}€/${utiliLordiMax.toFixed(2)}€)</strong></p>
-        <p>- Imposte: ${imposteMid.toFixed(2)}€ (${imposteMin.toFixed(2)}€/${imposteMax.toFixed(2)}€)</p>
-        <p style="font-size: 0.95rem;">= Utili netti della startup: <strong>${utiliNettiMid.toFixed(2)}€ (${utiliNettiMin.toFixed(2)}€/${utiliNettiMax.toFixed(2)}€)</strong></p>
+        <p>Ricavi lordi totali: ${ricaviTotaliMid.toFixed(2)}€ (${ricaviTotaliMin.toFixed(2)}€/${ricaviTotaliMax.toFixed(2)}€)</p>
+        <p>Utili netti totali: ${utiliTotaliNettiMid.toFixed(2)}€ (${utiliTotaliNettiMin.toFixed(2)}€/${utiliTotaliNettiMax.toFixed(2)}€)</p>
+        <p>Totale finanziato: ${totaleFinanziabileMid.toFixed(2)}€ (${totaleFinanziabileMin.toFixed(2)}€/${totaleFinanziabileMax.toFixed(2)}€)</p>
+        <p style="font-size: 0.95rem;">Net Present Value: <strong>${npvMid.toFixed(2)}€ (${npvMin.toFixed(2)}€/${npvMax.toFixed(2)}€)</strong></p>
     `);
 
     // Update output placeholders
@@ -725,8 +663,8 @@ function calculateValues() {
 
     // Update output placeholders
     $('#lavorifinanziati').html(`
-        <center><p style="font-size: 2rem;">${totaleFinanziabileMid.toFixed(2)}€</p></center>
-        <center><p style="font-size: 0.8rem;">(${totaleFinanziabileMin.toFixed(2)}€/${totaleFinanziabileMax.toFixed(2)}€)</p></center>
+        <center><p style="font-size: 2rem;">${totaleFinanziabileVeroMid.toFixed(2)}€</p></center>
+        <center><p style="font-size: 0.8rem;">(${totaleFinanziabileVeroMin.toFixed(2)}€/${totaleFinanziabileVeroMax.toFixed(2)}€)</p></center>
     `);
 
     // Update output placeholders
@@ -736,15 +674,15 @@ function calculateValues() {
     `);
 
     // Update output placeholders
+    $('#utileprevisto').html(`
+        <center><p style="font-size: 2rem;">${utileImmobileMid.toFixed(2)}€</p></center>
+        <center><p style="font-size: 0.8rem;">(${utileImmobileMin.toFixed(2)}€/${utileImmobileMax.toFixed(2)}€)</p></center>
+    `);
+
+    // Update output placeholders
     $('#por').html(`
         <center><p style="font-size: 2rem;">${profitOnRevenues.toFixed(2)}%</p></center>
         <center><p style="font-size: 0.8rem;">(${profitOnRevenuesMin.toFixed(2)}%/${profitOnRevenuesMax.toFixed(2)}%)</p></center>
-    `);
-
-     // Update output placeholders
-    $('#roii').html(`
-        <center><p style="font-size: 2rem;">${returnOnInvestment.toFixed(2)}%</p></center>
-        <center><p style="font-size: 0.8rem;">(${returnOnInvestmentMin.toFixed(2)}%/${returnOnInvestmentMax.toFixed(2)}%)</p></center>
     `);
 
     // Update output placeholders
@@ -791,41 +729,52 @@ function calculateValues() {
 
     // Update output placeholders
     $('#recupero_capitale').html(`
-        <center><p style="font-size: 2rem; margin-bottom: 0px; padding-bottom: 0px;">${recuperoCapitaleMid.toFixed(2)}</p></center>
-        <center><p style="font-size: 1.5rem;">anni</p></center>
+        <center><p style="font-size: 2rem;">${recuperoCapitaleMid.toFixed(2)} anni</p></center>
         <center><p style="font-size: 0.8rem;">(${recuperoCapitaleMin.toFixed(2)} anni/${recuperoCapitaleMax.toFixed(2)} anni)</p></center>
     `);
 
     // Update output placeholders
+    $('#recupero_capitale_prop').html(`
+        <center><p style="font-size: 2rem;">${recuperoCapitalePropMid.toFixed(2)} anni</p></center>
+        <center><p style="font-size: 0.8rem;">(${recuperoCapitalePropMin.toFixed(2)} anni/${recuperoCapitalePropMax.toFixed(2)} anni)</p></center>
+    `);
+
+    // Update output placeholders
     $('#coeffVariazione').html(`
-        <p style="font-size: 0.65rem; margin-top: 0px; padding-top: 2px; margin-left: 20px; margin-bottom: 0px; padding-bottom: 2px;"><strong>Deviazione Standard:</strong></p>
-        <p style="font-size: 1.5rem; margin-left: 20px; margin-bottom: 0px; padding-bottom: 10px;">${devStand.toFixed(2)}€</p>
-        <p style="font-size: 0.65rem; margin-left: 20px; margin-bottom: 0px; padding-bottom: 0px;""><strong>Coefficiente di Variazione:</strong></p>
-        <p style="font-size: 1.5rem; margin-left: 20px; margin-bottom: 7px; padding-bottom: 0px;">${coeffVar.toFixed(2)}%</p>
+        <div class="row">
+            <div class="col-md-6" style="text-align: center;">
+                <p style="font-size: 0.7rem; margin-top: 0px; padding-top: 2px; margin-left: 20px; margin-bottom: 10px; padding-bottom: 2px;"><strong>Deviazione Standard:</strong></p>
+                <p style="font-size: 2rem; margin-left: 20px; margin-bottom: 0px; padding-bottom: 10px;">${devStand.toFixed(2)}€</p>
+            </div>
+            <div class="col-md-6" style="text-align: center;">
+                <p style="font-size: 0.7rem; margin-top: 0px; padding-top: 2px; margin-left: 20px; margin-bottom: 10px; padding-bottom: 2px;"><strong>Coefficiente di Variazione:</strong></p>
+                <p style="font-size: 2rem; margin-left: 20px; margin-bottom: 7px; padding-bottom: 0px;">${coeffVar.toFixed(2)}%</p>
+            </div>
+        </div>
     `);
 
     // Update output placeholders
     $('#ricavi_eff').html(`
-        <center><p style="font-size: 2rem;">${totalGainMid_eff.toFixed(2)}€</p></center>
-        <center><p style="font-size: 0.8rem;">(${totalGainMin_eff.toFixed(2)}€/${totalGainMax_eff.toFixed(2)}€)</p></center>
+        <center><p style="font-size: 2rem;">${ricaviTotaliMid.toFixed(2)}€</p></center>
+        <center><p style="font-size: 0.8rem;">(${ricaviTotaliMin.toFixed(2)}€/${ricaviTotaliMax.toFixed(2)}€)</p></center>
     `);
 
     // Update output placeholders
     $('#costi_eff').html(`
-        <center><p style="font-size: 2rem;">${costiOperativiMid_eff.toFixed(2)}€</p></center>
-        <center><p style="font-size: 0.8rem;">(${costiOperativiMin_eff.toFixed(2)}€/${costiOperativiMax_eff.toFixed(2)}€)</p></center>
+        <center><p style="font-size: 2rem;">${costiTotaliMid.toFixed(2)}€</p></center>
+        <center><p style="font-size: 0.8rem;">(${costiTotaliMin.toFixed(2)}€/${costiTotaliMax.toFixed(2)}€)</p></center>
     `);
 
     // Update output placeholders
     $('#utililordi_eff').html(`
-        <center><p style="font-size: 2rem;">${utiliLordiMid_eff.toFixed(2)}€</p></center>
-        <center><p style="font-size: 0.8rem;">(${utiliLordiMin_eff.toFixed(2)}€/${utiliLordiMax_eff.toFixed(2)}€)</p></center>
+        <center><p style="font-size: 2rem;">${utiliTotaliLordiMid.toFixed(2)}€</p></center>
+        <center><p style="font-size: 0.8rem;">(${utiliTotaliLordiMin.toFixed(2)}€/${utiliTotaliLordiMax.toFixed(2)}€)</p></center>
     `);
 
     // Update output placeholders
     $('#utilinetti_eff').html(`
-        <center><p style="font-size: 2rem;">${utiliNettiMid_eff.toFixed(2)}€</p></center>
-        <center><p style="font-size: 0.8rem;">(${utiliNettiMin_eff.toFixed(2)}€/${utiliNettiMax_eff.toFixed(2)}€)</p></center>
+        <center><p style="font-size: 2rem;">${utiliTotaliNettiMid.toFixed(2)}€</p></center>
+        <center><p style="font-size: 0.8rem;">(${utiliTotaliNettiMin.toFixed(2)}€/${utiliTotaliNettiMax.toFixed(2)}€)</p></center>
     `);
 
     // Update output placeholders
@@ -866,17 +815,21 @@ function calculateValues() {
 
     // Update output placeholders
     $('#recupero_capitale_eff').html(`
-        <center><p style="font-size: 2rem; margin-bottom: 0px; padding-bottom: 0px;">${recuperoCapitaleMid_eff.toFixed(2)}</p></center>
-        <center><p style="font-size: 1.5rem;">anni</p></center>
+        <center><p style="font-size: 2rem;">${recuperoCapitaleMid_eff.toFixed(2)} anni</p></center>
         <center><p style="font-size: 0.8rem;">(${recuperoCapitaleMin_eff.toFixed(2)} anni/${recuperoCapitaleMax_eff.toFixed(2)} anni)</p></center>
     `);
 
     // Update output placeholders
-    $('#coeffVariazione_eff').html(`
-        <p style="font-size: 0.65rem; margin-top: 0px; padding-top: 2px; margin-left: 20px; margin-bottom: 0px; padding-bottom: 2px;"><strong>Deviazione Standard:</strong></p>
-        <p style="font-size: 1.5rem; margin-left: 20px; margin-bottom: 0px; padding-bottom: 10px;">${devStand_eff.toFixed(2)}€</p>
-        <p style="font-size: 0.65rem; margin-left: 20px; margin-bottom: 0px; padding-bottom: 0px;""><strong>Coefficiente di Variazione:</strong></p>
-        <p style="font-size: 1.5rem; margin-left: 20px; margin-bottom: 7px; padding-bottom: 0px;">${coeffVar_eff.toFixed(2)}%</p>
+    $('#recupero_capitale_prop_eff').html(`
+        <center><p style="font-size: 2rem;">${recuperoCapitalePropMid_eff.toFixed(2)} anni</p></center>
+        <center><p style="font-size: 0.8rem;">(${recuperoCapitalePropMin_eff.toFixed(2)} anni/${recuperoCapitalePropMax_eff.toFixed(2)} anni)</p></center>
+    `);
+
+        // Update output placeholders
+    $('#npv').html(`
+        <center><p style="font-size: 0.75rem; padding-bottom: 10px;">NPV effettivo del progetto</p></center>
+        <center><p style="font-size: 2rem;">${npvMid_eff.toFixed(2)}€</p></center>
+        <center><p style="font-size: 0.8rem;">(${npvMin_eff.toFixed(2)}€/${npvMax_eff.toFixed(2)}€)</p></center>
     `);
 }
 
@@ -910,6 +863,7 @@ function calculateValues_finan() {
     ];
 
     const mq = parseFloat($('#mqInput').val());
+    const quotaStartup = 0.15;
 
     let letti = parseFloat(document.getElementById("lettiInput").value);
 
@@ -984,54 +938,73 @@ function calculateValues_finan() {
     // Retrieve input values
     const years = parseFloat($('#yearsInput').val());
     const grossAnnualIncome = grossMonthlyIncome * 12;
-    const uncertaintyPer = 0.1;
+    const uncertaintyPer = 0.05;
     const revenuesMin = grossAnnualIncome * (1 - uncertaintyPer);
     const revenuesMax = grossAnnualIncome * (1 + uncertaintyPer);
-    const revenuesMid = revenuesMin + (revenuesMax - revenuesMin) / 2;
+    const revenuesMid = grossAnnualIncome;
+    const notaio = parseFloat($('#notaio').val()) / years;
 
-    const cedolareSeccaRate = 0.21;
-    const tasseCedolareMin = revenuesMin * cedolareSeccaRate
-    const tasseCedolareMax = revenuesMax * cedolareSeccaRate
-    const monthlyCondoFeesMin = parseFloat($('#condInput').val()) / 12;
-    const monthlyCondoFeesMax = parseFloat($('#condInput').val()) / 12;
-    const monthlyUtilitiesMin = mq * 22 * (1 + uncertaintyPer) / 12;
-    const monthlyUtilitiesMax = mq * 22 * (1 - uncertaintyPer) / 12;
-    const monthlyMiscellaneousCostsMin = 50 * 12 * (1 + uncertaintyPer) / 12;
-    const monthlyMiscellaneousCostsMax = 50 * 12 * (1 - uncertaintyPer) / 12;
-    const propertyManagementFeesMin = 50 * 12 * (1 + uncertaintyPer) / 12;
-    const propertyManagementFeesMax = 50 * 12 * (1 - uncertaintyPer) / 12;
-    const secondHomeTaxMin = parseFloat($('#rendInput').val()) * 1.05 * 160 * 10.6 / 1000;
-    const secondHomeTaxMax = secondHomeTaxMin;
-    const secondHomeTaxMid = secondHomeTaxMin;
+    const monthlyCondoFeesMid = parseFloat($('#condInput').val()) / 12;
+    const monthlyCondoFeesMax = monthlyCondoFeesMid;
+    const monthlyCondoFeesMin = monthlyCondoFeesMid;
 
-    const wasteCollectionTaxMin = mq * 3.5;
-    const wasteCollectionTaxMax = wasteCollectionTaxMin;
+    const monthlyUtilitiesMid = mq * 22 / 12;
+    const monthlyUtilitiesMin = monthlyUtilitiesMid * (1 + uncertaintyPer);
+    const monthlyUtilitiesMax = monthlyUtilitiesMid * (1 - uncertaintyPer);
+
+    const monthlyMiscellaneousCostsMid = 50;
+    const monthlyMiscellaneousCostsMin = monthlyMiscellaneousCostsMid * (1 + uncertaintyPer);
+    const monthlyMiscellaneousCostsMax = monthlyMiscellaneousCostsMid * (1 - uncertaintyPer);
+
+    const propertyManagementFeesMid = 200;
+    const propertyManagementFeesMin = propertyManagementFeesMid * (1 + uncertaintyPer);
+    const propertyManagementFeesMax = propertyManagementFeesMid * (1 - uncertaintyPer);
+
+    const secondHomeTaxMid = parseFloat($('#rendInput').val()) * 1.05 * 160 * 10.6 / 1000;
+    const secondHomeTaxMax = secondHomeTaxMid;
+    const secondHomeTaxMin = secondHomeTaxMid;
+
+    const wasteCollectionTaxMid = mq * 3.5;
+    const wasteCollectionTaxMin = wasteCollectionTaxMid;
+    const wasteCollectionTaxMax = wasteCollectionTaxMid;
+
     const desiredNetIncomePercentage = parseFloat($('#desired_net_income_percentageInput').val());
 
     const riskFreeRate = parseFloat($('#risk_free_rate').val());
     const premioRischio = parseFloat($('#premio_rischio').val());
-    const restructure_fees = parseFloat($('#restructure_fees').val())/100;
-    const propmanaging_fees = parseFloat($('#propmanaging_fees').val())/100;
+
+    const utileRichiestoMid = revenuesMid * quotaStartup;
+    const utileRichiestoMin = revenuesMin * quotaStartup;
+    const utileRichiestoMax = revenuesMax * quotaStartup;
 
     // Perform calculations
-    const taxesMin = tasseCedolareMin
-    const taxesMax = tasseCedolareMax
-    const taxesMid = tasseCedolareMin + (tasseCedolareMax - tasseCedolareMin)/2
     const taxesHomeMin = secondHomeTaxMin + wasteCollectionTaxMin;
     const taxesHomeMax = secondHomeTaxMax + wasteCollectionTaxMax;
-    const taxesHomeMid = taxesHomeMin + (taxesHomeMax - taxesHomeMin)/2
-    const totalTaxesMin = tasseCedolareMin + taxesHomeMin;
-    const totalTaxesMax = tasseCedolareMax + taxesHomeMax;
-    const totalTaxesMid = totalTaxesMin + (totalTaxesMax - totalTaxesMin)/2;
+    const taxesHomeMid = secondHomeTaxMid + wasteCollectionTaxMid;
+
+    const feesMid = (monthlyCondoFeesMid + monthlyUtilitiesMid + monthlyMiscellaneousCostsMid) * 12;
     const feesMin = (monthlyCondoFeesMin + monthlyUtilitiesMin + monthlyMiscellaneousCostsMin) * 12;
     const feesMax = (monthlyCondoFeesMax + monthlyUtilitiesMax + monthlyMiscellaneousCostsMax) * 12;
-    const feesMid = feesMin + (feesMax - feesMin)/2;
+
     const fixedcostMin = (monthlyCondoFeesMin + 100) * 12 + taxesHomeMin;
     const fixedcostMax = (monthlyCondoFeesMax + 100) * 12 + taxesHomeMax;
-    const fixedcostMid = fixedcostMin + (fixedcostMax - fixedcostMin)/2;
+    const fixedcostMid = (monthlyCondoFeesMid + 100) * 12 + taxesHomeMid;
+
     const condotaxMin = fixedcostMin - 100 * 12;
     const condotaxMax = fixedcostMin - 100 * 12;
     const condotaxMid = fixedcostMin - 100 * 12;
+
+    const managementCostsMid = propertyManagementFeesMid * 12;
+    const managementCostsMin = propertyManagementFeesMin * 12;
+    const managementCostsMax = propertyManagementFeesMax * 12;
+
+    const totalStartupTaxesMid = (revenuesMid - feesMid - managementCostsMid) * 0.28
+    const totalStartupTaxesMin = (revenuesMin - feesMin - managementCostsMin) * 0.28
+    const totalStartupTaxesMax = (revenuesMax - feesMax - managementCostsMax) * 0.28
+
+    const totalTaxesMid = totalStartupTaxesMid + taxesHomeMid;
+    const totalTaxesMin = totalStartupTaxesMin + taxesHomeMin;
+    const totalTaxesMax = totalStartupTaxesMax + taxesHomeMax;
 
     const selectedCard3 = document.querySelector('.selezionata3');
     let downpayment = null;
@@ -1058,15 +1031,10 @@ function calculateValues_finan() {
         downpaymentQuantityMid = taxesHomeMid;
     }
 
-    const managementCostsMin = propertyManagementFeesMin * 12;
-    const managementCostsMax = propertyManagementFeesMax * 12;
-    const managementCostsMid = managementCostsMin + (managementCostsMax - managementCostsMin)/2;
-    const startupCommissionsMin = revenuesMin * propmanaging_fees;
-    const startupCommissionsMax = revenuesMax * propmanaging_fees;
-    const startupCommissionsMid = startupCommissionsMin + (startupCommissionsMax - startupCommissionsMin)/2
-    const generalCostsMin = feesMin + managementCostsMin + startupCommissionsMin;
-    const generalCostsMax = feesMax + managementCostsMax + startupCommissionsMax;
+    const generalCostsMin = feesMin + managementCostsMin + notaio;
+    const generalCostsMax = feesMax + managementCostsMax + notaio;
     const generalCostsMid = generalCostsMin + (generalCostsMax - generalCostsMin)/2;
+
     const totalCostsMin = totalTaxesMin + generalCostsMin;
     const totalCostsMax = totalTaxesMax + generalCostsMax;
     const totalCostsMid = totalCostsMin + (totalCostsMax - totalCostsMin)/2;
@@ -1076,8 +1044,8 @@ function calculateValues_finan() {
     const ownerFeeMin = expectedAnnualProfitMin * (desiredNetIncomePercentage / 100);
     const ownerFeeMax = expectedAnnualProfitMax * (desiredNetIncomePercentage / 100);
     const ownerFeeMid = expectedAnnualProfitMid * (desiredNetIncomePercentage / 100);
-    const utileSpendibileMin = expectedAnnualProfitMin - ownerFeeMin + downpaymentQuantityMin;
-    const utileSpendibileMax = expectedAnnualProfitMax - ownerFeeMax + downpaymentQuantityMax;
+    const utileSpendibileMin = expectedAnnualProfitMin - ownerFeeMin + downpaymentQuantityMin - utileRichiestoMid;
+    const utileSpendibileMax = expectedAnnualProfitMax - ownerFeeMax + downpaymentQuantityMax - utileRichiestoMax;
     const utileSpendibileMid = utileSpendibileMin + (utileSpendibileMax - utileSpendibileMin)/2;
     const totalRate = (riskFreeRate + premioRischio) / 100;
     const rfRate = riskFreeRate / 100;
