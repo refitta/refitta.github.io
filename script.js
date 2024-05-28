@@ -281,7 +281,7 @@ $(document).ready(function () {
         calculateValues_finan();
     });
 
-    $('#irpef').on('input', function () {
+    $('#monthlyRevenues').on('input', function () {
         calculateValues_finan();
     });
 
@@ -403,6 +403,7 @@ function calculateValues() {
     const totalCostsMin = totalTaxesMin + generalCostsMin;
     const totalCostsMax = totalTaxesMax + generalCostsMax;
     const totalCostsMid = totalTaxesMid + generalCostsMid;
+
     const expectedAnnualProfitMin = revenuesMin - totalCostsMin;
     const expectedAnnualProfitMax = revenuesMax - totalCostsMax;
     const expectedAnnualProfitMid = revenuesMid - totalCostsMid;
@@ -836,30 +837,30 @@ function calculateValues() {
 function calculateValues_finan() {
 
     const database = [
-        { "N. letti": 1, "N. bagni": 1, "occupazione media": "57%", "Rendita mensile": 1022.02 },
-        { "N. letti": 2, "N. bagni": 1, "occupazione media": "52%", "Rendita mensile": 1391.08 },
-        { "N. letti": 3, "N. bagni": 1, "occupazione media": "43%", "Rendita mensile": 1684.41 },
-        { "N. letti": 4, "N. bagni": 1, "occupazione media": "45%", "Rendita mensile": 1750.46 },
-        { "N. letti": 5, "N. bagni": 1, "occupazione media": "57%", "Rendita mensile": 2866.18 },
-        { "N. letti": 6, "N. bagni": 1, "occupazione media": "48%", "Rendita mensile": 3971.98 },
-        { "N. letti": 1, "N. bagni": 2, "occupazione media": "57%", "Rendita mensile": 1022.02 },
-        { "N. letti": 2, "N. bagni": 2, "occupazione media": "52%", "Rendita mensile": 1448.64 },
-        { "N. letti": 3, "N. bagni": 2, "occupazione media": "44%", "Rendita mensile": 1889.15 },
-        { "N. letti": 4, "N. bagni": 2, "occupazione media": "46%", "Rendita mensile": 1987.29 },
-        { "N. letti": 5, "N. bagni": 2, "occupazione media": "57%", "Rendita mensile": 2876.60 },
-        { "N. letti": 6, "N. bagni": 2, "occupazione media": "47%", "Rendita mensile": 5172.56 },
-        { "N. letti": 1, "N. bagni": 3, "occupazione media": "54%", "Rendita mensile": 1188.97 },
-        { "N. letti": 2, "N. bagni": 3, "occupazione media": "50%", "Rendita mensile": 1744.47 },
-        { "N. letti": 3, "N. bagni": 3, "occupazione media": "43%", "Rendita mensile": 2205.78 },
-        { "N. letti": 4, "N. bagni": 3, "occupazione media": "45%", "Rendita mensile": 2317.28 },
-        { "N. letti": 5, "N. bagni": 3, "occupazione media": "52%", "Rendita mensile": 3069.93 },
-        { "N. letti": 6, "N. bagni": 3, "occupazione media": "44%", "Rendita mensile": 4751.46 },
-        { "N. letti": 1, "N. bagni": 4, "occupazione media": "50%", "Rendita mensile": 1651.64 },
-        { "N. letti": 2, "N. bagni": 4, "occupazione media": "46%", "Rendita mensile": 1876.85 },
-        { "N. letti": 3, "N. bagni": 4, "occupazione media": "47%", "Rendita mensile": 2015.39 },
-        { "N. letti": 4, "N. bagni": 4, "occupazione media": "45%", "Rendita mensile": 2417.29 },
-        { "N. letti": 5, "N. bagni": 4, "occupazione media": "49%", "Rendita mensile": 3548.27 },
-        { "N. letti": 6, "N. bagni": 4, "occupazione media": "44%", "Rendita mensile": 4743.23 }
+        {'N. letti': 1, 'N. bagni': 1, 'Occupazione media': 0.5695, 'Conservativi - Refitta': 1022.0247, 'Mediani - Refitta': 1582.473, 'Medi - AirDNA': 1949.7 },
+        {'N. letti': 2, 'N. bagni': 1, 'Occupazione media': 0.5185, 'Conservativi - Refitta': 1391.08365, 'Mediani - Refitta': 2153.727, 'Medi - AirDNA': 2653.5 },
+        {'N. letti': 3, 'N. bagni': 1, 'Occupazione media': 0.4335, 'Conservativi - Refitta': 1684.4076, 'Mediani - Refitta': 2607.732, 'Medi - AirDNA': 3213. },
+        {'N. letti': 4, 'N. bagni': 1, 'Occupazione media': 0.4505, 'Conservativi - Refitta': 1750.4628, 'Mediani - Refitta': 2709.996, 'Medi - AirDNA': 3339. },
+        {'N. letti': 5, 'N. bagni': 1, 'Occupazione media': 0.5695, 'Conservativi - Refitta': 2866.1796, 'Mediani - Refitta': 4437.276, 'Medi - AirDNA': 5467.2 },
+        {'N. letti': 6, 'N. bagni': 1, 'Occupazione media': 0.476, 'Conservativi - Refitta': 3971.982, 'Mediani - Refitta': 6149.472, 'Medi - AirDNA': 7576.8 },
+        {'N. letti': 1, 'N. bagni': 2, 'Occupazione media': 0.5695, 'Conservativi - Refitta': 1022.0247, 'Mediani - Refitta': 1582.473, 'Medi - AirDNA': 1949.7 },
+        {'N. letti': 2, 'N. bagni': 2, 'Occupazione media': 0.5185, 'Conservativi - Refitta': 1448.63715, 'Mediani - Refitta': 2242.665, 'Medi - AirDNA': 2763.3 },
+        {'N. letti': 3, 'N. bagni': 2, 'Occupazione media': 0.442, 'Conservativi - Refitta': 1889.1522, 'Mediani - Refitta': 2924.688, 'Medi - AirDNA': 3603.6 },
+        {'N. letti': 4, 'N. bagni': 2, 'Occupazione media': 0.459, 'Conservativi - Refitta': 1987.2864, 'Mediani - Refitta': 3076.704, 'Medi - AirDNA': 3790.8 },
+        {'N. letti': 5, 'N. bagni': 2, 'Occupazione media': 0.5695, 'Conservativi - Refitta': 2876.60145, 'Mediani - Refitta': 4453.557, 'Medi - AirDNA': 5487.3 },
+        {'N. letti': 6, 'N. bagni': 2, 'Occupazione media': 0.4675, 'Conservativi - Refitta': 5172.56025, 'Mediani - Refitta': 8008.275, 'Medi - AirDNA': 9867. },
+        {'N. letti': 1, 'N. bagni': 3, 'Occupazione media': 0.5355, 'Conservativi - Refitta': 1188.97065, 'Mediani - Refitta': 1840.671, 'Medi - AirDNA': 2268 },
+        {'N. letti': 2, 'N. bagni': 3, 'Occupazione media': 0.5015, 'Conservativi - Refitta': 1744.46775, 'Mediani - Refitta': 2700.666, 'Medi - AirDNA': 3327.6 },
+        {'N. letti': 3, 'N. bagni': 3, 'Occupazione media': 0.4335, 'Conservativi - Refitta': 2205.77805, 'Mediani - Refitta': 3414.96, 'Medi - AirDNA': 4207.5 },
+        {'N. letti': 4, 'N. bagni': 3, 'Occupazione media': 0.4505, 'Conservativi - Refitta': 2317.2819, 'Mediani - Refitta': 3587.517, 'Medi - AirDNA': 4420.2 },
+        {'N. letti': 5, 'N. bagni': 3, 'Occupazione media': 0.5185, 'Conservativi - Refitta': 3069.9348, 'Mediani - Refitta': 4752.876, 'Medi - AirDNA': 5856 },
+        {'N. letti': 6, 'N. bagni': 3, 'Occupazione media': 0.442, 'Conservativi - Refitta': 4751.4558, 'Mediani - Refitta': 7356.18, 'Medi - AirDNA': 9063.6 },
+        {'N. letti': 1, 'N. bagni': 4, 'Occupazione media': 0.5015, 'Conservativi - Refitta': 1651.6401, 'Mediani - Refitta': 2557.119, 'Medi - AirDNA': 3150.6 },
+        {'N. letti': 2, 'N. bagni': 4, 'Occupazione media': 0.459, 'Conservativi - Refitta': 1876.851, 'Mediani - Refitta': 2905.794, 'Medi - AirDNA': 3580.2 },
+        {'N. letti': 3, 'N. bagni': 4, 'Occupazione media': 0.4675, 'Conservativi - Refitta': 2015.3925, 'Mediani - Refitta': 3120.315, 'Medi - AirDNA': 3844.5 },
+        {'N. letti': 4, 'N. bagni': 4, 'Occupazione media': 0.4505, 'Conservativi - Refitta': 2417.2929, 'Mediani - Refitta': 3742.383, 'Medi - AirDNA': 4611. },
+        {'N. letti': 5, 'N. bagni': 4, 'Occupazione media': 0.493, 'Conservativi - Refitta': 3548.2689, 'Mediani - Refitta': 5493.528, 'Medi - AirDNA': 6768.6 },
+        {'N. letti': 6, 'N. bagni': 4, 'Occupazione media': 0.442, 'Conservativi - Refitta': 4743.2346, 'Mediani - Refitta': 7343.544, 'Medi - AirDNA': 9048 }
     ];
 
     const mq = parseFloat($('#mqInput').val());
@@ -873,12 +874,15 @@ function calculateValues_finan() {
 
     const bagni = parseFloat(document.getElementById("bagniInput").value);
 
-    function findRenditaMensile(bagni, letti) {
+    function findRenditaMensile(bagni, letti, dati) {
         const entry = database.find(item => item["N. bagni"] === bagni && item["N. letti"] === letti);
-        return entry ? entry["Rendita mensile"] : null;
+        return entry ? entry[dati] : null;
     }
 
-    const grossMonthlyIncome = findRenditaMensile(bagni, letti);
+    const dati = $('#monthlyRevenues').val();
+
+    const grossMonthlyIncome = findRenditaMensile(bagni, letti, dati);
+
     // const grossMonthlyIncome = 1000;
 
     const selectedCard = document.querySelector('.selezionata');
@@ -942,6 +946,7 @@ function calculateValues_finan() {
     const revenuesMin = grossAnnualIncome * (1 - uncertaintyPer);
     const revenuesMax = grossAnnualIncome * (1 + uncertaintyPer);
     const revenuesMid = grossAnnualIncome;
+
     const notaio = parseFloat($('#notaio').val()) / years;
 
     const monthlyCondoFeesMid = parseFloat($('#condInput').val()) / 12;
@@ -986,13 +991,9 @@ function calculateValues_finan() {
     const feesMin = (monthlyCondoFeesMin + monthlyUtilitiesMin + monthlyMiscellaneousCostsMin) * 12;
     const feesMax = (monthlyCondoFeesMax + monthlyUtilitiesMax + monthlyMiscellaneousCostsMax) * 12;
 
-    const fixedcostMin = (monthlyCondoFeesMin + 100) * 12 + taxesHomeMin;
-    const fixedcostMax = (monthlyCondoFeesMax + 100) * 12 + taxesHomeMax;
-    const fixedcostMid = (monthlyCondoFeesMid + 100) * 12 + taxesHomeMid;
-
-    const condotaxMin = fixedcostMin - 100 * 12;
-    const condotaxMax = fixedcostMin - 100 * 12;
-    const condotaxMid = fixedcostMin - 100 * 12;
+    const fixedcostMin = (monthlyCondoFeesMin + monthlyUtilitiesMin * 0.6 + monthlyMiscellaneousCostsMin * 0.5) * 12 + taxesHomeMin + notaio;
+    const fixedcostMax = (monthlyCondoFeesMax + monthlyUtilitiesMax * 0.6 + monthlyMiscellaneousCostsMax * 0.5) * 12 + taxesHomeMax + notaio;
+    const fixedcostMid = (monthlyCondoFeesMid + monthlyUtilitiesMid * 0.6 + monthlyMiscellaneousCostsMid * 0.5) * 12 + taxesHomeMid + notaio;
 
     const managementCostsMid = propertyManagementFeesMid * 12;
     const managementCostsMin = propertyManagementFeesMin * 12;
@@ -1013,6 +1014,10 @@ function calculateValues_finan() {
         downpayment = selectedCard3.id;
     }
 
+    const condotaxMid = taxesHomeMid + monthlyCondoFeesMid;
+    const condotaxMin = taxesHomeMin + monthlyCondoFeesMin;
+    const condotaxMax = taxesHomeMax + monthlyCondoFeesMax;
+
     let downpaymentQuantityMin = 0;
     let downpaymentQuantityMax = 0;
     let downpaymentQuantityMid = 0;
@@ -1022,42 +1027,62 @@ function calculateValues_finan() {
         downpaymentQuantityMax = fixedcostMax;
         downpaymentQuantityMid = fixedcostMid;
     } else if (downpayment == 'CondominialiTasse') {
-        downpaymentQuantityMin = fixedcostMin - 100 * 12;
-        downpaymentQuantityMax = fixedcostMax - 100 * 12;
-        downpaymentQuantityMid = fixedcostMid - 100 * 12;
+        downpaymentQuantityMin = condotaxMin;
+        downpaymentQuantityMax = condotaxMax;
+        downpaymentQuantityMid = condotaxMid;
     } else if (downpayment == 'Tasse') {
         downpaymentQuantityMin = taxesHomeMin;
         downpaymentQuantityMax = taxesHomeMax;
         downpaymentQuantityMid = taxesHomeMid;
+    } else {
+        downpaymentQuantityMin = 0;
+        downpaymentQuantityMax = 0;
+        downpaymentQuantityMid = 0;
     }
 
-    const generalCostsMin = feesMin + managementCostsMin + notaio;
-    const generalCostsMax = feesMax + managementCostsMax + notaio;
-    const generalCostsMid = generalCostsMin + (generalCostsMax - generalCostsMin)/2;
+    const expectedAnnualProfitMid = revenuesMid - feesMid - managementCostsMid - totalTaxesMid - notaio;
+    const expectedAnnualProfitMin = revenuesMin - feesMin - managementCostsMin - totalTaxesMin - notaio;
+    const expectedAnnualProfitMax = revenuesMax - feesMax - managementCostsMax - totalTaxesMax - notaio;
 
-    const totalCostsMin = totalTaxesMin + generalCostsMin;
-    const totalCostsMax = totalTaxesMax + generalCostsMax;
-    const totalCostsMid = totalCostsMin + (totalCostsMax - totalCostsMin)/2;
-    const expectedAnnualProfitMin = revenuesMin - totalCostsMin;
-    const expectedAnnualProfitMax = revenuesMax - totalCostsMax;
-    const expectedAnnualProfitMid = expectedAnnualProfitMin + (expectedAnnualProfitMax-expectedAnnualProfitMin)/2;
     const ownerFeeMin = expectedAnnualProfitMin * (desiredNetIncomePercentage / 100);
     const ownerFeeMax = expectedAnnualProfitMax * (desiredNetIncomePercentage / 100);
     const ownerFeeMid = expectedAnnualProfitMid * (desiredNetIncomePercentage / 100);
-    const utileSpendibileMin = expectedAnnualProfitMin - ownerFeeMin + downpaymentQuantityMin - utileRichiestoMid;
-    const utileSpendibileMax = expectedAnnualProfitMax - ownerFeeMax + downpaymentQuantityMax - utileRichiestoMax;
-    const utileSpendibileMid = utileSpendibileMin + (utileSpendibileMax - utileSpendibileMin)/2;
+
+    const utileSpendibileMin = expectedAnnualProfitMin - ownerFeeMin + downpaymentQuantityMin / 1.22 * 0.72 - utileRichiestoMid;
+    const utileSpendibileMax = expectedAnnualProfitMax - ownerFeeMax + downpaymentQuantityMax / 1.22 * 0.72 - utileRichiestoMax;
+    const utileSpendibileMid = expectedAnnualProfitMid - ownerFeeMid + downpaymentQuantityMid / 1.22 * 0.72 - utileRichiestoMid;
+
     const totalRate = (riskFreeRate + premioRischio) / 100;
     const rfRate = riskFreeRate / 100;
+
+    const irpef = 0;
+
     const totaleFinanziabileMin = utileSpendibileMin * (1 - Math.pow(1 + totalRate, -years)) / totalRate;
     const totaleFinanziabileMax = utileSpendibileMax * (1 - Math.pow(1 + totalRate, -years)) / totalRate;
     const totaleFinanziabileMid = utileSpendibileMid * (1 - Math.pow(1 + totalRate, -years)) / totalRate;
-    const fiscalbenefitMin = costoRistrutturazioneMin * 0.5 / 10;
-    const fiscalbenefitMax = costoRistrutturazioneMax * 0.5 / 10;
-    const totalquoteMin = fiscalbenefitMin + ownerFeeMin - downpaymentQuantityMax;
-    const totalquoteMax = fiscalbenefitMax + ownerFeeMax - downpaymentQuantityMin;
-    const entrateMin = fiscalbenefitMin + ownerFeeMin
-    const usciteMax = downpaymentQuantityMax
+    const totaleFinanziabileVeroMin = totaleFinanziabileMin / (1 + irpef);
+    const totaleFinanziabileVeroMax = totaleFinanziabileMax / (1 + irpef);
+    const totaleFinanziabileVeroMid = totaleFinanziabileMid / (1 + irpef);
+
+	let fiscalbenefitMin;
+    let fiscalbenefitMax;
+    let fiscalbenefitMid;
+
+    if (irpef > 0) {
+        fiscalbenefitMin = totaleFinanziabileVeroMin / 2 / 10;
+        fiscalbenefitMax = totaleFinanziabileVeroMax / 2 / 10;
+        fiscalbenefitMid = totaleFinanziabileVeroMid / 2 / 10;
+    } else {
+        fiscalbenefitMin = 0;
+        fiscalbenefitMax = 0;
+        fiscalbenefitMid = 0;
+    }
+
+    const totalquoteMin = fiscalbenefitMin + ownerFeeMin - downpaymentQuantityMin;
+    const totalquoteMax = fiscalbenefitMax + ownerFeeMax - downpaymentQuantityMax;
+    const totalquoteMid = (totalquoteMin + totalquoteMax) / 2
+    const entrateMin = fiscalbenefitMin + ownerFeeMin;
+    const usciteMax = downpaymentQuantityMin;
 
     let textpaghiincassi = "";
 
@@ -1077,7 +1102,7 @@ function calculateValues_finan() {
         pagamentoMax = 0;
     } else {
         ratioFinanziabilitaMin = totaleFinanziabileMin / costoRistrutturazioneMax * 100;
-        pagamentoMax = costoRistrutturazioneMax - totaleFinanziabileMin
+        pagamentoMax = (costoRistrutturazioneMax - totaleFinanziabileMin) * 1.22
     }
 
     if (costoRistrutturazioneMin <= totaleFinanziabileMid) {
@@ -1085,7 +1110,7 @@ function calculateValues_finan() {
         pagamentoMin = 0;
     } else {
         ratioFinanziabilitaMax = totaleFinanziabileMid / costoRistrutturazioneMin * 100;
-        pagamentoMin = costoRistrutturazioneMin - totaleFinanziabileMid
+        pagamentoMin = (costoRistrutturazioneMin - totaleFinanziabileMid) * 1.22
     }
 
     let ratiotext = "";
@@ -1139,14 +1164,14 @@ function calculateValues_finan() {
             </div>
             <div class="col-md-3">
                 <div class="card cardstyle" style="height: 100px; padding: 10px;">
-                    <p style="font-size: 0.65rem; text-align: center;">Le tue entrate annuali minime:</p>
-                    <strong><p style="font-size: 1.5rem; text-align: center;">${entrateMin.toFixed(2)}€</p></strong>
+                    <p style="font-size: 0.65rem; text-align: center;">Costo medio annuale dell\'immobile:</p>
+                    <strong><p style="font-size: 1.5rem; text-align: center;">${fixedcostMid.toFixed(2)}€</p></strong>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="card cardstyle" style="height: 100px; padding: 10px;">
-                    <p style="font-size: 0.65rem; text-align: center;">Le tue uscite annuali massime:</p>
-                    <strong><p style="font-size: 1.5rem; text-align: center;">${usciteMax.toFixed(2)}€</p></strong>
+                    <p style="font-size: 0.65rem; text-align: center;">Quota media annuale per il proprietario:</p>
+                    <strong><p style="font-size: 1.5rem; text-align: center;">${totalquoteMid.toFixed(2)}€</p></strong>
                 </div>
             </div>
         </div>
@@ -1156,7 +1181,6 @@ function calculateValues_finan() {
                 <strong><p style="font-size: 0.65rem; padding-left: 50px; text-align: left;">Stima indicativa dei costi di ristrutturazione:</p></strong>
                 <br>
                 <strong><p style="font-size: 0.7rem; padding-left: 50px; text-align: left;">FLUSSI DI CASSA ANNUALI PER TE:</p></strong>
-                <p style="font-size: 0.65rem; padding-left: 50px; text-align: left;">Beneficio fiscale annuale (x10 anni):</p>
                 <p style="font-size: 0.65rem; padding-left: 50px; text-align: left;">Quota annuale pagata:</p>
                 <p style="font-size: 0.65rem; padding-left: 50px; text-align: left;">Stima delle rendite annuali incassate:</p>
                 <strong><p style="font-size: 0.65rem; padding-left: 50px; text-align: left;">Totale:</p></strong>
@@ -1172,8 +1196,7 @@ function calculateValues_finan() {
                 <strong><p style="font-size: 0.65rem; padding-right: 50px; text-align: right;">da ${costoRistrutturazioneMin.toFixed(2)}€ a ${costoRistrutturazioneMax.toFixed(2)}€</p></strong>
                 <br>
                 <strong><p style="height: 0.85rem; padding-left: 50px; text-align: left;"></p></strong>
-                <p style="font-size: 0.65rem; padding-right: 50px; text-align: right;">da ${fiscalbenefitMin.toFixed(2)}€ a ${fiscalbenefitMax.toFixed(2)}€</p>
-                <p style="font-size: 0.65rem; padding-right: 50px; text-align: right;">da ${downpaymentQuantityMin.toFixed(2)}€ a ${downpaymentQuantityMin.toFixed(2)}€</p>
+                <p style="font-size: 0.65rem; padding-right: 50px; text-align: right;">da ${downpaymentQuantityMax.toFixed(2)}€ a ${downpaymentQuantityMin.toFixed(2)}€</p>
                 <p style="font-size: 0.65rem; padding-right: 50px; text-align: right;">da ${ownerFeeMin.toFixed(2)}€ a ${ownerFeeMax.toFixed(2)}€</p>
                 <strong><p style="font-size: 0.65rem;  padding-right: 50px; text-align: right;">da ${totalquoteMin.toFixed(2)}€ a ${totalquoteMax.toFixed(2)}€</p></strong>
                 <br>
