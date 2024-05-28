@@ -995,6 +995,8 @@ function calculateValues_finan() {
     const fixedcostMax = (monthlyCondoFeesMax + monthlyUtilitiesMax * 0.6 + monthlyMiscellaneousCostsMax * 0.5) * 12 + taxesHomeMax + notaio;
     const fixedcostMid = (monthlyCondoFeesMid + monthlyUtilitiesMid * 0.6 + monthlyMiscellaneousCostsMid * 0.5) * 12 + taxesHomeMid + notaio;
 
+    const sunkcostMid = (monthlyCondoFeesMid + monthlyUtilitiesMid * 0.6 + monthlyMiscellaneousCostsMid * 0.5) * 12 + taxesHomeMid;
+
     const managementCostsMid = propertyManagementFeesMid * 12;
     const managementCostsMin = propertyManagementFeesMin * 12;
     const managementCostsMax = propertyManagementFeesMax * 12;
@@ -1165,7 +1167,7 @@ function calculateValues_finan() {
             <div class="col-md-3">
                 <div class="card cardstyle" style="height: 100px; padding: 10px;">
                     <p style="font-size: 0.65rem; text-align: center;">Costo medio annuale dell\'immobile:</p>
-                    <strong><p style="font-size: 1.5rem; text-align: center;">${fixedcostMid.toFixed(2)}€</p></strong>
+                    <strong><p style="font-size: 1.5rem; text-align: center;">${sunkcostMid.toFixed(2)}€</p></strong>
                 </div>
             </div>
             <div class="col-md-3">
