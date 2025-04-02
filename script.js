@@ -314,7 +314,7 @@ function calculateValues() {
     const desiredNetIncomePercentage = parseFloat($('#desired_net_income_percentage').val());
     const riskFreeRate = parseFloat($('#risk_free_rate').val());
     const premioRischio = parseFloat($('#premio_rischio').val());
-    const quotaStartup = 0.15;
+    const quotaStartup = 0.; //0.15
 
     const irpef = parseFloat($('#irpef').val());
 
@@ -352,9 +352,9 @@ function calculateValues() {
     const monthlyMiscellaneousCostsMin = monthlyMiscellaneousCostsMid * (1 + uncertaintyPer);
     const monthlyMiscellaneousCostsMax = monthlyMiscellaneousCostsMid * (1 - uncertaintyPer);
 
-	const monthlyMiscellaneousCostsEmptyMid = monthlyUtilitiesEmptyMid * 0.5
-	const monthlyMiscellaneousCostsEmptyMin = monthlyUtilitiesEmptyMin * 0.5
-	const monthlyMiscellaneousCostsEmptyMax = monthlyUtilitiesEmptyMax * 0.5
+	const monthlyMiscellaneousCostsEmptyMid = monthlyMiscellaneousCostsMid * 0.5
+	const monthlyMiscellaneousCostsEmptyMin = monthlyMiscellaneousCostsMin * 0.5
+	const monthlyMiscellaneousCostsEmptyMax = monthlyMiscellaneousCostsMax * 0.5
 
     const propertyManagementFeesMid = parseFloat($('#property_management_fees').val());
     const propertyManagementFeesMin = propertyManagementFeesMid * (1 + uncertaintyPer);
@@ -380,9 +380,9 @@ function calculateValues() {
     const managementCostsMax = propertyManagementFeesMax * 12;
     const managementCostsMid = propertyManagementFeesMid * 12;
 
-    const totalStartupTaxesMid = (revenuesMid - feesMid - managementCostsMid) * 0.28
-    const totalStartupTaxesMin = (revenuesMin - feesMin - managementCostsMin) * 0.28
-    const totalStartupTaxesMax = (revenuesMax - feesMax - managementCostsMax) * 0.28
+    const totalStartupTaxesMid = (revenuesMid - feesMid - managementCostsMid) * 0.
+    const totalStartupTaxesMin = (revenuesMin - feesMin - managementCostsMin) * 0.
+    const totalStartupTaxesMax = (revenuesMax - feesMax - managementCostsMax) * 0. //0.28
 
     const totalTaxesMin = totalStartupTaxesMin + taxesHomeMin;
     const totalTaxesMax = totalStartupTaxesMax + taxesHomeMax;
@@ -486,9 +486,9 @@ function calculateValues() {
     const utiliTotaleNettiPropMin = (utiliTotaliLordiMin + notaio * years) * 0.79;
     const utiliTotaleNettiPropMax = (utiliTotaliLordiMax + notaio * years) * 0.79;
 
-    const costiLavoriPropMid = totaleFinanziabileMid * 1.20;
-    const costiLavoriPropMin = totaleFinanziabileMin * 1.20;
-    const costiLavoriPropMax = totaleFinanziabileMax * 1.20;
+    const costiLavoriPropMid = totaleFinanziabileVeroMid * 1.20;
+    const costiLavoriPropMin = totaleFinanziabileVeroMin * 1.20;
+    const costiLavoriPropMax = totaleFinanziabileVeroMax * 1.20;
 
     const recuperoCapitalePropMid = years - costiLavoriPropMid / (utiliTotaleNettiPropMid) * years;
     const recuperoCapitalePropMin = years - costiLavoriPropMin / (utiliTotaleNettiPropMin) * years;
@@ -863,8 +863,44 @@ function calculateValues_finan() {
         {'N. letti': 6, 'N. bagni': 4, 'Occupazione media': 0.442, 'Conservativi - Refitta': 4743.2346, 'Mediani - Refitta': 7343.544, 'Medi - AirDNA': 9048 }
     ];
 
+    const database_venezia = [
+        {'N. letti': 1, 'N. bagni': 1, 'Occupazione media': 0.75, 'Conservativi - Refitta': 2259.140625, 'Mediani - Refitta': 3012.1875, 'Medi - AirDNA': 5152.5 },
+        {'N. letti': 2, 'N. bagni': 1, 'Occupazione media': 0.75, 'Conservativi - Refitta': 2259.140625, 'Mediani - Refitta': 3012.1875, 'Medi - AirDNA': 5152.5 },
+        {'N. letti': 3, 'N. bagni': 1, 'Occupazione media': 0.78, 'Conservativi - Refitta': 2349.50625, 'Mediani - Refitta': 3132.675, 'Medi - AirDNA': 5152.5 },
+        {'N. letti': 4, 'N. bagni': 1, 'Occupazione media': 0.66, 'Conservativi - Refitta': 1988.04375, 'Mediani - Refitta': 2650.725, 'Medi - AirDNA': 5152.5 },
+        {'N. letti': 5, 'N. bagni': 1, 'Occupazione media': 0.65, 'Conservativi - Refitta': 1957.921875, 'Mediani - Refitta': 2610.5625, 'Medi - AirDNA': 6232.5 },
+        {'N. letti': 6, 'N. bagni': 1, 'Occupazione media': 0.64, 'Conservativi - Refitta': 1927.8, 'Mediani - Refitta': 2570.4, 'Medi - AirDNA': 6232.5 },
+        {'N. letti': 1, 'N. bagni': 2, 'Occupazione media': 0.75, 'Conservativi - Refitta': 2259.140625, 'Mediani - Refitta': 3012.1875, 'Medi - AirDNA': 4770 },
+        {'N. letti': 2, 'N. bagni': 2, 'Occupazione media': 0.75, 'Conservativi - Refitta': 2259.140625, 'Mediani - Refitta': 3012.1875, 'Medi - AirDNA': 5152.5 },
+        {'N. letti': 3, 'N. bagni': 2, 'Occupazione media': 0.78, 'Conservativi - Refitta': 2349.50625, 'Mediani - Refitta': 3132.675, 'Medi - AirDNA': 5152.5 },
+        {'N. letti': 4, 'N. bagni': 2, 'Occupazione media': 0.66, 'Conservativi - Refitta': 2444.5575, 'Mediani - Refitta': 3214.53, 'Medi - AirDNA': 6739.2 },
+        {'N. letti': 5, 'N. bagni': 2, 'Occupazione media': 0.59, 'Conservativi - Refitta': 2410.96125, 'Mediani - Refitta': 2745.7125, 'Medi - AirDNA': 6739.2 },
+        {'N. letti': 6, 'N. bagni': 2, 'Occupazione media': 0.64, 'Conservativi - Refitta': 2725.44, 'Mediani - Refitta': 3035.52, 'Medi - AirDNA': 6739.2 },
+        {'N. letti': 1, 'N. bagni': 3, 'Occupazione media': 0.75, 'Conservativi - Refitta': 4169.25, 'Mediani - Refitta': 6043.5, 'Medi - AirDNA': 4770 },
+        {'N. letti': 2, 'N. bagni': 3, 'Occupazione media': 0.75, 'Conservativi - Refitta': 4169.25, 'Mediani - Refitta': 6043.5, 'Medi - AirDNA': 5152.5 },
+        {'N. letti': 3, 'N. bagni': 3, 'Occupazione media': 0.78, 'Conservativi - Refitta': 4336.02, 'Mediani - Refitta': 6285.24, 'Medi - AirDNA': 6739.2 },
+        {'N. letti': 4, 'N. bagni': 3, 'Occupazione media': 0.66, 'Conservativi - Refitta': 3668.94, 'Mediani - Refitta': 5318.28, 'Medi - AirDNA': 6739.2 },
+        {'N. letti': 5, 'N. bagni': 3, 'Occupazione media': 0.59, 'Conservativi - Refitta': 3279.81, 'Mediani - Refitta': 4754.22, 'Medi - AirDNA': 6739.2 },
+        {'N. letti': 6, 'N. bagni': 3, 'Occupazione media': 0.64, 'Conservativi - Refitta': 3557.76, 'Mediani - Refitta': 5157.12, 'Medi - AirDNA': 4770 },
+        {'N. letti': 1, 'N. bagni': 4, 'Occupazione media': 0.75, 'Conservativi - Refitta': 4169.25, 'Mediani - Refitta': 6043.5, 'Medi - AirDNA': 5152.5 },
+        {'N. letti': 2, 'N. bagni': 4, 'Occupazione media': 0.75, 'Conservativi - Refitta': 4169.25, 'Mediani - Refitta': 6043.5, 'Medi - AirDNA': 6739.2 },
+        {'N. letti': 3, 'N. bagni': 4, 'Occupazione media': 0.78, 'Conservativi - Refitta': 4743.765, 'Mediani - Refitta': 8880.885, 'Medi - AirDNA': 6739.2 },
+        {'N. letti': 4, 'N. bagni': 4, 'Occupazione media': 0.66, 'Conservativi - Refitta': 4013.955, 'Mediani - Refitta': 7514.595, 'Medi - AirDNA': 6739.2 },
+        {'N. letti': 5, 'N. bagni': 4, 'Occupazione media': 0.59, 'Conservativi - Refitta': 3588.2325, 'Mediani - Refitta': 6717.5925, 'Medi - AirDNA': 4770 },
+        {'N. letti': 6, 'N. bagni': 4, 'Occupazione media': 0.64, 'Conservativi - Refitta': 3892.32, 'Mediani - Refitta': 7286.88, 'Medi - AirDNA': 5152.5 },
+    ];
+
+    // Select the input element by its id
+    const addressInput = document.getElementById('address');
+
+    // Get the value of the input element
+    const addressValue = addressInput.value;
+
+    // Split the value by spaces and get the last word
+    const city = addressValue.split(' ').pop();
+
     const mq = parseFloat($('#mqInput').val());
-    const quotaStartup = 0.15;
+    const quotaStartup = 0.;
 
     let letti = parseFloat(document.getElementById("lettiInput").value);
 
@@ -874,14 +910,20 @@ function calculateValues_finan() {
 
     const bagni = parseFloat(document.getElementById("bagniInput").value);
 
-    function findRenditaMensile(bagni, letti, dati) {
-        const entry = database.find(item => item["N. bagni"] === bagni && item["N. letti"] === letti);
+    function findRenditaMensile(city, bagni, letti, dati) {
+        let entry;
+        if (city === "venezia") {
+            entry = database_venezia.find(item => item["N. bagni"] === bagni && item["N. letti"] === letti);
+        } else {
+            entry = database.find(item => item["N. bagni"] === bagni && item["N. letti"] === letti);
+        }
         return entry ? entry[dati] : null;
     }
 
+
     const dati = $('#monthlyRevenues').val();
 
-    const grossMonthlyIncome = findRenditaMensile(bagni, letti, dati);
+    const grossMonthlyIncome = findRenditaMensile(city, bagni, letti, dati);
 
     // const grossMonthlyIncome = 1000;
 
@@ -1001,9 +1043,9 @@ function calculateValues_finan() {
     const managementCostsMin = propertyManagementFeesMin * 12;
     const managementCostsMax = propertyManagementFeesMax * 12;
 
-    const totalStartupTaxesMid = (revenuesMid - feesMid - managementCostsMid) * 0.28
-    const totalStartupTaxesMin = (revenuesMin - feesMin - managementCostsMin) * 0.28
-    const totalStartupTaxesMax = (revenuesMax - feesMax - managementCostsMax) * 0.28
+    const totalStartupTaxesMid = (revenuesMid - feesMid - managementCostsMid) * 0.
+    const totalStartupTaxesMin = (revenuesMin - feesMin - managementCostsMin) * 0.
+    const totalStartupTaxesMax = (revenuesMax - feesMax - managementCostsMax) * 0.
 
     const totalTaxesMid = totalStartupTaxesMid + taxesHomeMid;
     const totalTaxesMin = totalStartupTaxesMin + taxesHomeMin;
